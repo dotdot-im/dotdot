@@ -38,14 +38,11 @@ export default () => {
 
   return (
     <Container>
-      <header className="my-4">
-        <h1>Chat</h1>
-      </header>
       <section>
-        <ListGroup className='mb-4'>
+        <ListGroup className='my-4'>
           { state.messages.map(eachMessage => (
-            <ListGroup.Item key={ eachMessage.id }>
-              <span style={ { color: `#${eachMessage.color}` } }>{ eachMessage.user}</span>: { eachMessage.msg }
+            <ListGroup.Item key={ eachMessage.id } style={ { borderLeftWidth: '4px', borderLeftColor: `#${eachMessage.color}` } }>
+              { eachMessage.msg }
             </ListGroup.Item>
           )) }
         </ListGroup>

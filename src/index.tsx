@@ -16,7 +16,7 @@ loadIcons();
 const app = (
   <BrowserRouter basename={process.env.REACT_APP_BASEPATH}>
     <Helmet
-      titleTemplate='%s | Chat'
+      titleTemplate='%s | dotdot'
     />
     <StateProvider>
       <div id="content">

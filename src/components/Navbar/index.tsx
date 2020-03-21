@@ -17,7 +17,7 @@ export default () => {
     <Navbar className='main' bg="light" variant="dark">
       <Container>
         <Navbar.Brand as={NavLink} to="/">
-          <Logo /> Nils
+          <Logo /> dotdot
         </Navbar.Brand>
         <Navbar.Collapse className="justify-content-end">
           <Nav.Link as={NavLink} to="/" exact>

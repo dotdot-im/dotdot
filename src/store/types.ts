@@ -17,7 +17,7 @@ export type Domain = {
 export type Payout = {
   uuid: string,
   tx_id: any,
-  amount_nils: number,
+  amount_dotdot: number,
   amount_fiat: number,
   currency: string,
   sent_on: Date | null,

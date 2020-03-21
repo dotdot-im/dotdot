@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/hic-web/static/css/main.e5bff07c.chunk.css",
+    "main.js": "/hic-web/static/js/main.ea98af26.chunk.js",
+    "main.js.map": "/hic-web/static/js/main.ea98af26.chunk.js.map",
+    "runtime-main.js": "/hic-web/static/js/runtime-main.7099c503.js",
+    "runtime-main.js.map": "/hic-web/static/js/runtime-main.7099c503.js.map",
+    "static/js/2.9350d44d.chunk.js": "/hic-web/static/js/2.9350d44d.chunk.js",
+    "static/js/2.9350d44d.chunk.js.map": "/hic-web/static/js/2.9350d44d.chunk.js.map",
+    "index.html": "/hic-web/index.html",
+    "precache-manifest.a94cc677d91693e2990fd9e4cb00de51.js": "/hic-web/precache-manifest.a94cc677d91693e2990fd9e4cb00de51.js",
+    "service-worker.js": "/hic-web/service-worker.js",
+    "static/css/main.e5bff07c.chunk.css.map": "/hic-web/static/css/main.e5bff07c.chunk.css.map",
+    "static/js/2.9350d44d.chunk.js.LICENSE.txt": "/hic-web/static/js/2.9350d44d.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7099c503.js",
+    "static/js/2.9350d44d.chunk.js",
+    "static/css/main.e5bff07c.chunk.css",
+    "static/js/main.ea98af26.chunk.js"
+  ]
+}

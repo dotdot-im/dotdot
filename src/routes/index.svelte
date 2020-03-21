@@ -5,16 +5,35 @@ const socket = new Phoenix.Socket("ws://localhost:4000/socket", {
 	params: { userToken: "123" }
 });
 
-const messages = [];
+let messages = [];
+let message = '';
 
 socket.connect();
 
-socket.onError( () => messages.push('Socket error') )
-socket.onClose( () => messages.push("the connection dropped") )
+socket.onError( () => { messages = messages.concat('Socket error'); })
+socket.onClose( () => { messages = messages.concat('Connection dropped'); })
 
 // Join the initial channel
-const controlChannel = socket.channel("control");
-controlChannel.on("new_msg", msg => messages.push(msg) )
+const controlChannel = socket.channel("control:main");
+controlChannel.join()
+  .receive("ok", resp => { console.log('joined', resp); messages = messages.concat("Joined successfully"); })
+  .receive("error", resp => { console.log('error joining', resp); messages = messages.concat("Unable to join"); })
+
+controlChannel.on("control", msg => { console.log('control', msg); messages = messages.concat('control:: ' + msg.message); })
+controlChannel.on("new_message", msg => { console.log('message', msg); messages = messages.concat(msg.message); })
+
+controlChannel.on("new:msg", msg => {
+  messages = messages.concat(msg);
+})
+
+controlChannel.on("user:entered", msg => {
+  var username = this.sanitize(msg.user || "anonymous")
+  $messages.append(`<br/><i>[${username} entered]</i>`)
+})
+
+function handleSubmit() {
+  controlChannel.push("new_message", {message: message})
+}
 
 </script>
 
@@ -64,4 +83,8 @@ controlChannel.on("new_msg", msg => messages.push(msg) )
       <li>{message}</li>
     {/each}
   </ul>
+  <form action="" on:submit={handleSubmit}>
+    <input id="m" autocomplete="off" placeholder="Message..." bind:value={message} />
+    <button type="submit">Send</button>
+  </form>
 </div>

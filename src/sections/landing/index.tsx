@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Container, Form, ListGroup } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useImmer } from "use-immer";
+import io from 'socket.io-client';
 
 import "./index.scss";
 
@@ -15,12 +16,16 @@ type Message = {
 type State = {
   message: string,
   messages: Message[],
+  socket: SocketIOClient.Socket,
 };
+
+
 
 export default () => {
   const [state, setState] = useImmer<State>({
     message: '',
     messages: [],
+    socket: io('http://localhost:8080'),
   });
 
   const handleSubmit = (e: React.ChangeEvent<any>) => {

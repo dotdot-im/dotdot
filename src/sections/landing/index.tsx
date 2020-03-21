@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Form, ListGroup } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useImmer } from "use-immer";
-import io from 'socket.io-client';
+import socketio from 'socket.io-client';
 
 import "./index.scss";
 
@@ -16,27 +16,49 @@ type Message = {
 type State = {
   message: string,
   messages: Message[],
-  socket: SocketIOClient.Socket,
 };
 
-
+const io = socketio('http://localhost:8080');
 
 export default () => {
   const [state, setState] = useImmer<State>({
     message: '',
     messages: [],
-    socket: io('http://localhost:8080'),
   });
+
+  useEffect(() => {
+    console.log('adding io handlers', io);
+    io.on('connection', (socket: SocketIOClient.Socket) => {
+      console.log('connected');
+      setState(draft => {
+        draft.messages.push({
+          id: draft.messages.length,
+          msg: 'Connected',
+          user: 'server',
+          color: 'ccc',
+        });
+      });
+
+      socket.on('message', (msg: string) => {
+        console.log('message', msg);
+        setState(draft => {
+          draft.messages.push({
+            id: draft.messages.length,
+            msg,
+            user: 'alex',
+            color: 'eb0000',
+          });
+        });
+      });
+    });
+  }, [setState]);
 
   const handleSubmit = (e: React.ChangeEvent<any>) => {
     e.preventDefault();
+
+    io.emit('message', state.message);
+
     setState(draft => {
-      draft.messages.push({
-        id: draft.messages.length,
-        msg: state.message,
-        user: 'alex',
-        color: 'eb0000',
-      });
       draft.message = '';
     });
   };

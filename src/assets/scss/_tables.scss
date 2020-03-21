@@ -1,0 +1,28 @@
+.table {
+  th {
+    background-color:#f6f9fc;
+    color:#8898aa;
+    text-transform: uppercase;
+    font-size: .65rem;
+    letter-spacing: 1px;
+    border-top: 1px solid $light;
+    border-bottom: 1px solid $light;
+  }
+
+  tbody {
+    color: #525f7f;
+    font-size: 0.9rem;
+  }
+
+  th, td {
+    padding: 0.75rem 0.5rem;
+
+    &:first-child {
+      padding-left: 1rem;
+    }
+  }
+
+  .table-striped tbody tr:nth-of-type(2n+1) {
+    background-color: rgba(0, 0, 0, 0.01);
+  }
+}

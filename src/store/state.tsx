@@ -8,11 +8,11 @@ const initialState: AppState = {
     checked: false,
     loggedIn: false,
     user: null,
-    csrf: null,
+    token: null,
   },
   offline: false,
-  domains: [],
-  payouts: [],
+  messages: [],
+  users: [],
 };
 const defaultDispatch: React.Dispatch<Action> = () => {
   console.warn('Using default reducer, check StateProvider');

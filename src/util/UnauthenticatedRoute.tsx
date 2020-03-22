@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Redirect } from "react-router-dom";
 import { useStateValue } from 'store/state';
 
-import Loading from 'sections/loading';
+import Loading from 'sections/Loading';
 
 type Props = {
   path: string,
@@ -23,7 +23,7 @@ export default (props: Props) => {
 
   if (state.auth.loggedIn) {
     return (
-      <Redirect to='/dashboard' />
+      <Redirect to='/' />
     );
   }
 

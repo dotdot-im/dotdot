@@ -1,15 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
+import Helmet from "react-helmet";
 
 import { StateProvider } from "store/state";
-import Footer from "components/Footer";
-
-import "assets/scss/index.scss";
 
 import loadIcons from "./lib/icons";
 import Router from "./router";
-import Helmet from "react-helmet";
+
+import "assets/scss/index.scss";
+
 
 loadIcons();
 
@@ -19,10 +19,7 @@ const app = (
       titleTemplate='%s | dotdot'
     />
     <StateProvider>
-      <div id="content">
-        <Router />
-      </div>
-      <Footer />
+      <Router />
     </StateProvider>
   </BrowserRouter>
 );

@@ -1,28 +1,13 @@
 export type User = {
   uuid: string,
-  email?: string,
-  balance: number,
-  transferwise_id: number | null,
-  currency: string | null,
-  created_on: Date,
+  name: string,
+  color: string,
 };
 
-export type Domain = {
-  uuid: string,
-  domain: string,
-  balance: number,
-  created_on: Date,
-};
-
-export type Payout = {
-  uuid: string,
-  tx_id: any,
-  amount_dotdot: number,
-  amount_fiat: number,
-  currency: string,
-  sent_on: Date | null,
-  created_on: Date,
-  estimated_on: Date | null,
+export type Message = {
+  id: number,
+  msg: string,
+  user: User,
 };
 
 export type AppState = {
@@ -30,11 +15,11 @@ export type AppState = {
     checked: boolean,
     loggedIn: boolean,
     user: User | null,
-    csrf: string | null,
+    token: string | null,
   },
   offline: boolean,
-  domains: Domain[],
-  payouts: Payout[],
+  messages: Message[],
+  users: User[],
 };
 
 export type Action = {

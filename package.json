@@ -1,8 +1,8 @@
 {
-  "name": "hic-web",
+  "name": "dotdot",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://aurbano.github.io/hic-web/",
+  "homepage": "https://aurbano.github.io/dotdot/",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
     "@fortawesome/free-brands-svg-icons": "^5.12.1",

@@ -27,7 +27,7 @@ export default () => {
 
   return (
     <Form noValidate onSubmit={handleSubmit}>
-      <Form.Group controlId="exampleForm.ControlTextarea1">
+      <Form.Group controlId="chatForm.message">
         <Form.Label>Message</Form.Label>
         <Form.Control
           as="input"

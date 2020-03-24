@@ -5,13 +5,10 @@ import Footer from "components/Footer";
 import Chat from "sections/Chat";
 import AuthenticatedRoute from "util/AuthenticatedRoute";
 import UnauthenticatedRoute from "util/UnauthenticatedRoute";
-import useCheckLogin from "lib/checkAuth";
 import OfflineCheck from "components/OfflineCheck";
 import Login from "sections/Login";
 
 export default () => {
-  useCheckLogin();
-
   return (
     <>
       <div id="content">

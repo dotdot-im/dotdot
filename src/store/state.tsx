@@ -5,12 +5,14 @@ import { AppState, AppContext, Action } from './types';
 
 const initialState: AppState = {
   auth: {
-    checked: false,
+    checked: true,
     loggedIn: false,
     user: null,
     token: null,
   },
   offline: false,
+  connected: false,
+  error: null,
   messages: [],
   users: [],
 };

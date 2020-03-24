@@ -6,8 +6,16 @@ import styles from './index.module.scss';
 export default () => {
   const { state } = useStateValue();
 
-  if (!state.offline) {
+  if (!state.offline && !state.error) {
     return null;
+  }
+
+  if (state.error) {
+    return (
+      <div className={ styles.offline }>
+        Error: {state.error}
+      </div>
+    );
   }
 
   return (

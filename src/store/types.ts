@@ -18,6 +18,8 @@ export type AppState = {
     token: string | null,
   },
   offline: boolean,
+  connected: boolean,
+  error: string | null,
   messages: Message[],
   users: User[],
 };

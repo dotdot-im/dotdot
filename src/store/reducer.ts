@@ -22,6 +22,7 @@ export default produce((draft: AppState, action: Action) => {
       break;
     case 'offline':
       draft.offline = true;
+      draft.error = null;
       break;
     case 'error':
       draft.error = action.payload;

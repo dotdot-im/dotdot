@@ -74,7 +74,7 @@ export default (props: Props) => {
   socket.on('connect_error', (error: string) => {
     console.log('failed to connect', error);
 
-    onError(error);
+    onError(null);
   });
 
   socket.on('connect_timeout', (timeout: string) => {

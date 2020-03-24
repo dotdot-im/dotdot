@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form } from 'react-bootstrap';
+import { Form, Container } from 'react-bootstrap';
 
 import { useStateValue } from 'store/state';
 import { fetchResource } from 'util/fetch';
@@ -37,6 +37,11 @@ export default () => {
       })
     }).catch(reason => {
       dispatch({
+        type: 'offline',
+        payload: null,
+      })
+
+      dispatch({
         type: 'login',
         payload: null,
       })
@@ -44,19 +49,21 @@ export default () => {
   };
 
   return (
-    <Form noValidate onSubmit={handleSubmit}>
-      <Form.Group controlId="loginForm.username">
-        <Form.Label>User name</Form.Label>
-        <Form.Control
-          as="input"
-          type="text"
-          onChange={e => {
-            const value = e.currentTarget.value;
-            setState(draft => { draft.username = value });
-          }}
-          value={ localState.username }
-        />
-      </Form.Group>
-    </Form>
+    <Container className='mt-4'>
+      <Form noValidate onSubmit={handleSubmit}>
+        <Form.Group controlId="loginForm.username">
+          <Form.Label>User name</Form.Label>
+          <Form.Control
+            as="input"
+            type="text"
+            onChange={e => {
+              const value = e.currentTarget.value;
+              setState(draft => { draft.username = value });
+            }}
+            value={ localState.username }
+          />
+        </Form.Group>
+      </Form>
+    </Container>
   );
 };

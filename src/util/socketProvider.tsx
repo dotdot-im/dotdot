@@ -74,13 +74,19 @@ export default (props: Props) => {
   socket.on('connect_error', (error: string) => {
     console.log('failed to connect', error);
 
-    onError(null);
+    dispatch({
+      type: 'offline',
+      payload: null,
+    });
   });
 
   socket.on('connect_timeout', (timeout: string) => {
     console.log('timeout connect', timeout);
 
-    onError(null);
+    dispatch({
+      type: 'offline',
+      payload: null,
+    });
   });
 
   socket.on('error', (error: string) => {

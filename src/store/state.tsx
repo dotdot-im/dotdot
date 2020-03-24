@@ -41,3 +41,4 @@ export const StateProvider = (props: Props) =>{
 };
 
 export const useStateValue = (): AppContext => React.useContext(StateContext);
+export default useStateValue;

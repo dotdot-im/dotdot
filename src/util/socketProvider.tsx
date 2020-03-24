@@ -1,16 +1,14 @@
-import React, { createContext, useEffect } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import socketio from 'socket.io-client';
 
 import { useStateValue } from "store/state";
 
 type SocketContextType = {
   socket: SocketIOClient.Socket | null,
-  emit: Function,
 };
 
 export const SocketContext = createContext<SocketContextType>({
   socket: null,
-  emit: () => {},
 });
 
 type Props = {
@@ -19,86 +17,89 @@ type Props = {
 
 export default (props: Props) => {
   const { state, dispatch } = useStateValue();
+  const [ socket, setSocket ] = useState<SocketIOClient.Socket | null>(null);
 
   useEffect(() => {
+    // clear any errors
     dispatch({
       type: 'error',
       payload: null,
     });
-  }, [dispatch]);
 
-  const onError = (error: string | null) => {
-    socket.close();
-    socket.disconnect();
+    if (!state.auth.loggedIn) {
+      return;
+    }
 
-    dispatch({
-      type: 'login',
-      payload: null,
+    // initialize the socket
+    const newSocket = socketio('http://localhost:8080', {
+      reconnection: true,
+      timeout: 2000,
+      query: {
+          token: state.auth.token,
+      }
     });
 
-    dispatch({
-      type: 'socketConnected',
-      payload: false,
-    });
+    newSocket.on('connect', () => {
+      console.log('connected');
 
-    if (error) {
       dispatch({
-        type: 'error',
-        payload: error,
+        type: 'socketConnected',
+        payload: true,
       });
-    } else {
+    });
+
+    newSocket.on('connect_error', (error: string) => {
+      console.log('failed to connect', error);
+
       dispatch({
         type: 'offline',
         payload: null,
       });
-    }
-  };
-
-  const socket = socketio('http://localhost:8080', {
-    reconnection: true,
-    timeout: 2000,
-    query: {
-        token: state.auth.token,
-    }
-  });
-
-  socket.on('connect', () => {
-    console.log('connected');
-
-    dispatch({
-      type: 'socketConnected',
-      payload: true,
     });
-  });
 
-  socket.on('connect_error', (error: string) => {
-    console.log('failed to connect', error);
+    newSocket.on('connect_timeout', (timeout: string) => {
+      console.log('timeout connect', timeout);
 
-    dispatch({
-      type: 'offline',
-      payload: null,
+      dispatch({
+        type: 'offline',
+        payload: null,
+      });
     });
-  });
 
-  socket.on('connect_timeout', (timeout: string) => {
-    console.log('timeout connect', timeout);
+    newSocket.on('error', (error: string) => {
+      console.log('failed to connect', error);
 
-    dispatch({
-      type: 'offline',
-      payload: null,
+      dispatch({
+        type: 'login',
+        payload: null,
+      });
+
+      dispatch({
+        type: 'socketConnected',
+        payload: false,
+      });
+
+      if (error) {
+        dispatch({
+          type: 'error',
+          payload: error,
+        });
+      } else {
+        dispatch({
+          type: 'offline',
+          payload: null,
+        });
+      }
     });
-  });
 
-  socket.on('error', (error: string) => {
-    console.log('failed to connect', error);
+    setSocket(newSocket);
+  }, [dispatch, state.auth.loggedIn, state.auth.token]);
 
-    onError(error);
-  });
-
-  const provider = {
+  let provider = {
     socket,
-    emit: socket.emit,
   };
+
+  console.log('socket provider: ', socket);
 
   return (
     <SocketContext.Provider value={ provider }>

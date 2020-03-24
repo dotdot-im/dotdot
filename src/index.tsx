@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import Helmet from "react-helmet";
 
 import { StateProvider } from "store/state";
+import SocketProvider from "util/socketProvider";
 
 import loadIcons from "./lib/icons";
 import Router from "./router";
@@ -19,7 +20,9 @@ const app = (
       titleTemplate='%s | dotdot'
     />
     <StateProvider>
-      <Router />
+      <SocketProvider>
+        <Router />
+      </SocketProvider>
     </StateProvider>
   </BrowserRouter>
 );

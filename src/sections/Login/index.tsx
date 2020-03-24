@@ -56,6 +56,7 @@ export default () => {
           <Form.Control
             as="input"
             type="text"
+            autoFocus
             onChange={e => {
               const value = e.currentTarget.value;
               setState(draft => { draft.username = value });

@@ -1,7 +1,6 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 
-import SocketProvider from "util/socketProvider";
 import { useStateValue } from "store/state";
 import Loader from 'components/Loader';
 
@@ -26,10 +25,8 @@ export default () => {
   }
 
   return (
-    <SocketProvider>
-      <Container>
-        { chatArea }
-      </Container>
-    </SocketProvider>
+    <Container>
+      { chatArea }
+    </Container>
   );
 };

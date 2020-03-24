@@ -13,12 +13,12 @@ export default () => {
     message: '',
   });
 
-  const { emit } = useContext(SocketContext);
+  const { socket } = useContext(SocketContext);
 
   const handleSubmit = (e: React.ChangeEvent<any>) => {
     e.preventDefault();
 
-    emit('message', state.message);
+    socket?.emit('message', state.message);
 
     setState(draft => {
       draft.message = '';
@@ -32,6 +32,7 @@ export default () => {
         <Form.Control
           as="input"
           type="text"
+          autoFocus
           onChange={e => {
             const value = e.currentTarget.value;
             setState(draft => { draft.message = value });

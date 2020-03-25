@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import socketio from 'socket.io-client';
 
 import { useStateValue } from "store/state";
+import { API_URL } from "../constants";
 
 type SocketContextType = {
   socket: SocketIOClient.Socket | null,
@@ -31,7 +32,7 @@ export default (props: Props) => {
     }
 
     // initialize the socket
-    const newSocket = socketio('http://localhost:8080', {
+    const newSocket = socketio(API_URL, {
       reconnection: true,
       timeout: 2000,
       query: {

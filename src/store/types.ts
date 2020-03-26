@@ -6,7 +6,7 @@ export type User = {
 
 export type Message = {
   id: number,
-  msg: string,
+  message: string,
   user: User,
 };
 

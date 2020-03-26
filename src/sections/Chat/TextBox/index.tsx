@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import { Form } from "react-bootstrap";
 import { useImmer } from "use-immer";
 
@@ -12,17 +12,41 @@ export default () => {
   const [state, setState] = useImmer<State>({
     message: '',
   });
+  const draftTimer = useRef<any>(null)
 
   const { socket } = useContext(SocketContext);
 
   const handleSubmit = (e: React.ChangeEvent<any>) => {
     e.preventDefault();
 
-    socket?.emit('message', state.message);
+    socket?.emit('message', {
+      message: state.message,
+    });
 
     setState(draft => {
       draft.message = '';
     });
+  };
+
+  const sendDraft = (message: string) => {
+    socket?.emit('draft', {
+      message,
+    });
+  };
+
+  const onType = (e: React.ChangeEvent<any>) => {
+    e.preventDefault();
+
+    clearTimeout(draftTimer.current);
+
+    const value = e.currentTarget.value;
+    setState(draft => {
+      draft.message = value;
+    });
+
+    draftTimer.current = setTimeout(() => {
+      sendDraft(value);
+    }, 100);
   };
 
   return (
@@ -33,10 +57,7 @@ export default () => {
           as="input"
           type="text"
           autoFocus
-          onChange={e => {
-            const value = e.currentTarget.value;
-            setState(draft => { draft.message = value });
-          }}
+          onChange={ onType }
           value={ state.message }
         />
       </Form.Group>

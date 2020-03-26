@@ -4,6 +4,7 @@ import { useImmer } from "use-immer";
 
 import { SocketContext } from "util/socketProvider";
 import { Message } from "store/types";
+import MessageComponent from "./Message";
 
 type State = {
   messages: Message[];
@@ -50,31 +51,10 @@ export default () => {
   return (
     <ListGroup className="my-4">
       {state.messages.map(eachMessage => (
-        <ListGroup.Item
-          className="d-flex justify-content-between align-items-center"
-          key={eachMessage.id}
-          style={{
-            borderLeftWidth: "4px",
-            borderLeftColor: `#${eachMessage.user.color}`
-          }}
-        >
-          {eachMessage.message}
-          <span className="text-muted">{eachMessage.user.name}</span>
-        </ListGroup.Item>
+        <MessageComponent message={ eachMessage } />
       ))}
       {Object.values(state.drafts).map(eachMessage => (
-        <ListGroup.Item
-          className="d-flex justify-content-between align-items-center"
-          key={eachMessage.id}
-          style={{
-            color: "#aaa",
-            borderLeftWidth: "4px",
-            borderLeftColor: `#${eachMessage.user.color}`
-          }}
-        >
-          {eachMessage.message}
-          <span className="text-muted">{eachMessage.user.name}</span>
-        </ListGroup.Item>
+        <MessageComponent message={ eachMessage } draft />
       ))}
     </ListGroup>
   );

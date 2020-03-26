@@ -41,8 +41,6 @@ export default (props: Props) => {
     });
 
     newSocket.on('connect', () => {
-      console.log('connected');
-
       dispatch({
         type: 'socketConnected',
         payload: true,
@@ -50,8 +48,6 @@ export default (props: Props) => {
     });
 
     newSocket.on('connect_error', (error: string) => {
-      console.log('failed to connect', error);
-
       dispatch({
         type: 'offline',
         payload: null,
@@ -59,8 +55,6 @@ export default (props: Props) => {
     });
 
     newSocket.on('connect_timeout', (timeout: string) => {
-      console.log('timeout connect', timeout);
-
       dispatch({
         type: 'offline',
         payload: null,
@@ -68,8 +62,6 @@ export default (props: Props) => {
     });
 
     newSocket.on('error', (error: string) => {
-      console.log('failed to connect', error);
-
       dispatch({
         type: 'login',
         payload: null,
@@ -99,8 +91,6 @@ export default (props: Props) => {
   let provider = {
     socket,
   };
-
-  console.log('socket provider: ', socket);
 
   return (
     <SocketContext.Provider value={ provider }>

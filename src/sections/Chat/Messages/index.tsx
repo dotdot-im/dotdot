@@ -38,6 +38,10 @@ export default () => {
 
     socket.on("draft", (payload: Message) => {
       setState(draft => {
+        if (payload.message.trim().length < 1) {
+          delete draft.drafts[payload.user.uuid];
+          return;
+        }
         draft.drafts[payload.user.uuid] = payload;
       });
     });

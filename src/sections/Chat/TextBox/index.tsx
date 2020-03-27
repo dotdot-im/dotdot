@@ -52,10 +52,10 @@ export default () => {
   return (
     <Form noValidate onSubmit={handleSubmit}>
       <Form.Group controlId="chatForm.message">
-        <Form.Label>Message</Form.Label>
         <Form.Control
           as="input"
           type="text"
+          placeholder='Message...'
           autoFocus
           onChange={ onType }
           value={ state.message }

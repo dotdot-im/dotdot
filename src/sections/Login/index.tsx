@@ -66,10 +66,10 @@ export default () => {
     <Container className='mt-4'>
       <Form noValidate onSubmit={handleSubmit}>
         <Form.Group controlId="loginForm.username">
-          <Form.Label>User name</Form.Label>
           <Form.Control
             as="input"
             type="text"
+            placeholder="What's your name?"
             disabled={ localState.loading }
             autoFocus
             onChange={e => {

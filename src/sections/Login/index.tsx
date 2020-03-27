@@ -7,16 +7,26 @@ import { useImmer } from 'use-immer';
 
 type State = {
   username: string,
+  loading: boolean,
 };
 
 export default () => {
   const { dispatch } = useStateValue();
   const [localState, setState] = useImmer<State>({
     username: '',
+    loading: false,
   });
 
   const handleSubmit = (e: React.ChangeEvent<any>) => {
     e.preventDefault();
+
+    if (localState.loading) {
+      return;
+    }
+
+    setState(draft => {
+      draft.loading = true;
+    });
 
     const body = {
       username: localState.username,
@@ -45,6 +55,10 @@ export default () => {
         type: 'login',
         payload: null,
       })
+
+      setState(draft => {
+        draft.loading = false;
+      });
     });
   };
 
@@ -56,6 +70,7 @@ export default () => {
           <Form.Control
             as="input"
             type="text"
+            disabled={ localState.loading }
             autoFocus
             onChange={e => {
               const value = e.currentTarget.value;

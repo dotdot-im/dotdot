@@ -7,6 +7,7 @@ import Loader from 'components/Loader';
 import "./index.scss";
 import Messages from"./Messages";
 import TextBox from "./TextBox";
+import OnlineUsers from "./OnlineUsers";
 
 export default () => {
   const { state } = useStateValue();
@@ -18,6 +19,7 @@ export default () => {
   if (state.connected) {
     chatArea = (
       <>
+        <OnlineUsers />
         <Messages />
         <TextBox />
       </>

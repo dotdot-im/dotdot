@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Container } from 'react-bootstrap';
 
-import { useStateValue } from 'store/state';
+import { useGlobalState } from 'store/state';
 import { fetchResource } from 'util/fetch';
 import { useImmer } from 'use-immer';
 
@@ -11,7 +11,7 @@ type State = {
 };
 
 export default () => {
-  const { dispatch } = useStateValue();
+  const { dispatch } = useGlobalState();
   const [localState, setState] = useImmer<State>({
     username: '',
     loading: false,

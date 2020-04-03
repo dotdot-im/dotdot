@@ -2,9 +2,17 @@ import produce from "immer"
 
 import { AppState, Action } from "./types";
 
+// TODO NEW BLOG POST
+// const REDUCER = {
+//   [REDUX_CONSTANTS.LOGIN]: (draft, payload) => {},
+// };
+
 export default produce((draft: AppState, action: Action) => {
   console.info('REDUCER: ', action.type);
   console.log(action.payload);
+
+  // REDUCER[action.type](draft, action.payload);
+
   switch (action.type) {
     case 'login':
       draft.auth.checked = true;

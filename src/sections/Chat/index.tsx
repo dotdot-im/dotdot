@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 
-import { useStateValue } from "store/state";
+import { useGlobalState } from "store/state";
 import Loader from 'components/Loader';
 
 import "./index.scss";
@@ -10,7 +10,7 @@ import TextBox from "./TextBox";
 import OnlineUsers from "./OnlineUsers";
 
 export default () => {
-  const { state } = useStateValue();
+  const { state } = useGlobalState();
 
   let chatArea = (
     <Loader />

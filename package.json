@@ -41,7 +41,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -58,5 +60,12 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@storybook/addon-actions": "^5.3.18",
+    "@storybook/addon-links": "^5.3.18",
+    "@storybook/addons": "^5.3.18",
+    "@storybook/preset-create-react-app": "^2.1.1",
+    "@storybook/react": "^5.3.18",
+    "random-words": "^1.1.1"
+  }
 }

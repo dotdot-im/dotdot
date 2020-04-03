@@ -1,6 +1,8 @@
 import React from 'react';
-import { ListGroup } from 'react-bootstrap';
+import classNames from 'classnames';
 import { Message } from 'store/types';
+
+import styles from './index.module.scss';
 
 type Props = {
   message: Message,
@@ -12,8 +14,7 @@ export default (props: Props) => {
   const userColor = `#${props.message.user.color}`;
 
   const style: any = {
-    borderLeftWidth: "4px",
-    borderLeftColor: userColor,
+    borderLeft: `solid 5px ${userColor}`,
   };
 
   if (props.draft) {
@@ -21,8 +22,8 @@ export default (props: Props) => {
   }
 
   return (
-    <ListGroup.Item
-      className="d-flex justify-content-between align-items-center"
+    <div
+      className={ classNames(styles.message, "d-flex justify-content-between align-items-center") }
       key={props.message.id}
       style={ style }
     >
@@ -30,6 +31,6 @@ export default (props: Props) => {
       <span style={ { color: userColor } }>
         @{props.message.user.name}
       </span>
-    </ListGroup.Item>
+    </div>
   );
 };

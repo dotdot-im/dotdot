@@ -1,10 +1,10 @@
 import React from "react";
 
-import { useStateValue } from "store/state";
+import { useGlobalState } from "store/state";
 import styles from './index.module.scss';
 
 export default () => {
-  const { state } = useStateValue();
+  const { state } = useGlobalState();
 
   if (!state.offline && !state.error) {
     return null;

@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import socketio from 'socket.io-client';
 
-import { useStateValue } from "store/state";
+import { useGlobalState } from "store/state";
 import { API_URL } from "../constants";
 
 type SocketContextType = {
@@ -17,7 +17,7 @@ type Props = {
 };
 
 export default (props: Props) => {
-  const { state, dispatch } = useStateValue();
+  const { state, dispatch } = useGlobalState();
   const [ socket, setSocket ] = useState<SocketIOClient.Socket | null>(null);
 
   useEffect(() => {

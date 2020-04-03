@@ -5,7 +5,7 @@ import { AppState, AppContext, Action } from './types';
 
 const initialState: AppState = {
   auth: {
-    checked: true,
+    checked: false,
     loggedIn: false,
     user: null,
     token: null,
@@ -40,5 +40,5 @@ export const StateProvider = (props: Props) =>{
   );
 };
 
-export const useStateValue = (): AppContext => React.useContext(StateContext);
-export default useStateValue;
+export const useGlobalState = (): AppContext => React.useContext(StateContext);
+export default useGlobalState;

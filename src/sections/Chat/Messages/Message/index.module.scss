@@ -1,0 +1,15 @@
+@import "../../../../assets/scss/variables";
+
+$background: fade-out(#fff, 0.9);
+$border: #3b4252;
+$text: #b5bcc4;
+
+.message {
+  padding: 0.5em 1em;
+  border-radius: 0.25em;
+  background: $background;
+  border: $border solid 1px;
+  margin-bottom: 1em;
+  box-shadow: 1px 0 10px rgba(0, 0, 0, 0.1);
+  color: $text;
+}

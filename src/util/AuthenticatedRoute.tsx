@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from "react-router-dom";
-import { useStateValue } from 'store/state';
+import { useGlobalState } from 'store/state';
 
 import Loading from 'sections/Loading';
 
@@ -14,7 +14,7 @@ type Props = {
  * This Route only allows browsing into if the user IS logged in
  */
 export default (props: Props) => {
-  const { state } = useStateValue();
+  const { state } = useGlobalState();
   if (!state.auth.checked) {
     return (
       <Loading />

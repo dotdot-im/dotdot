@@ -49,13 +49,13 @@ export default () => {
   }, [socket, setState]);
 
   return (
-    <ListGroup className="my-4">
+    <div className="my-4">
       {state.messages.map(eachMessage => (
         <MessageComponent message={ eachMessage } />
       ))}
       {Object.values(state.drafts).map(eachMessage => (
         <MessageComponent message={ eachMessage } draft />
       ))}
-    </ListGroup>
+    </div>
   );
 };

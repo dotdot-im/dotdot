@@ -75,7 +75,7 @@ export const fetchResource = async (path: string, method: FetchMethod, body?: an
     return await response.data;
   } catch (error) {
     if (error.response) {
-      console.warn('useFetch error', error.response);
+      console.warn(`useFetch error on ${method} ${path}`, error.response);
       const returnError: FetchError = {
         status: error.response.status,
         message: error.response.data ? error.response.data.errors.join(', ') : error.message,
@@ -83,7 +83,7 @@ export const fetchResource = async (path: string, method: FetchMethod, body?: an
       };
       throw returnError;
     } else {
-      console.warn('useFetch error', error);
+      console.warn(`useFetch error on ${method} ${path}`, error);
       const returnError: FetchError = {
         status: 500,
         message: error.message,

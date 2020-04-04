@@ -1,9 +1,12 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useRef } from "react";
 import { useImmer } from "use-immer";
+import classNames from "classnames";
 
 import { SocketContext } from "util/socketProvider";
 import { Message } from "store/types";
 import MessageComponent from "./Message";
+
+import styles from './index.module.scss';
 
 type State = {
   messages: Message[];
@@ -19,6 +22,15 @@ export default () => {
   });
 
   const { socket } = useContext(SocketContext);
+
+  const chatAreaRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!chatAreaRef || !chatAreaRef.current) {
+      return;
+    }
+    chatAreaRef.current.scrollTop = chatAreaRef.current.scrollHeight;
+  }, [state.messages]);
 
   useEffect(() => {
     if (!socket) {
@@ -57,7 +69,7 @@ export default () => {
   }, [socket, setState]);
 
   return (
-    <div className="my-4">
+    <div className={ classNames(styles.messages, "my-4") } ref={ chatAreaRef }>
       {state.messages.map(eachMessage => (
         <MessageComponent key={ eachMessage.id } message={ eachMessage } />
       ))}

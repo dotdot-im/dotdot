@@ -3,6 +3,7 @@ import { Form } from "react-bootstrap";
 import { useImmer } from "use-immer";
 
 import { SocketContext } from "util/socketProvider";
+import styles from './index.module.scss';
 
 type State = {
   message: string,
@@ -50,7 +51,7 @@ export default () => {
   };
 
   return (
-    <Form noValidate onSubmit={handleSubmit}>
+    <Form noValidate onSubmit={handleSubmit} className={ styles.textBox }>
       <Form.Group controlId="chatForm.message">
         <Form.Control
           as="input"

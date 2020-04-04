@@ -8,9 +8,6 @@ import { AppState, Action } from "./types";
 // };
 
 export default produce((draft: AppState, action: Action) => {
-  console.info('REDUCER: ', action.type);
-  console.log(action.payload);
-
   // REDUCER[action.type](draft, action.payload);
 
   switch (action.type) {

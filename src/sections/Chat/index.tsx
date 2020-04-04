@@ -4,7 +4,7 @@ import { Container } from "react-bootstrap";
 import { useGlobalState } from "store/state";
 import Loader from 'components/Loader';
 
-import "./index.scss";
+import styles from "./index.module.scss";
 import Messages from"./Messages";
 import TextBox from "./TextBox";
 import OnlineUsers from "./OnlineUsers";
@@ -27,7 +27,7 @@ export default () => {
   }
 
   return (
-    <Container>
+    <Container className={ styles.container }>
       { chatArea }
     </Container>
   );

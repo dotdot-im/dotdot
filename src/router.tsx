@@ -43,13 +43,11 @@ export default () => {
 
   return (
     <>
-      <div id="content">
-        <OfflineCheck />
-        <Switch>
-          <UnauthenticatedRoute path='/login' component={ Login } />
-          <AuthenticatedRoute path="/" component={ Chat } />
-        </Switch>
-      </div>
+      <OfflineCheck />
+      <Switch>
+        <UnauthenticatedRoute path='/login' component={ Login } />
+        <AuthenticatedRoute path="/" component={ Chat } />
+      </Switch>
     </>
   );
 };

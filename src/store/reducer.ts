@@ -36,6 +36,9 @@ export default produce((draft: AppState, action: Action) => {
       break;
     case 'socketConnected':
       draft.connected = action.payload;
+      if (!action.payload) {
+        draft.auth.checked = false;
+      }
       break;
   }
 });

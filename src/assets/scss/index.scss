@@ -22,7 +22,7 @@ html, body, #root, .full-height {
 #root {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 .navbar-brand, h1, h2 {
@@ -48,10 +48,6 @@ h4 {
   text-transform: uppercase;
   letter-spacing: .025em;
   margin: 0 0 5px;
-}
-
-#content {
-  height: 100vh;
 }
 
 .navbar.bg-light {

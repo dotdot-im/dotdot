@@ -20,6 +20,10 @@ export default () => {
   const handleSubmit = (e: React.ChangeEvent<any>) => {
     e.preventDefault();
 
+    if (state.message.length < 1 || state.message.trim().length < 1) {
+      return;
+    }
+
     socket?.emit('message', {
       message: state.message,
     });
@@ -30,6 +34,9 @@ export default () => {
   };
 
   const sendDraft = (message: string) => {
+    if (message.length < 1 || message.trim().length < 1) {
+      return;
+    }
     socket?.emit('draft', {
       message,
     });
@@ -56,7 +63,7 @@ export default () => {
         <Form.Control
           as="input"
           type="text"
-          placeholder='Message...'
+          placeholder='Type a message...'
           autoFocus
           onChange={ onType }
           value={ state.message }

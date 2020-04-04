@@ -10,11 +10,12 @@ const initialState: AppState = {
     user: null,
     token: null,
   },
+  socket: {
+    connected: false,
+    key: null,
+  },
   offline: false,
-  connected: false,
   error: null,
-  messages: [],
-  users: [],
 };
 const defaultDispatch: React.Dispatch<Action> = () => {
   console.warn('Using default reducer, check StateProvider');

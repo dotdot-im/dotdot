@@ -1,5 +1,5 @@
 export type User = {
-  uuid: string,
+  user_id: string,
   name: string,
   color: string,
 };
@@ -17,11 +17,12 @@ export type AppState = {
     user: User | null,
     token: string | null,
   },
+  socket: {
+    connected: boolean,
+    key: CryptoKey | null,
+  },
   offline: boolean,
-  connected: boolean,
   error: string | null,
-  messages: Message[],
-  users: User[],
 };
 
 export type Action = {

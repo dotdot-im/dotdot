@@ -16,7 +16,7 @@ export default () => {
     <Loader />
   );
 
-  if (state.connected) {
+  if (state.socket.connected) {
     chatArea = (
       <>
         <OnlineUsers />

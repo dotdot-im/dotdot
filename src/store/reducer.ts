@@ -10,6 +10,8 @@ import { AppState, Action } from "./types";
 export default produce((draft: AppState, action: Action) => {
   // REDUCER[action.type](draft, action.payload);
 
+  console.log('REDUCER', action);
+
   switch (action.type) {
     case 'login':
       draft.auth.checked = true;
@@ -35,7 +37,7 @@ export default produce((draft: AppState, action: Action) => {
       draft.error = action.payload;
       break;
     case 'socketConnected':
-      draft.connected = action.payload;
+      draft.socket.connected = action.payload;
       if (!action.payload) {
         draft.auth.checked = false;
       }

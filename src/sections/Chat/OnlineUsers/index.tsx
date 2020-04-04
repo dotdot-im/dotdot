@@ -23,6 +23,7 @@ export default () => {
       return;
     }
     socket.on("users", (payload: any) => {
+      console.log('users', payload)
       setState(draft => {
         draft.users = payload.users;
       });
@@ -33,10 +34,10 @@ export default () => {
     <div className={ styles.onlineUsers }>
       { state.users.map(user => (
         <OverlayTrigger
-          key={ user.uuid }
+          key={ user.user_id }
           placement='bottom'
           overlay={
-            <Tooltip id={`user-${user.uuid}`}>
+            <Tooltip id={`user-${user.user_id}`}>
               @{user.name}
             </Tooltip>
           }

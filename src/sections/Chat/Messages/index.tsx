@@ -40,10 +40,10 @@ export default () => {
       // check if the last one was by the same user
       setState(draft => {
         // delete draft from this user
-        delete draft.drafts[payload.user.uuid];
+        delete draft.drafts[payload.user.user_id];
 
         const lastMessage = draft.messages[draft.messages.length - 1];
-        if (lastMessage && lastMessage.user.uuid === payload.user.uuid) {
+        if (lastMessage && lastMessage.user.user_id === payload.user.user_id) {
           lastMessage.message += `\n${payload.message}`;
           return;
         }
@@ -60,10 +60,10 @@ export default () => {
     socket.on("draft", (payload: Message) => {
       setState(draft => {
         if (payload.message.trim().length < 1) {
-          delete draft.drafts[payload.user.uuid];
+          delete draft.drafts[payload.user.user_id];
           return;
         }
-        draft.drafts[payload.user.uuid] = payload;
+        draft.drafts[payload.user.user_id] = payload;
       });
     });
   }, [socket, setState]);

@@ -30,7 +30,7 @@ export default (props: Props) => {
       style={ style }
     >
       {props.message.message}
-      <span className={ classNames(styles.user, { [styles.op]: props.message.user.uuid === state.auth.user?.uuid }) }>
+      <span className={ classNames(styles.user, { [styles.op]: props.message.user.user_id === state.auth.user?.user_id }) }>
         <i>@</i>{props.message.user.name}
       </span>
       <div className={ classNames(styles.dots) } style={ { backgroundColor: userColor } } />

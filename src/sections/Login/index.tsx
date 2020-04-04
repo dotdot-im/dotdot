@@ -1,9 +1,12 @@
 import React from 'react';
 import { Form, Container } from 'react-bootstrap';
+import { useImmer } from 'use-immer';
+import classNames from 'classnames';
 
 import { useGlobalState } from 'store/state';
 import { fetchResource } from 'util/fetch';
-import { useImmer } from 'use-immer';
+
+import styles from './index.module.scss';
 
 type State = {
   username: string,
@@ -32,7 +35,7 @@ export default () => {
       username: localState.username,
     };
     fetchResource('/auth', 'POST', body).then(data => {
-      if (!data || !data.user.uuid) {
+      if (!data || !data.user.user_id) {
         console.warn('Invalid user object');
         dispatch({
           type: 'login',
@@ -59,7 +62,7 @@ export default () => {
   };
 
   return (
-    <Container className='mt-4'>
+    <Container className={ classNames(styles.login, 'mt-4') }>
       <Form noValidate onSubmit={handleSubmit}>
         <Form.Group controlId="loginForm.username">
           <Form.Control

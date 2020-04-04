@@ -1,5 +1,4 @@
 import React, { useEffect, useContext } from "react";
-import { ListGroup } from "react-bootstrap";
 import { useImmer } from "use-immer";
 
 import { SocketContext } from "util/socketProvider";
@@ -26,14 +25,23 @@ export default () => {
       return;
     }
     socket.on("message", (payload: Message) => {
+      // check if the last one was by the same user
       setState(draft => {
+        // delete draft from this user
+        delete draft.drafts[payload.user.uuid];
+
+        const lastMessage = draft.messages[draft.messages.length - 1];
+        if (lastMessage && lastMessage.user.uuid === payload.user.uuid) {
+          lastMessage.message += `\n${payload.message}`;
+          return;
+        }
+
         draft.messages.push({
           id: draft.messages.length,
           message: payload.message,
           user: payload.user
         });
-        // delete draft from this user
-        delete draft.drafts[payload.user.uuid];
+
       });
     });
 
@@ -51,10 +59,10 @@ export default () => {
   return (
     <div className="my-4">
       {state.messages.map(eachMessage => (
-        <MessageComponent message={ eachMessage } />
+        <MessageComponent key={ eachMessage.id } message={ eachMessage } />
       ))}
       {Object.values(state.drafts).map(eachMessage => (
-        <MessageComponent message={ eachMessage } draft />
+        <MessageComponent key={ eachMessage.id } message={ eachMessage } draft />
       ))}
     </div>
   );

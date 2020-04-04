@@ -1,0 +1,7 @@
+@import "variables";
+
+input[type="text"] {
+  &:focus {
+    background: $input-bg;
+  }
+}

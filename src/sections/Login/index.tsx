@@ -46,14 +46,10 @@ export default () => {
         payload: data,
       })
     }).catch(reason => {
+      console.log('login fail reason', reason);
       dispatch({
-        type: 'offline',
-        payload: null,
-      })
-
-      dispatch({
-        type: 'login',
-        payload: null,
+        type: 'error',
+        payload: reason.errors.join(', '),
       })
 
       setState(draft => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig, AxiosError } from 'axios';
 
 import { API_URL } from '../constants';
 
@@ -78,22 +78,52 @@ export const fetchResource = async (path: string, method: FetchMethod, body?: an
       console.warn(`useFetch error on ${method} ${path}`, error.response);
       const returnError: FetchError = {
         status: error.response.status,
-        message: error.response.data ? error.response.data.errors.join(', ') : error.message,
-        errors: error.response.data.errors,
+        message: parseAxiosError(error),
+        errors: parseErrorList(error),
       };
       throw returnError;
-    } else {
-      console.warn(`useFetch error on ${method} ${path}`, error);
+    }
+
+    console.warn(`useFetch network error on ${method} ${path}`, error);
       const returnError: FetchError = {
         status: 500,
         message: error.message,
         errors: [error.message]
       };
       throw returnError;
-    }
+  }
+};
+
+function parseAxiosError(error: AxiosError): string {
+  if (!error.response || !error.response.data) {
+    return error.message || 'An error occurred';
   }
 
+  return parseErrorList(error).join('. ');
+}
 
-};
+function parseErrorList(error: AxiosError): string[] {
+  const defaultError = 'An error occurred';
+  if (!error.response || !error.response.data) {
+    return [error.message || defaultError];
+  }
+
+  return parseErrors(
+    defaultError,
+    error.response.data,
+    error.response.data.errors,
+    error.response.data.error,
+  );
+}
+
+function parseErrors(defaultError: string, ...errors: any[]): string[] {
+  for (let i = 0; i < errors.length; i++) {
+    const error = errors[i];
+    if (Array.isArray(error)) return error;
+    if (typeof error === 'string') return [error];
+  }
+
+  return [defaultError];
+}
 
 export default useFetch;

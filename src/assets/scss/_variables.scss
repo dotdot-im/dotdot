@@ -1,7 +1,7 @@
 /**
  * Global variables file
  */
-$primary: #13a9b6;
+$primary: rgb(55, 148, 255);
 
 $secondary: #f75f00;
 $secondary-dark: #c93838;
@@ -9,9 +9,16 @@ $secondary-dark: #c93838;
 $lighter: #293134;
 $light: #e9ecef;
 $dark: #050405;
-$accent: #43ab92;
+$accent: $secondary;
 
 $headingFont: 'Comfortaa', Helvetica, Arial, sans-serif;
+
+$input-bg: rgb(47, 57, 61);
+$input-color: rgb(216, 222, 233);
+$input-border: #3b4252;
+$input-border-focus: scale-color($input-border, $lightness: 10%);
+
+$border-radius-base: 0.4em;
 
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';

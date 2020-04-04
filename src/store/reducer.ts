@@ -16,6 +16,8 @@ export default produce((draft: AppState, action: Action) => {
   switch (action.type) {
     case 'login':
       draft.auth.checked = true;
+      draft.error = null;
+      draft.offline = false;
 
       if (!action.payload) {
         draft.auth.loggedIn = false;

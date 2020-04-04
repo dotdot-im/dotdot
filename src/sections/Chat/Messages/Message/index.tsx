@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { Message } from 'store/types';
 
 import styles from './index.module.scss';
+import useGlobalState from 'store/state';
 
 type Props = {
   message: Message,
@@ -10,6 +11,7 @@ type Props = {
 };
 
 export default (props: Props) => {
+  const { state } = useGlobalState();
 
   const userColor = `#${props.message.user.color}`;
 
@@ -23,14 +25,15 @@ export default (props: Props) => {
 
   return (
     <div
-      className={ classNames(styles.message, "d-flex justify-content-between align-items-center") }
+      className={ classNames(styles.message) }
       key={props.message.id}
       style={ style }
     >
       {props.message.message}
-      <span style={ { color: userColor } }>
-        @{props.message.user.name}
+      <span className={ classNames(styles.user, { [styles.op]: props.message.user.uuid === state.auth.user?.uuid }) }>
+        <i>@</i>{props.message.user.name}
       </span>
+      <div className={ classNames(styles.dots) } style={ { backgroundColor: userColor } } />
     </div>
   );
 };

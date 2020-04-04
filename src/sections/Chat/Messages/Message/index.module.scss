@@ -1,8 +1,10 @@
 @import "../../../../assets/scss/variables";
 
-$background: fade-out(#fff, 0.9);
+$background: rgb(50, 57, 65);
 $border: #3b4252;
 $text: #b5bcc4;
+$text-inverse: #293134;
+$radius: 0.45em;
 
 .message {
   padding: 0.5em 1em;
@@ -12,4 +14,44 @@ $text: #b5bcc4;
   margin-bottom: 1em;
   box-shadow: 1px 0 10px rgba(0, 0, 0, 0.1);
   color: $text;
+  white-space: pre-line;
+  position: relative;
+}
+
+.dots {
+  &::before {
+    position: absolute;
+    background-color: inherit;
+    left: -3em;
+    top: 0;
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    border: $background solid 1px;
+    content: ' ';
+  }
+}
+
+.user {
+  background: rgba(255, 255, 255, 0.05);
+  position: absolute;
+  max-width: 100px;
+  font-size: 0.75em;
+  letter-spacing: 1.5px;
+  top: 0;
+  right: 0;
+  padding: 0.20em 0.5em 0.25em;
+  border-bottom-left-radius: $radius;
+  box-shadow: 1px 0 1px rgba(0, 0, 0, 0.2);
+
+  i {
+    font-variant: normal;
+    font-style: normal;
+    opacity: 0.45;
+  }
+}
+
+.op {
+  background: #ec7600;
+  color: $text-inverse;
 }

@@ -49,7 +49,7 @@ export default () => {
 
         // if the last message is by the same user, just append to it
         const lastMessage = draft.messages[draft.messages.length - 1]
-        if (lastMessage && lastMessage.user.user_id === payload.user.user_id) {
+        if (lastMessage && lastMessage.user.user_id === payload.user.user_id && lastMessage.attributes.private === payload.attributes.private) {
           lastMessage.message += `\n${payload.message}`
           return
         }

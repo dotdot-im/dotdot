@@ -4,6 +4,8 @@ import { Message } from 'store/types'
 
 import styles from './index.module.scss'
 import useGlobalState from 'store/state'
+import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 type Props = {
   message: Message
@@ -16,6 +18,11 @@ export default (props: Props) => {
 
   const style: any = {}
 
+  let icon: IconProp = 'circle'
+  if (props.message.attributes.private) {
+    icon = 'lock'
+  }
+
   return (
     <div
       className={classNames(styles.message, {
@@ -27,7 +34,9 @@ export default (props: Props) => {
       key={props.message.id}
       style={style}
     >
-      <div className={classNames(styles.header)} style={{ color: userColor }} />
+      <div className={classNames(styles.header)} style={{ color: userColor }}>
+        <FontAwesomeIcon icon={ icon } />
+      </div>
       <div className={classNames(styles.timestamp)}>
         {props.message.attributes.draft ? 'typing...' : '12:34'}
       </div>

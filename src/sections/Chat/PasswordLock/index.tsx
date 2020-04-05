@@ -55,11 +55,13 @@ export default () => {
   let buttonClass = styles.unlocked
   let buttonIcon: IconProp = 'lock-open'
   let tooltipText = 'Set a password to keep your username'
+  let title = 'Claim Username'
 
   if (state.auth.user && state.auth.user.hasPassword) {
     buttonClass = styles.locked
     buttonIcon = 'lock'
     tooltipText = 'Change your password'
+    title = 'Update Password'
   }
 
   return (
@@ -77,7 +79,9 @@ export default () => {
       <Modal show={showModal} onHide={handleClose}>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <Modal.Header closeButton>
-            <Modal.Title>Claim Username</Modal.Title>
+            <Modal.Title>
+              { title }
+            </Modal.Title>
           </Modal.Header>
 
           <Modal.Body>

@@ -63,8 +63,8 @@ export const multiple = () => {
       id: i + 1,
       user: users[user],
       attributes: {
-        draft: Math.random() > 0.5,
-        private: Math.random() > 0.5,
+        draft: Math.random() > 0.7,
+        private: Math.random() < 0.1,
       },
       message: randomWords(Math.round(3 + Math.random() * 100)).join(' '),
     })

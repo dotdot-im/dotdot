@@ -12,7 +12,6 @@ $radius: 0.45em;
   color: $text;
   white-space: pre-line;
   position: relative;
-  font-family: 'Rubik';
 
   margin: 1em -15px;
 
@@ -77,6 +76,7 @@ $radius: 0.45em;
   font-weight: 500;
   margin-bottom: 0.1em;
   margin-left: 1em;
+  opacity: 0.7;
 
   i {
     font-variant: normal;
@@ -86,6 +86,23 @@ $radius: 0.45em;
 
   @media all and (min-width: 30em) {
     margin-left: 0;
+    float: left;
+    margin-right: 0.3em;
+  }
+}
+
+.timestamp {
+  font-weight: 300;
+  display: inline;
+  font-size: 0.75em;
+  opacity: 0.8;
+  color: $text;
+  letter-spacing: 0.02em;
+
+  float: right;
+
+  @media all and (max-width: 30em) {
+    display: none;
   }
 }
 
@@ -93,13 +110,58 @@ $radius: 0.45em;
 .body {
   line-height: 1.45;
   letter-spacing: 0.01em;
+  clear: both;
 
   @media all and (min-width: 30em) {
-    line-height: 1.6;
-    letter-spacing: 0.02em;
+    line-height: 1.66;
+    letter-spacing: 0.022em;
   }
 }
 
 .op {
   color: #ec7600;
+}
+
+.draft {
+  .header {
+    &:before {
+      border: 2px solid currentColor;
+      background: none;
+    }
+  }
+
+  .user {
+    opacity: 0.8;
+    font-style: italic;
+
+    &:after {
+      content: ' is thinking';
+    }
+  }
+
+  .body {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.private {
+  .body {
+    color: orange;
+  }
+
+  .user {
+    &:before {
+      content: 'PM from ';
+    }
+  }
+}
+
+.privateDraft {
+  .user {
+    &:after {
+      content: '...';
+    }
+  }
 }

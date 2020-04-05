@@ -16,21 +16,21 @@ export default (props: Props) => {
 
   const style: any = {}
 
-  if (props.message.attributes.draft) {
-    style.color = '#aaa'
-  }
-
-  if (props.message.attributes.private) {
-    style.color = 'orange'
-  }
-
   return (
     <div
-      className={classNames(styles.message)}
+      className={classNames(styles.message, {
+        [styles.draft]: props.message.attributes.draft,
+        [styles.private]: props.message.attributes.private,
+        [styles.privateDraft]:
+          props.message.attributes.private && props.message.attributes.draft,
+      })}
       key={props.message.id}
       style={style}
     >
       <div className={classNames(styles.header)} style={{ color: userColor }} />
+      <div className={classNames(styles.timestamp)}>
+        {props.message.attributes.draft ? 'typing...' : '12:34'}
+      </div>
       <span
         className={classNames(styles.user, {
           [styles.op]: props.message.user.user_id === state.auth.user?.user_id,

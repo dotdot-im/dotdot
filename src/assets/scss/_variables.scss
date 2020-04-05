@@ -11,12 +11,20 @@ $light: #e9ecef;
 $dark: #050405;
 $accent: $secondary;
 
+$border-color: #3b4252;
+
 $headingFont: 'Comfortaa', Helvetica, Arial, sans-serif;
 
 $input-bg: rgb(47, 57, 61);
-$input-color: rgb(216, 222, 233);
-$input-border: #3b4252;
+$input-color: $light;
+$input-border: $border-color;
 $input-border-focus: scale-color($input-border, $lightness: 10%);
+
+$modal-content-bg: $lighter;
+$modal-content-border-color: transparent;
+
+$close-color: $light;
+$close-text-shadow: $dark;
 
 $border-radius-base: 0.4em;
 

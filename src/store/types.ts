@@ -2,6 +2,7 @@ export type User = {
   user_id: string,
   name: string,
   color: string,
+  hasPassword: boolean,
 };
 
 export type Message = {

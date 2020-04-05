@@ -7,7 +7,6 @@ import useGlobalState from 'store/state';
 
 type Props = {
   message: Message,
-  draft?: boolean,
 };
 
 export default (props: Props) => {
@@ -19,8 +18,12 @@ export default (props: Props) => {
     borderLeft: `solid 5px ${userColor}`,
   };
 
-  if (props.draft) {
+  if (props.message.attributes.draft) {
     style.color = '#aaa';
+  }
+
+  if (props.message.attributes.private) {
+    style.color = 'orange';
   }
 
   return (

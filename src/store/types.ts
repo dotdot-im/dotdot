@@ -6,6 +6,10 @@ export type User = {
 
 export type Message = {
   id: number,
+  attributes: {
+    draft: boolean,
+    private: boolean,
+  },
   message: string,
   user: User,
 };

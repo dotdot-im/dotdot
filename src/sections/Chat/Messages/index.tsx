@@ -10,15 +10,11 @@ import styles from './index.module.scss';
 
 type State = {
   messages: Message[];
-  drafts: {
-    [key: string]: Message;
-  };
 };
 
 export default () => {
   const [state, setState] = useImmer<State>({
     messages: [],
-    drafts: {}
   });
 
   const { socket } = useContext(SocketContext);
@@ -40,8 +36,13 @@ export default () => {
       // check if the last one was by the same user
       setState(draft => {
         // delete draft from this user
-        delete draft.drafts[payload.user.user_id];
+        // find previous drafts by this user
+        const existingDraft = draft.messages.findIndex(eachMessage => eachMessage.attributes.draft && eachMessage.user.user_id === payload.user.user_id);
+        if (existingDraft > -1) {
+          draft.messages.splice(existingDraft, 1);
+        }
 
+        // if the last message is by the same user, just append to it
         const lastMessage = draft.messages[draft.messages.length - 1];
         if (lastMessage && lastMessage.user.user_id === payload.user.user_id) {
           lastMessage.message += `\n${payload.message}`;
@@ -50,20 +51,11 @@ export default () => {
 
         draft.messages.push({
           id: draft.messages.length,
+          attributes: payload.attributes,
           message: payload.message,
           user: payload.user
         });
 
-      });
-    });
-
-    socket.on("draft", (payload: Message) => {
-      setState(draft => {
-        if (payload.message.trim().length < 1) {
-          delete draft.drafts[payload.user.user_id];
-          return;
-        }
-        draft.drafts[payload.user.user_id] = payload;
       });
     });
   }, [socket, setState]);
@@ -72,9 +64,6 @@ export default () => {
     <div className={ classNames(styles.messages, "my-4") } ref={ chatAreaRef }>
       {state.messages.map(eachMessage => (
         <MessageComponent key={ eachMessage.id } message={ eachMessage } />
-      ))}
-      {Object.values(state.drafts).map(eachMessage => (
-        <MessageComponent key={ eachMessage.id } message={ eachMessage } draft />
       ))}
     </div>
   );

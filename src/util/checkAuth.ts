@@ -38,6 +38,11 @@ export const checkAuth = (dispatch: React.Dispatch<Action>) => {
           type: 'error',
           payload: reason.errors.join(', '),
         })
+
+        dispatch({
+          type: 'login',
+          payload: null,
+        })
       }
     })
 }

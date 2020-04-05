@@ -48,5 +48,10 @@ export default produce((draft: AppState, action: Action) => {
         draft.auth.token = null
       }
       break
+    case 'user_password':
+      if (draft.auth.user) {
+        draft.auth.user.hasPassword = true
+      }
+      break
   }
 })

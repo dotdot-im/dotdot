@@ -10,8 +10,16 @@ export default () => {
     return null
   }
 
+  let error = state.error
+  if (Array.isArray(error)) {
+    error = error.join('. ')
+  }
+  if (typeof error !== 'string') {
+    error = String(error)
+  }
+
   if (state.error) {
-    return <div className={styles.offline}>Error: {state.error}</div>
+    return <div className={styles.offline}>Error: {error}</div>
   }
 
   return (

@@ -1,2 +1,5 @@
 .github
 public
+build
+node_modules
+.storybook

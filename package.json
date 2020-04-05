@@ -3,6 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://aurbano.github.io/dotdot/",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
+  },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
     "@fortawesome/free-brands-svg-icons": "^5.12.1",
@@ -36,15 +45,6 @@
     "typescript": "^3.8.3",
     "use-immer": "^0.3.5"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
-  },
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -66,6 +66,7 @@
     "@storybook/addons": "^5.3.18",
     "@storybook/preset-create-react-app": "^2.1.1",
     "@storybook/react": "^5.3.18",
+    "prettier": "^2.0.2",
     "random-words": "^1.1.1"
   }
 }

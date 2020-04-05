@@ -1,15 +1,25 @@
 @import 'assets/scss/variables';
 
+$lockedColor: fade-out(#fff, 0.7);
+
 .passwordLock {
   padding: 0.5em 0;
+}
 
-  button {
-    color: $secondary;
-    animation: pulse linear 1s infinite;
+.unlocked {
+  color: $secondary !important;
+  animation: pulse linear 1s infinite;
 
-    &:hover {
-      color: scale-color($secondary, $lightness: -10%);
-    }
+  &:hover {
+    color: scale-color($secondary, $lightness: -10%) !important;
+  }
+}
+
+.locked {
+  color: $lockedColor !important;
+
+  &:hover {
+    color: fade-in($lockedColor, 0.2) !important;
   }
 }
 

@@ -12,6 +12,8 @@ import { AuthData } from 'store/types'
 
 type State = {
   username: string
+  password: string
+  hasPassword: boolean
   loading: boolean
 }
 
@@ -19,11 +21,15 @@ export default () => {
   const { dispatch } = useGlobalState()
   const [localState, setState] = useImmer<State>({
     username: '',
+    password: '',
+    hasPassword: false,
     loading: false,
   })
 
   const handleSubmit = (e: React.ChangeEvent<any>) => {
     e.preventDefault()
+
+    console.log('login')
 
     if (localState.loading) {
       return
@@ -35,6 +41,7 @@ export default () => {
 
     const body = {
       username: localState.username,
+      password: localState.password,
     }
     fetchResource('/auth', 'POST', body)
       .then((data: AuthData) => {
@@ -42,7 +49,7 @@ export default () => {
           console.warn('Invalid user object')
           dispatch({
             type: 'login',
-            payload: null,
+            payload: data,
           })
           return
         }
@@ -54,13 +61,19 @@ export default () => {
       })
       .catch((reason) => {
         console.log('login fail reason', reason)
-        dispatch({
-          type: 'error',
-          payload: reason.errors.join(', '),
-        })
+        if (reason.status !== 400) {
+          // username requires password
+          dispatch({
+            type: 'error',
+            payload: reason.errors.join(', '),
+          })
+        }
 
         setState((draft) => {
           draft.loading = false
+          if (reason.status === 400) {
+            draft.hasPassword = true
+          }
         })
       })
   }
@@ -84,6 +97,26 @@ export default () => {
             }}
             value={localState.username}
           />
+          {localState.hasPassword && (
+            <Form.Control
+              as="input"
+              className="mt-2"
+              type="password"
+              placeholder="Password..."
+              disabled={localState.loading}
+              autoFocus
+              onChange={(e) => {
+                const value = e.currentTarget.value
+                setState((draft) => {
+                  draft.password = value
+                })
+              }}
+              value={localState.password}
+            />
+          )}
+          <button type="submit" style={{ visibility: 'hidden' }}>
+            Login
+          </button>
         </Form.Group>
       </Form>
     </Container>

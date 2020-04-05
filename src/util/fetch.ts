@@ -16,7 +16,7 @@ export type FetchError = {
 type FetchReturn<T> = [
   boolean,
   T | null,
-  FetchError | null,
+  FetchError | null
 ];
 
 axios.defaults.withCredentials = true;

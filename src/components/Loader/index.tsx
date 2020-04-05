@@ -1,14 +1,14 @@
-import React from 'react';
-import Logo from 'components/Logo';
+import React from 'react'
+import Logo from 'components/Logo'
 
 type Props = {
-  text?: string | null,
-};
+  text?: string | null
+}
 
 export default (props: Props) => {
   return (
     <>
       <Logo infinite />
     </>
-  );
-};
+  )
+}

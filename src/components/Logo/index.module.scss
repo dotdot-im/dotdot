@@ -25,7 +25,7 @@ $stop5: 100%;
 }
 
 .blob {
-  position:absolute;
+  position: absolute;
   top: 0;
   left: 0;
   background: $color1;
@@ -35,15 +35,15 @@ $stop5: 100%;
 
   animation-name: blob-first;
   animation-duration: 1s;
-  animation-timing-function: cubic-bezier(.86,.27,.25,.78);
+  animation-timing-function: cubic-bezier(0.86, 0.27, 0.25, 0.78);
   animation-fill-mode: forwards;
 
-  &:nth-child(2){
+  &:nth-child(2) {
     animation-name: blob-second;
   }
 }
 
-@keyframes blob-first{
+@keyframes blob-first {
   from {
     transform: scale(1) translateX(0);
   }
@@ -53,7 +53,7 @@ $stop5: 100%;
   }
 }
 
-@keyframes blob-second{
+@keyframes blob-second {
   from {
     transform: scale(1) translateX(0);
   }

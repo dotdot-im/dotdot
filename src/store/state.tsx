@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'
 
-import reducer from './reducer';
-import { AppState, AppContext, Action } from './types';
+import reducer from './reducer'
+import { AppState, AppContext, Action } from './types'
 
 const initialState: AppState = {
   auth: {
@@ -16,30 +16,30 @@ const initialState: AppState = {
   },
   offline: false,
   error: null,
-};
+}
 const defaultDispatch: React.Dispatch<Action> = () => {
-  console.warn('Using default reducer, check StateProvider');
-  return initialState;
+  console.warn('Using default reducer, check StateProvider')
+  return initialState
 }
 export const StateContext = React.createContext<AppContext>({
   state: initialState,
   dispatch: defaultDispatch,
-});
+})
 
 type Props = {
-  children: any,
-};
+  children: any
+}
 
-export const StateProvider = (props: Props) =>{
-  const [state, dispatch] = React.useReducer(reducer, initialState);
+export const StateProvider = (props: Props) => {
+  const [state, dispatch] = React.useReducer(reducer, initialState)
   // TODO: if value is not "any" then typescript has an issue with readonly state values
-  const value: any = { state, dispatch };
+  const value: any = { state, dispatch }
   return (
-    <StateContext.Provider value={ value }>
-      { props.children }
+    <StateContext.Provider value={value}>
+      {props.children}
     </StateContext.Provider>
-  );
-};
+  )
+}
 
-export const useGlobalState = (): AppContext => React.useContext(StateContext);
-export default useGlobalState;
+export const useGlobalState = (): AppContext => React.useContext(StateContext)
+export default useGlobalState

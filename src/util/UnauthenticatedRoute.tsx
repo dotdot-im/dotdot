@@ -1,37 +1,29 @@
-import React from 'react';
-import { Route, Redirect } from "react-router-dom";
-import { useGlobalState } from 'store/state';
+import React from 'react'
+import { Route, Redirect } from 'react-router-dom'
+import { useGlobalState } from 'store/state'
 
-import Loading from 'sections/Loading';
+import Loading from 'sections/loading'
 
 type Props = {
-  path: string,
-  exact?: boolean,
-  component?: React.ComponentType<any>,
-};
+  path: string
+  exact?: boolean
+  component?: React.ComponentType<any>
+}
 
 /**
  * This Route only allows browsing into if the user is NOT logged in
  */
 export default (props: Props) => {
-  const { state } = useGlobalState();
+  const { state } = useGlobalState()
   if (!state.auth.checked) {
-    return (
-      <Loading />
-    );
+    return <Loading />
   }
 
   if (state.auth.loggedIn) {
-    return (
-      <Redirect to='/' />
-    );
+    return <Redirect to="/" />
   }
 
   return (
-    <Route
-      path={ props.path }
-      exact={ props.exact }
-      component={ props.component }
-    />
-  );
-};
+    <Route path={props.path} exact={props.exact} component={props.component} />
+  )
+}

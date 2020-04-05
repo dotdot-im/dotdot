@@ -1,74 +1,74 @@
-import React, { useContext, useRef } from "react";
-import { Form } from "react-bootstrap";
-import { useImmer } from "use-immer";
+import React, { useContext, useRef } from 'react'
+import { Form } from 'react-bootstrap'
+import { useImmer } from 'use-immer'
 
-import { SocketContext } from "util/socketProvider";
-import styles from './index.module.scss';
+import { SocketContext } from 'util/socketProvider'
+import styles from './index.module.scss'
 
 type State = {
-  message: string,
-};
+  message: string
+}
 
 export default () => {
   const [state, setState] = useImmer<State>({
     message: '',
-  });
+  })
   const draftTimer = useRef<any>(null)
 
-  const { socket } = useContext(SocketContext);
+  const { socket } = useContext(SocketContext)
 
   const handleSubmit = (e: React.ChangeEvent<any>) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (state.message.length < 1 || state.message.trim().length < 1) {
-      return;
+      return
     }
 
     socket?.emit('message', {
       message: state.message,
-    });
+    })
 
-    setState(draft => {
-      draft.message = '';
-    });
-  };
+    setState((draft) => {
+      draft.message = ''
+    })
+  }
 
   const sendDraft = (message: string) => {
     if (message.length < 1 || message.trim().length < 1) {
-      return;
+      return
     }
     socket?.emit('draft', {
       message,
-    });
-  };
+    })
+  }
 
   const onType = (e: React.ChangeEvent<any>) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    clearTimeout(draftTimer.current);
+    clearTimeout(draftTimer.current)
 
-    const value = e.currentTarget.value;
-    setState(draft => {
-      draft.message = value;
-    });
+    const value = e.currentTarget.value
+    setState((draft) => {
+      draft.message = value
+    })
 
     draftTimer.current = setTimeout(() => {
-      sendDraft(value);
-    }, 100);
-  };
+      sendDraft(value)
+    }, 100)
+  }
 
   return (
-    <Form noValidate onSubmit={handleSubmit} className={ styles.textBox }>
+    <Form noValidate onSubmit={handleSubmit} className={styles.textBox}>
       <Form.Group controlId="chatForm.message">
         <Form.Control
           as="input"
           type="text"
-          placeholder='Type a message...'
+          placeholder="Type a message..."
           autoFocus
-          onChange={ onType }
-          value={ state.message }
+          onChange={onType}
+          value={state.message}
         />
       </Form.Group>
     </Form>
-  );
-};
+  )
+}

@@ -1,45 +1,45 @@
 export type User = {
-  user_id: string,
-  name: string,
-  color: string,
-};
+  user_id: string
+  name: string
+  color: string
+}
 
 export type Message = {
-  id: number,
+  id: number
   attributes: {
-    draft: boolean,
-    private: boolean,
-  },
-  message: string,
-  user: User,
-};
+    draft: boolean
+    private: boolean
+  }
+  message: string
+  user: User
+}
 
 export type AppState = {
   auth: {
-    checked: boolean,
-    loggedIn: boolean,
-    user: User | null,
-    token: string | null,
-  },
+    checked: boolean
+    loggedIn: boolean
+    user: User | null
+    token: string | null
+  }
   socket: {
-    connected: boolean,
-    key: CryptoKey | null,
-  },
-  offline: boolean,
-  error: string | null,
-};
+    connected: boolean
+    key: CryptoKey | null
+  }
+  offline: boolean
+  error: string | null
+}
 
 export type Action = {
-  type: string,
-  payload?: any,
-};
+  type: string
+  payload?: any
+}
 
 export type AppContext = {
-  state: AppState,
-  dispatch: React.Dispatch<Action>,
-};
+  state: AppState
+  dispatch: React.Dispatch<Action>
+}
 
 export type AuthData = {
-  user: User,
-  token: string,
-};
+  user: User
+  token: string
+}

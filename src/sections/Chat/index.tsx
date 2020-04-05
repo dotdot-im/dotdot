@@ -1,21 +1,19 @@
-import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import React from 'react'
+import { Container, Row, Col } from 'react-bootstrap'
 
-import { useGlobalState } from "store/state";
-import Loader from 'components/Loader';
+import { useGlobalState } from 'store/state'
+import Loader from 'components/Loader'
 
-import styles from "./index.module.scss";
-import Messages from"./Messages";
-import TextBox from "./TextBox";
-import OnlineUsers from "./OnlineUsers";
-import PasswordLock from "./PasswordLock";
+import styles from './index.module.scss'
+import Messages from './Messages'
+import TextBox from './TextBox'
+import OnlineUsers from './OnlineUsers'
+import PasswordLock from './PasswordLock'
 
 export default () => {
-  const { state } = useGlobalState();
+  const { state } = useGlobalState()
 
-  let chatArea = (
-    <Loader />
-  );
+  let chatArea = <Loader />
 
   if (state.socket.connected) {
     chatArea = (
@@ -32,12 +30,8 @@ export default () => {
         <Messages />
         <TextBox />
       </>
-    );
+    )
   }
 
-  return (
-    <Container className={ styles.container }>
-      { chatArea }
-    </Container>
-  );
-};
+  return <Container className={styles.container}>{chatArea}</Container>
+}

@@ -16,7 +16,7 @@ To add a new icon:
 To use icons:
 
 ```jsx
-<FontAwesomeIcon icon='icon name' />
+<FontAwesomeIcon icon="icon name" />
 ```
 
 > Icons are typesafe, so if you use the wrong name in the FontAwesomeIcon component it'll warn you.

@@ -1,18 +1,17 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { BrowserRouter } from 'react-router-dom'
 
-import { StateProvider } from "store/state";
-import SocketProvider from "util/socketProvider";
+import { StateProvider } from 'store/state'
+import SocketProvider from 'util/socketProvider'
 
-import loadIcons from "./lib/icons";
-import Router from "./router";
-import Title from "./components/Title";
+import loadIcons from './lib/icons'
+import Router from './router'
+import Title from './components/Title'
 
-import "assets/scss/index.scss";
+import 'assets/scss/index.scss'
 
-
-loadIcons();
+loadIcons()
 
 const app = (
   <BrowserRouter basename={process.env.REACT_APP_BASEPATH}>
@@ -23,6 +22,6 @@ const app = (
       </SocketProvider>
     </StateProvider>
   </BrowserRouter>
-);
+)
 
-ReactDOM.render(app, document.getElementById("root"));
+ReactDOM.render(app, document.getElementById('root'))

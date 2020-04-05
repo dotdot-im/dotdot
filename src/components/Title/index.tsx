@@ -1,8 +1,7 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext, useState, useCallback } from 'react';
 import Helmet from 'react-helmet';
 
 import { SocketContext } from "util/socketProvider";
-import { Message } from "store/types";
 
 export default () => {
 
@@ -11,11 +10,11 @@ export default () => {
     const [windowFocused, setWindowFocused] = useState<boolean>(true);
     const [titleNotification, setTitleNotification] = useState<boolean>(false);
 
-    const onMessage = () => {
+    const onMessage = useCallback(() => {
         if (!windowFocused) {
             setTitleNotification(true);
         }
-    };
+    }, [windowFocused]);
 
     useEffect(() => {
         if (!socket) {

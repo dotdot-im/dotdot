@@ -34,3 +34,8 @@ export type AppContext = {
   state: AppState,
   dispatch: React.Dispatch<Action>,
 };
+
+export type AuthData = {
+  user: User,
+  token: string,
+};

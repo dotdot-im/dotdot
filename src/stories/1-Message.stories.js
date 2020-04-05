@@ -22,17 +22,17 @@ login: name (if new, done. if pwd, prompt)
 
 const users = [
   {
-    uuid: '1',
+    user_id: '1',
     color: 'eb0000',
     name: 'alex',
   },
   {
-    uuid: '2',
+    user_id: '2',
     color: 'ec7600',
     name: 'phil',
   },
   {
-    uuid: '3',
+    user_id: '3',
     color: '38b08c',
     name: 'jaime',
   },
@@ -42,7 +42,7 @@ export const single = () => {
   const msg = {
     id: 1,
     user: {
-      uuid: '123',
+      user_id: '123',
       color: 'eb0000',
       name: 'Test User'
     },

@@ -8,6 +8,7 @@ import { fetchResource } from 'util/fetch';
 import Logo from 'components/Logo';
 
 import styles from './index.module.scss';
+import { AuthData } from 'store/types';
 
 type State = {
   username: string,
@@ -35,7 +36,7 @@ export default () => {
     const body = {
       username: localState.username,
     };
-    fetchResource('/auth', 'POST', body).then(data => {
+    fetchResource('/auth', 'POST', body).then((data: AuthData) => {
       if (!data || !data.user.user_id) {
         console.warn('Invalid user object');
         dispatch({

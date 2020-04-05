@@ -8,13 +8,14 @@ import OfflineCheck from "components/OfflineCheck";
 import Login from "sections/Login";
 import useGlobalState from "store/state";
 import { fetchResource } from "util/fetch";
+import { AuthData } from "store/types";
 
 export default () => {
   const { state, dispatch } = useGlobalState();
 
   if (!state.auth.checked) {
-    fetchResource('/auth', 'GET').then(data => {
-      if (!data || !data.user.uuid) {
+    fetchResource('/auth', 'GET').then((data: AuthData) => {
+      if (!data || !data.user.user_id) {
         console.warn('Invalid user object');
         dispatch({
           type: 'login',

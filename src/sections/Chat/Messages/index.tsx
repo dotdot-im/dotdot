@@ -1,4 +1,5 @@
 import React, { useEffect, useContext, useRef } from 'react'
+import { Container } from 'react-bootstrap'
 import { useImmer } from 'use-immer'
 import classNames from 'classnames'
 
@@ -65,9 +66,13 @@ export default () => {
 
   return (
     <div className={classNames(styles.messages, 'my-4')} ref={chatAreaRef}>
-      {state.messages.map((eachMessage) => (
-        <MessageComponent key={eachMessage.id} message={eachMessage} />
-      ))}
+      <Container>
+        <div className={classNames(styles.messageList)}>
+          {state.messages.map((eachMessage) => (
+            <MessageComponent key={eachMessage.id} message={eachMessage} />
+          ))}
+        </div>
+      </Container>
     </div>
   )
 }

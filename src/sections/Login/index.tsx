@@ -5,6 +5,7 @@ import classNames from 'classnames';
 
 import { useGlobalState } from 'store/state';
 import { fetchResource } from 'util/fetch';
+import Logo from 'components/Logo';
 
 import styles from './index.module.scss';
 
@@ -63,6 +64,7 @@ export default () => {
 
   return (
     <Container className={ classNames(styles.login, 'mt-4') }>
+      <Logo />
       <Form noValidate onSubmit={handleSubmit}>
         <Form.Group controlId="loginForm.username">
           <Form.Control

@@ -1,0 +1,99 @@
+$color1: #ec7600;
+$color2: #38b08c;
+$color3: rgb(219, 200, 125);
+
+$size: 4em;
+$maxDistance: 0.65;
+
+$stop1: 0%;
+$stop2: 25%;
+$stop3: 50%;
+$stop4: 75%;
+$stop5: 100%;
+
+.logo {
+  filter: url('#goo');
+  margin: 1em auto;
+  position: relative;
+  width: $size;
+  height: $size;
+}
+
+.svgFilter {
+  position: absolute;
+  visibility: hidden;
+}
+
+.blob {
+  position:absolute;
+  top: 0;
+  left: 0;
+  background: $color1;
+  width: $size;
+  height: $size;
+  border-radius: 100%;
+  //animation: blob-first cubic-bezier(0.770, 0.000, 0.175, 1.000) 4s infinite;
+  animation: blob-first cubic-bezier(.86,.27,.25,.78) 1s;
+  // animation: blob-first linear 3s infinite;
+  animation-fill-mode: forwards;
+  animation-iteration-count: initite;
+
+  &:nth-child(2){
+    animation-name: blob-second;
+  }
+}
+
+@keyframes blob-first{
+  #{$stop1} {
+    transform: scale(1) translateX(0);
+  }
+  // #{$stop2} {
+  //   transform: scale(0.8) translateX(-$maxDistance * $size / 2);
+  // }
+  #{$stop5} {
+    background: $color2;
+    transform: scale(1) translateX(-$maxDistance * $size);
+  }
+  // #{$stop4} {
+  //   transform: scale(0.8) translateX(-$maxDistance * $size / 2);
+  // }
+  // #{$stop5} {
+  //   transform: scale(1) translateX(0);
+  // }
+}
+
+@keyframes blob-second{
+  #{$stop1} {
+    transform: scale(1) translateX(0);
+  }
+  // #{$stop2} {
+  //   transform: scale(0.8) translateX($maxDistance * $size / 2);
+  // }
+  #{$stop5} {
+    transform: scale(1) translateX($maxDistance * $size);
+  }
+  // #{$stop4} {
+  //   transform: scale(0.8) translateX($maxDistance * $size / 2);
+  // }
+  // #{$stop5} {
+  //   transform: scale(1) translateX(0);
+  // }
+}
+
+@keyframes blob-third{
+  #{$stop1} {
+    transform: scale(0);
+  }
+  #{$stop2} {
+    transform: scale(0);
+  }
+  #{$stop3} {
+    transform: scale(1);
+  }
+  #{$stop4} {
+    transform: scale(0);
+  }
+  #{$stop5} {
+    transform: scale(0);
+  }
+}

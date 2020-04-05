@@ -1,10 +1,11 @@
 @import '../../../../assets/scss/variables';
 
 .messages {
-  flex-grow: 1;
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .messageList {
-  display: flex;
-  flex-direction: column;
+  height: 100%;
 }

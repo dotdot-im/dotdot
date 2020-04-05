@@ -6,52 +6,100 @@ $text: #b5bcc4;
 $text-inverse: #293134;
 $radius: 0.45em;
 
+// Message box
 .message {
-  padding: 0.5em 1em;
-  border-radius: 0.25em;
-  background: $background;
-  border: $border solid 1px;
-  margin-bottom: 1em;
-  box-shadow: 1px 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
   color: $text;
   white-space: pre-line;
   position: relative;
-}
+  font-family: 'Rubik';
 
-.dots {
-  &::before {
-    position: absolute;
-    background-color: inherit;
-    left: -3em;
-    top: 0;
-    width: 2em;
-    height: 2em;
-    border-radius: 50%;
-    border: $background solid 1px;
-    content: ' ';
+  margin: 1em -15px;
+
+  // Border
+  padding: 0 1em 0 1em;
+
+  @media all and (min-width: 30em) {
+    padding-left: 1.3em;
+    margin: 1.5em 0;
   }
 }
 
+// Message header
+.header {
+  // Dot itself
+  &:before {
+    content: '';
+    width: 0.7em;
+    height: 0.7em;
+    display: inline-block;
+    border-radius: 50%;
+    background: currentColor;
+    position: absolute;
+    top: 0.4em;
+    left: 1em;
+  }
+
+  // Line
+  &:after {
+    content: '';
+    width: 2px;
+    position: absolute;
+    top: 80vh;
+    bottom: 0.25em;
+    left: 0;
+    border-radius: 2px;
+    background: currentColor;
+    // background: linear-gradient(0deg, currentColor 0%, transparent 100%);
+  }
+
+  @media all and (min-width: 30em) {
+    &:before {
+      left: 0;
+      top: 0.4em;
+    }
+
+    &:after {
+      width: 1px;
+      position: absolute;
+      top: 80vh;
+      bottom: 0.25em;
+      left: 0.25em;
+      background: currentColor;
+    }
+  }
+}
+
+// User tag
 .user {
-  background: rgba(255, 255, 255, 0.05);
-  position: absolute;
-  max-width: 100px;
-  font-size: 0.75em;
-  letter-spacing: 1.5px;
-  top: 0;
-  right: 0;
-  padding: 0.2em 0.5em 0.25em;
-  border-bottom-left-radius: $radius;
+  display: inline-block;
   box-shadow: 1px 0 1px rgba(0, 0, 0, 0.2);
+  font-weight: 500;
+  margin-bottom: 0.1em;
+  margin-left: 1em;
 
   i {
     font-variant: normal;
     font-style: normal;
     opacity: 0.45;
   }
+
+  @media all and (min-width: 30em) {
+    margin-left: 0;
+  }
+}
+
+// Message body
+.body {
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+
+  @media all and (min-width: 30em) {
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+  }
 }
 
 .op {
-  background: #ec7600;
-  color: $text-inverse;
+  color: #ec7600;
 }

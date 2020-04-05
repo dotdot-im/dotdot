@@ -14,9 +14,7 @@ export default (props: Props) => {
 
   const userColor = `#${props.message.user.color}`
 
-  const style: any = {
-    borderLeft: `solid 5px ${userColor}`,
-  }
+  const style: any = {}
 
   if (props.message.attributes.draft) {
     style.color = '#aaa'
@@ -32,19 +30,15 @@ export default (props: Props) => {
       key={props.message.id}
       style={style}
     >
-      {props.message.message}
+      <div className={classNames(styles.header)} style={{ color: userColor }} />
       <span
         className={classNames(styles.user, {
           [styles.op]: props.message.user.user_id === state.auth.user?.user_id,
         })}
       >
-        <i>@</i>
         {props.message.user.name}
       </span>
-      <div
-        className={classNames(styles.dots)}
-        style={{ backgroundColor: userColor }}
-      />
+      <div className={classNames(styles.body)}>{props.message.message}</div>
     </div>
   )
 }

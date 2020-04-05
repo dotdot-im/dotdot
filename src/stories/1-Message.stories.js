@@ -46,6 +46,10 @@ export const single = () => {
       color: 'eb0000',
       name: 'Test User',
     },
+    attributes: {
+      draft: false,
+      private: false,
+    },
     message: 'Some random test message',
   }
   return <Message message={msg} />
@@ -58,6 +62,10 @@ export const multiple = () => {
     msgs.push({
       id: i + 1,
       user: users[user],
+      attributes: {
+        draft: Math.random() > 0.5,
+        private: Math.random() > 0.5,
+      },
       message: randomWords(Math.round(3 + Math.random() * 100)).join(' '),
     })
   }

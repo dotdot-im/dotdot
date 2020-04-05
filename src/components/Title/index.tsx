@@ -36,7 +36,7 @@ export default () => {
 
     return (
         <Helmet>
-            <title>{titleNotification ? ". dotdot" : "dotdot"}</title>
+            <title>{titleNotification ? "• dotdot" : "dotdot"}</title>
         </Helmet>
     );
 };

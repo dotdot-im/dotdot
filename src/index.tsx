@@ -16,9 +16,9 @@ loadIcons();
 
 const app = (
   <BrowserRouter basename={process.env.REACT_APP_BASEPATH}>
-    <Title />
     <StateProvider>
       <SocketProvider>
+        <Title />
         <Router />
       </SocketProvider>
     </StateProvider>

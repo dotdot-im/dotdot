@@ -1,5 +1,5 @@
 import React from "react";
-import { Container } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 
 import { useGlobalState } from "store/state";
 import Loader from 'components/Loader';
@@ -8,6 +8,7 @@ import styles from "./index.module.scss";
 import Messages from"./Messages";
 import TextBox from "./TextBox";
 import OnlineUsers from "./OnlineUsers";
+import PasswordLock from "./PasswordLock";
 
 export default () => {
   const { state } = useGlobalState();
@@ -19,7 +20,15 @@ export default () => {
   if (state.socket.connected) {
     chatArea = (
       <>
-        <OnlineUsers />
+        <Row>
+          <Col>
+            <PasswordLock />
+          </Col>
+          <Col>
+            <OnlineUsers />
+          </Col>
+        </Row>
+
         <Messages />
         <TextBox />
       </>

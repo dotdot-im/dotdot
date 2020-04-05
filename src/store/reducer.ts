@@ -14,9 +14,11 @@ export default produce((draft: AppState, action: Action) => {
 
   switch (action.type) {
     case 'login':
-      draft.auth.checked = true;
+      if (!draft.offline) {
+        draft.auth.checked = true;
+      }
+
       draft.error = null;
-      draft.offline = false;
 
       if (!action.payload) {
         draft.auth.loggedIn = false;
@@ -25,6 +27,8 @@ export default produce((draft: AppState, action: Action) => {
         break;
       }
 
+      draft.offline = false;
+
       draft.auth.loggedIn = true;
       draft.auth.user = action.payload.user;
       draft.auth.token = action.payload.token;
@@ -32,6 +36,8 @@ export default produce((draft: AppState, action: Action) => {
     case 'offline':
       draft.offline = true;
       draft.error = null;
+      draft.auth.token = null;
+      draft.socket.connected = false;
       break;
     case 'error':
       draft.error = action.payload;
@@ -39,7 +45,7 @@ export default produce((draft: AppState, action: Action) => {
     case 'socketConnected':
       draft.socket.connected = action.payload;
       if (!action.payload) {
-        draft.auth.checked = false;
+        draft.auth.token = null;
       }
       break;
   }

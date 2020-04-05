@@ -27,7 +27,7 @@ export default (props: Props) => {
       payload: null,
     });
 
-    if (!state.auth.loggedIn) {
+    if (!state.auth.loggedIn || !state.auth.token) {
       return;
     }
 
@@ -62,11 +62,6 @@ export default (props: Props) => {
     });
 
     newSocket.on('error', (error: string) => {
-      dispatch({
-        type: 'login',
-        payload: null,
-      });
-
       dispatch({
         type: 'socketConnected',
         payload: false,

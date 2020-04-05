@@ -1,5 +1,5 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Logo from 'components/Logo';
 
 type Props = {
   text?: string | null,
@@ -8,7 +8,7 @@ type Props = {
 export default (props: Props) => {
   return (
     <>
-      <FontAwesomeIcon icon='spinner' pulse /> { props.text || 'Loading' }
+      <Logo infinite />
     </>
   );
 };

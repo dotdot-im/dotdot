@@ -1,0 +1,26 @@
+@import "assets/scss/variables";
+
+.passwordLock {
+  padding: 0.5em 0;
+
+  button {
+    color: $secondary;
+    animation: pulse linear 1s infinite;
+
+    &:hover {
+      color: scale-color($secondary, $lightness: -10%);
+    }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1)
+  }
+  50% {
+    transform: scale(1.1)
+  }
+  100% {
+    transform: scale(1)
+  }
+}

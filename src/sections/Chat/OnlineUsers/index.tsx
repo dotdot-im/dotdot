@@ -23,7 +23,6 @@ export default () => {
       return;
     }
     socket.on("users", (payload: any) => {
-      console.log('users', payload)
       setState(draft => {
         draft.users = payload.users;
       });

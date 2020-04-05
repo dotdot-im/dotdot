@@ -14,5 +14,10 @@ jobs:
         node-version: ${{ matrix.node }}
     - name: Install Packages
       run: yarn install
-    - name: Deploy to GH Pages
-      run: yarn deploy
+    - name: Build
+      run: yarn build
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build

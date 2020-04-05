@@ -12,17 +12,16 @@ export default () => {
     const [titleNotification, setTitleNotification] = useState<boolean>(false);
 
     useEffect(() => {
+        console.log("Message received in title component");
         if (!socket) {
             return;
         }
         socket.on("message", () => {
-            console.log("message received in title component");
             if (!windowFocused) {
                 setTitleNotification(true);
             }
-            console.log("message received in title component");
         });
-    });
+    },[socket]);
 
     window.onfocus = function() {
         setTitleNotification(false);

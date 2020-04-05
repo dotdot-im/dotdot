@@ -1,34 +1,34 @@
-import React, { createContext, useEffect, useState } from "react";
-import socketio from 'socket.io-client';
+import React, { createContext, useEffect, useState } from 'react'
+import socketio from 'socket.io-client'
 
-import { useGlobalState } from "store/state";
-import { API_URL } from "../constants";
+import { useGlobalState } from 'store/state'
+import { API_URL } from '../constants'
 
 type SocketContextType = {
-  socket: SocketIOClient.Socket | null,
-};
+  socket: SocketIOClient.Socket | null
+}
 
 export const SocketContext = createContext<SocketContextType>({
   socket: null,
-});
+})
 
 type Props = {
-  children: any,
-};
+  children: any
+}
 
 export default (props: Props) => {
-  const { state, dispatch } = useGlobalState();
-  const [ socket, setSocket ] = useState<SocketIOClient.Socket | null>(null);
+  const { state, dispatch } = useGlobalState()
+  const [socket, setSocket] = useState<SocketIOClient.Socket | null>(null)
 
   useEffect(() => {
     // clear any errors
     dispatch({
       type: 'error',
       payload: null,
-    });
+    })
 
     if (!state.auth.loggedIn || !state.auth.token) {
-      return;
+      return
     }
 
     // initialize the socket
@@ -36,60 +36,60 @@ export default (props: Props) => {
       reconnection: true,
       timeout: 2000,
       query: {
-          token: state.auth.token,
-      }
-    });
+        token: state.auth.token,
+      },
+    })
 
     newSocket.on('connect', () => {
       dispatch({
         type: 'socketConnected',
         payload: true,
-      });
-    });
+      })
+    })
 
     newSocket.on('connect_error', (error: string) => {
       dispatch({
         type: 'offline',
         payload: null,
-      });
-    });
+      })
+    })
 
     newSocket.on('connect_timeout', (timeout: string) => {
       dispatch({
         type: 'offline',
         payload: null,
-      });
-    });
+      })
+    })
 
     newSocket.on('error', (error: string) => {
       dispatch({
         type: 'socketConnected',
         payload: false,
-      });
+      })
 
       if (error) {
         dispatch({
           type: 'error',
           payload: error,
-        });
+        })
       } else {
         dispatch({
           type: 'offline',
           payload: null,
-        });
+        })
       }
-    });
+    })
 
-    setSocket(newSocket);
-  }, [dispatch, state.auth.loggedIn, state.auth.token]);
+    setSocket(newSocket)
+  }, [dispatch, state.auth.loggedIn, state.auth.token])
 
   let provider = {
     socket,
-  };
+  }
 
   return (
-    <SocketContext.Provider value={ provider }>
-      { props.children }
+    <SocketContext.Provider value={provider}>
+      {props.children}
     </SocketContext.Provider>
-  );
-};
+  )
+}

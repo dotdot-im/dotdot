@@ -1,34 +1,30 @@
-import React from "react";
+import React from 'react'
 
-import { useGlobalState } from "store/state";
-import styles from './index.module.scss';
+import { useGlobalState } from 'store/state'
+import styles from './index.module.scss'
 
 export default () => {
-  const { state } = useGlobalState();
+  const { state } = useGlobalState()
 
   if (!state.offline && !state.error) {
-    return null;
+    return null
   }
 
-  let error = state.error;
+  let error = state.error
   if (Array.isArray(error)) {
-    error = error.join('. ');
+    error = error.join('. ')
   }
   if (typeof error !== 'string') {
-    error = String(error);
+    error = String(error)
   }
 
   if (state.error) {
-    return (
-      <div className={ styles.offline }>
-        Error: {error}
-      </div>
-    );
+    return <div className={styles.offline}>Error: {error}</div>
   }
 
   return (
-    <div className={ styles.offline }>
+    <div className={styles.offline}>
       You seem to be offline! Please try again later
     </div>
-  );
-};
+  )
+}

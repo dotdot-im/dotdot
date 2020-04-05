@@ -1,11 +1,11 @@
-import React from 'react';
-import randomWords from 'random-words';
+import React from 'react'
+import randomWords from 'random-words'
 
-import Message from 'sections/Chat/Messages/Message';
-import '../assets/scss/index.scss';
-import { Container } from 'react-bootstrap';
+import Message from 'sections/Chat/Messages/Message'
+import '../assets/scss/index.scss'
+import { Container } from 'react-bootstrap'
 
-export default { title: 'Message' };
+export default { title: 'Message' }
 
 /*
 
@@ -36,7 +36,7 @@ const users = [
     color: '38b08c',
     name: 'jaime',
   },
-];
+]
 
 export const single = () => {
   const msg = {
@@ -44,19 +44,17 @@ export const single = () => {
     user: {
       user_id: '123',
       color: 'eb0000',
-      name: 'Test User'
+      name: 'Test User',
     },
     message: 'Some random test message',
-  };
-  return (
-    <Message message={ msg } />
-  );
+  }
+  return <Message message={msg} />
 }
 
 export const multiple = () => {
-  const msgs = [];
+  const msgs = []
   for (let i = 0; i < 10; i++) {
-    const user = Math.round(Math.random() * (users.length - 1));
+    const user = Math.round(Math.random() * (users.length - 1))
     msgs.push({
       id: i + 1,
       user: users[user],
@@ -65,10 +63,10 @@ export const multiple = () => {
   }
 
   return (
-     <Container>
-       { msgs.map(msg => (
-         <Message key={ msg.id } message={ msg } />
-       )) }
-     </Container>
-  );
+    <Container>
+      {msgs.map((msg) => (
+        <Message key={msg.id} message={msg} />
+      ))}
+    </Container>
+  )
 }

@@ -1,4 +1,4 @@
-import { create } from '@storybook/theming/create';
+import { create } from '@storybook/theming/create'
 
 export default create({
   base: 'dark',
@@ -8,4 +8,4 @@ export default create({
 
   brandTitle: 'dotdot',
   brandUrl: 'https://dotdot.im',
-});
+})

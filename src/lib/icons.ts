@@ -1,4 +1,4 @@
-import { library } from "@fortawesome/fontawesome-svg-core";
+import { library } from '@fortawesome/fontawesome-svg-core'
 
 /**
  * Icon Preloading
@@ -7,10 +7,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 
 // Icons available in two styles, regular and solid
 // solid tends to have all free icons, while some regular ones are PRO only
-import {
-  faLock,
-  faLockOpen,
-} from "@fortawesome/free-solid-svg-icons";
+import { faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons'
 
 // import {
 
@@ -21,8 +18,5 @@ import {
  */
 
 export default () => {
-  library.add(
-   faLock,
-   faLockOpen,
-  );
-};
+  library.add(faLock, faLockOpen)
+}

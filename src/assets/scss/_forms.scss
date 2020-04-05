@@ -1,6 +1,6 @@
-@import "variables";
+@import 'variables';
 
-input[type="text"] {
+input[type='text'] {
   &:focus {
     background: $input-bg;
   }

@@ -1,4 +1,4 @@
-@import "../../../../assets/scss/variables";
+@import '../../../../assets/scss/variables';
 
 $background: rgb(50, 57, 65);
 $border: #3b4252;
@@ -40,7 +40,7 @@ $radius: 0.45em;
   letter-spacing: 1.5px;
   top: 0;
   right: 0;
-  padding: 0.20em 0.5em 0.25em;
+  padding: 0.2em 0.5em 0.25em;
   border-bottom-left-radius: $radius;
   box-shadow: 1px 0 1px rgba(0, 0, 0, 0.2);
 

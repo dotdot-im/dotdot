@@ -1,11 +1,12 @@
-@import "variables";
-@import "fonts";
+@import 'variables';
+@import 'fonts';
 
-@import "~bootstrap/scss/bootstrap";
+@import '~bootstrap/scss/bootstrap';
 
-@import "forms";
+@import 'forms';
 
-html, body {
+html,
+body {
   width: 100%;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -16,7 +17,10 @@ body {
   min-height: 100vh;
 }
 
-html, body, #root, .full-height {
+html,
+body,
+#root,
+.full-height {
   height: 100%;
 }
 

@@ -1,0 +1,12 @@
+{
+  "extends": ["react-app", "plugin:import/typescript"],
+  "plugins": ["prettier"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true // Allows for the parsing of JSX
+    }
+  },
+  "rules": {
+    "prettier/prettier": "error"
+  }
+}

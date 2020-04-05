@@ -1,4 +1,5 @@
 import React, { useContext, useRef } from 'react'
+import { Container } from 'react-bootstrap'
 import { Form } from 'react-bootstrap'
 import { useImmer } from 'use-immer'
 
@@ -60,14 +61,16 @@ export default () => {
   return (
     <Form noValidate onSubmit={handleSubmit} className={styles.textBox}>
       <Form.Group controlId="chatForm.message">
-        <Form.Control
-          as="input"
-          type="text"
-          placeholder="Type a message..."
-          autoFocus
-          onChange={onType}
-          value={state.message}
-        />
+        <Container>
+          <Form.Control
+            as="input"
+            type="text"
+            placeholder="Type a message..."
+            autoFocus
+            onChange={onType}
+            value={state.message}
+          />
+        </Container>
       </Form.Group>
     </Form>
   )

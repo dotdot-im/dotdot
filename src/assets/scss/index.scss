@@ -12,20 +12,18 @@ body {
 }
 
 body {
-  background: $lighter;
-  color: $light;
-  min-height: 100vh;
+  background: #fefefe;
+  color: $lighter;
+
+  @media (prefers-color-scheme: dark) {
+    background: $lighter;
+    color: $light;
+  }
 }
 
 html,
 body,
-#root,
-.full-height {
-  height: 100%;
-}
-
+.full-height,
 #root {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+  height: 100%;
 }

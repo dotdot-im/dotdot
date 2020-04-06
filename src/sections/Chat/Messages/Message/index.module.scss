@@ -5,6 +5,7 @@ $border: #3b4252;
 $text: #b5bcc4;
 $text-inverse: #293134;
 $radius: 0.45em;
+$padding: 1em;
 
 // Message box
 .message {
@@ -13,9 +14,7 @@ $radius: 0.45em;
   position: relative;
 
   margin: 1em -15px;
-
-  // Border
-  padding: 0 1em 0 1em;
+  padding: 0 $padding;
 
   @media all and (min-width: 30em) {
     padding-left: 1.3em;
@@ -25,46 +24,14 @@ $radius: 0.45em;
 
 // Message header
 .header {
-  // Dot itself
-  &:before {
-    content: '';
-    width: 0.7em;
-    height: 0.7em;
-    display: inline-block;
-    border-radius: 50%;
-    background: currentColor;
+  font-size: 1em;
+  position: relative;
+
+  svg {
     position: absolute;
-    top: 0.4em;
-    left: 1em;
-  }
-
-  // Line
-  &:after {
-    content: '';
-    width: 2px;
-    position: absolute;
-    top: 80vh;
-    bottom: 0.25em;
-    left: 0;
-    border-radius: 2px;
-    background: currentColor;
-    // background: linear-gradient(0deg, currentColor 0%, transparent 100%);
-  }
-
-  @media all and (min-width: 30em) {
-    &:before {
-      left: 0;
-      top: 0.4em;
-    }
-
-    &:after {
-      width: 1px;
-      position: absolute;
-      top: 80vh;
-      bottom: 0.25em;
-      left: 0.25em;
-      background: currentColor;
-    }
+    top: 0.35em;
+    left: -$padding - 0.9em;
+    filter: drop-shadow(0 0 2px $lighter);
   }
 }
 
@@ -130,11 +97,11 @@ $radius: 0.45em;
   }
 
   .user {
-    opacity: 0.8;
-    font-style: italic;
-
     &:after {
-      content: ' is thinking';
+      opacity: 0.7;
+      font-size: 0.8em;
+      font-weight: 100;
+      content: ' is thinking...';
     }
   }
 
@@ -146,14 +113,10 @@ $radius: 0.45em;
 }
 
 .private {
-  .body {
-    color: orange;
-  }
+  color: $secondary !important;
 
-  .user {
-    &:before {
-      content: 'PM from ';
-    }
+  .body {
+    color: $secondary;
   }
 }
 

@@ -7,6 +7,7 @@ export type User = {
 
 export type Message = {
   id: number
+  time: Date,
   attributes: {
     draft: boolean
     private: boolean

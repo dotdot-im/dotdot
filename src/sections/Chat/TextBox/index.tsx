@@ -1,12 +1,13 @@
 import React, { useContext, useRef } from 'react'
-import { Container } from 'react-bootstrap'
 import { Form } from 'react-bootstrap'
 import { useImmer } from 'use-immer'
+import classNames from 'classnames'
 
 import { SocketContext } from 'util/socketProvider'
 import styles from './index.module.scss'
 import { User } from 'store/types'
 import { VALID_USERNAME } from '../../../constants'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 type State = {
   message: string,
@@ -31,19 +32,20 @@ export default () => {
       return
     }
 
+    sendMessage(state.message);
+
     setState((draft) => {
       draft.message = ''
+      draft.private = false
     })
-
-    sendMessage();
   }
 
-  const sendMessage = (draft: boolean = false) => {
-    if (state.message.length < 1 || state.message.trim().length < 1) {
+  const sendMessage = (message: string, draft: boolean = false) => {
+    if (message.length < 1 || message.trim().length < 1) {
       return
     }
     socket?.emit('message', {
-      message: state.message,
+      message,
       attributes: {
         draft,
         private: state.private
@@ -71,23 +73,24 @@ export default () => {
     })
 
     draftTimer.current = setTimeout(() => {
-      sendMessage(true)
+      sendMessage(value, true)
     }, 100)
   }
 
   return (
-    <Form noValidate onSubmit={handleSubmit} className={styles.textBox}>
+    <Form noValidate onSubmit={handleSubmit} className={ classNames('container', styles.textBox, { [styles.private]: state.private }) }>
       <Form.Group controlId="chatForm.message">
-        <Container>
-          <Form.Control
-            as="input"
-            type="text"
-            placeholder="Type a message..."
-            autoFocus
-            onChange={onType}
-            value={state.message}
-          />
-        </Container>
+        <Form.Control
+          as="input"
+          type="text"
+          placeholder="Type a message..."
+          autoFocus
+          onChange={onType}
+          value={state.message}
+        />
+        <span>
+          <FontAwesomeIcon icon='lock' />
+        </span>
       </Form.Group>
     </Form>
   )

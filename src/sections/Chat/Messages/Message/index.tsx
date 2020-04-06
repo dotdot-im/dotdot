@@ -6,6 +6,7 @@ import styles from './index.module.scss'
 import useGlobalState from 'store/state'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 type Props = {
   message: Message
@@ -15,8 +16,6 @@ export default (props: Props) => {
   const { state } = useGlobalState()
 
   const userColor = `#${props.message.user.color}`
-
-  const style: any = {}
 
   let icon: IconProp = 'circle'
   if (props.message.attributes.private) {
@@ -32,18 +31,34 @@ export default (props: Props) => {
           props.message.attributes.private && props.message.attributes.draft,
       })}
       key={props.message.id}
-      style={style}
+      style={{ borderLeftColor: userColor, }}
     >
-      <div className={classNames(styles.header)} style={{ color: userColor }}>
-        <FontAwesomeIcon icon={ icon } />
+      <div className={classNames(styles.header, { [styles.private]: props.message.attributes.private })} style={{ color: userColor, background: userColor }}>
+        { props.message.attributes.private && (
+          <OverlayTrigger
+            placement="right"
+            overlay={(
+              <Tooltip id={`user-${props.message.user.user_id}`}>
+                Private message from <b>@{props.message.user.name}</b><br />
+                Only you can see this.
+              </Tooltip>
+            )}
+          >
+            <FontAwesomeIcon icon={ icon } />
+          </OverlayTrigger>
+        ) }
+        { !props.message.attributes.private && (
+          <FontAwesomeIcon icon={ icon } />
+        ) }
       </div>
       <div className={classNames(styles.timestamp)}>
-        {props.message.attributes.draft ? 'typing...' : '12:34'}
+        {props.message.attributes.draft ? 'now' : props.message.time.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}
       </div>
       <span
         className={classNames(styles.user, {
           [styles.op]: props.message.user.user_id === state.auth.user?.user_id,
         })}
+        style={ { color: userColor } }
       >
         {props.message.user.name}
       </span>

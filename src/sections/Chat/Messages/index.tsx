@@ -34,10 +34,9 @@ export default () => {
       return
     }
     socket.on('message', (payload: Message) => {
-      // check if the last one was by the same user
+
       setState((draft) => {
         // delete draft from this user
-        // find previous drafts by this user
         const existingDraft = draft.messages.findIndex(
           (eachMessage) =>
             eachMessage.attributes.draft &&
@@ -47,15 +46,19 @@ export default () => {
           draft.messages.splice(existingDraft, 1)
         }
 
-        // if the last message is by the same user, just append to it
-        const lastMessage = draft.messages[draft.messages.length - 1]
-        if (lastMessage && lastMessage.user.user_id === payload.user.user_id && lastMessage.attributes.private === payload.attributes.private) {
-          lastMessage.message += `\n${payload.message}`
-          return
+        if (!payload.attributes.draft) {
+          const lastMessage = draft.messages[draft.messages.length - 1]
+
+          if (lastMessage && lastMessage.user.user_id === payload.user.user_id && lastMessage.attributes.private === payload.attributes.private) {
+            // last message was by this same user (and it's the same kind of message)
+            lastMessage.message += `\n${payload.message}`
+            return
+          }
         }
 
         draft.messages.push({
           id: draft.messages.length,
+          time: new Date(),
           attributes: payload.attributes,
           message: payload.message,
           user: payload.user,

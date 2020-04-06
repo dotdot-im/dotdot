@@ -29,8 +29,6 @@ export default () => {
   const handleSubmit = (e: React.ChangeEvent<any>) => {
     e.preventDefault()
 
-    console.log('login')
-
     if (localState.loading) {
       return
     }

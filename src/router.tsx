@@ -14,10 +14,10 @@ export default () => {
 
   // Check authentication state
   useEffect(() => {
-    if (!state.auth.checked || !state.auth.token) {
+    if (!state.auth.checked) {
       checkAuth(dispatch)
     }
-  }, [state.auth.checked, state.auth.token, dispatch])
+  }, [state.auth.checked, dispatch])
 
   return (
     <>

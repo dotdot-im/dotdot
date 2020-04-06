@@ -23,7 +23,6 @@ export default produce((draft: AppState, action: Action) => {
       if (!action.payload) {
         draft.auth.loggedIn = false
         draft.auth.user = null
-        draft.auth.token = null
         break
       }
 
@@ -31,12 +30,10 @@ export default produce((draft: AppState, action: Action) => {
 
       draft.auth.loggedIn = true
       draft.auth.user = action.payload.user
-      draft.auth.token = action.payload.token
       break
     case 'offline':
       draft.offline = true
       draft.error = null
-      draft.auth.token = null
       draft.socket.connected = false
       break
     case 'error':
@@ -44,9 +41,6 @@ export default produce((draft: AppState, action: Action) => {
       break
     case 'socketConnected':
       draft.socket.connected = action.payload
-      if (!action.payload) {
-        draft.auth.token = null
-      }
       break
     case 'user_password':
       if (draft.auth.user) {

@@ -8,7 +8,6 @@ const initialState: AppState = {
     checked: false,
     loggedIn: false,
     user: null,
-    token: null,
   },
   socket: {
     connected: false,

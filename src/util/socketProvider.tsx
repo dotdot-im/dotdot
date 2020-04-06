@@ -27,19 +27,14 @@ export default (props: Props) => {
       payload: null,
     })
 
-    if (!state.auth.loggedIn || !state.auth.token) {
+    if (!state.auth.loggedIn) {
       return
     }
-
-    console.log('connect with ', state.auth.token);
 
     // initialize the socket
     const newSocket = socketio(API_URL, {
       reconnection: true,
       timeout: 2000,
-      query: {
-        token: state.auth.token,
-      },
     })
 
     newSocket.on('connect', () => {
@@ -83,7 +78,7 @@ export default (props: Props) => {
     })
 
     setSocket(newSocket)
-  }, [dispatch, state.auth.loggedIn, state.auth.token])
+  }, [dispatch, state.auth.loggedIn])
 
   let provider = {
     socket,

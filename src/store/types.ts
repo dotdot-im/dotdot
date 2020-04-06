@@ -21,7 +21,6 @@ export type AppState = {
     checked: boolean
     loggedIn: boolean
     user: User | null
-    token: string | null
   }
   socket: {
     connected: boolean

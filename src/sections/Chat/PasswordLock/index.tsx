@@ -25,7 +25,7 @@ export default () => {
 
     const form = event.currentTarget
 
-    if (form.checkValidity() === false || password !== repeatPassword) {
+    if (!form.checkValidity()) {
       return
     }
 
@@ -42,9 +42,12 @@ export default () => {
           type: 'user_password',
           payload: true,
         })
+
+        setShowModal(false)
+        setPassword('')
+        setRepeatPassword('')
       })
       .catch((reason) => {
-        console.log('login fail reason', reason)
         dispatch({
           type: 'error',
           payload: reason.errors.join(', '),
@@ -77,7 +80,7 @@ export default () => {
       </OverlayTrigger>
 
       <Modal show={showModal} onHide={handleClose}>
-        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+        <Form validated={validated} onSubmit={handleSubmit}>
           <Modal.Header closeButton>
             <Modal.Title>
               { title }

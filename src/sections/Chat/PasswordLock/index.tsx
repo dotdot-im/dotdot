@@ -23,13 +23,12 @@ export default () => {
     event.preventDefault()
     event.stopPropagation()
 
-    const form = event.currentTarget
+    setValidated(true)
 
+    const form = event.currentTarget
     if (!form.checkValidity()) {
       return
     }
-
-    setValidated(true)
 
     const body = {
       password,
@@ -44,6 +43,7 @@ export default () => {
         })
 
         setShowModal(false)
+        setValidated(false)
         setPassword('')
         setRepeatPassword('')
       })
@@ -80,7 +80,7 @@ export default () => {
       </OverlayTrigger>
 
       <Modal show={showModal} onHide={handleClose}>
-        <Form validated={validated} onSubmit={handleSubmit}>
+        <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <Modal.Header closeButton>
             <Modal.Title>
               { title }

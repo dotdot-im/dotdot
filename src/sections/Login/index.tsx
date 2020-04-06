@@ -87,6 +87,8 @@ export default () => {
             placeholder="What's your name?"
             disabled={localState.loading}
             autoFocus
+            minLength={ 1 }
+            maxLength={ 20 }
             onChange={(e) => {
               const value = e.currentTarget.value
               setState((draft) => {

@@ -54,6 +54,7 @@ export default () => {
           if (lastMessage && lastMessage.user.user_id === payload.user.user_id && lastMessage.attributes.private === payload.attributes.private) {
             // last message was by this same user (and it's the same kind of message)
             lastMessage.message += `\n${payload.message}`
+            lastMessage.timestamp = new Date(payload.timestamp)
             return
           }
         }

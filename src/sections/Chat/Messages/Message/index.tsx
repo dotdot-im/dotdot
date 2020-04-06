@@ -18,6 +18,9 @@ export default (props: Props) => {
   const userColor = `#${props.message.user.color}`
 
   let icon: IconProp = 'circle'
+  if (props.message.user.user_id === state.auth.user?.user_id) {
+    icon = 'dot-circle'
+  }
   if (props.message.attributes.private) {
     icon = 'lock'
   }

@@ -7,7 +7,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 
 // Icons available in two styles, regular and solid
 // solid tends to have all free icons, while some regular ones are PRO only
-import { faLock, faLockOpen, faCircle } from '@fortawesome/free-solid-svg-icons'
+import { faLock, faLockOpen, faCircle, faUser, faDotCircle } from '@fortawesome/free-solid-svg-icons'
 
 // import {
 
@@ -18,5 +18,5 @@ import { faLock, faLockOpen, faCircle } from '@fortawesome/free-solid-svg-icons'
  */
 
 export default () => {
-  library.add(faLock, faLockOpen, faCircle)
+  library.add(faLock, faLockOpen, faCircle, faUser, faDotCircle)
 }

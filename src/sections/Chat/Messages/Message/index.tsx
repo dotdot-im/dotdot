@@ -30,7 +30,7 @@ export default (props: Props) => {
         [styles.privateDraft]:
           props.message.attributes.private && props.message.attributes.draft,
       })}
-      key={props.message.id}
+      key={props.message.timestamp.toDateString()}
       style={{ borderLeftColor: userColor, }}
     >
       <div className={classNames(styles.header, { [styles.private]: props.message.attributes.private })} style={{ color: userColor, background: userColor }}>
@@ -52,7 +52,7 @@ export default (props: Props) => {
         ) }
       </div>
       <div className={classNames(styles.timestamp)}>
-        {props.message.attributes.draft ? 'now' : props.message.time.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}
+        {props.message.attributes.draft ? 'now' : props.message.timestamp.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}
       </div>
       <span
         className={classNames(styles.user, {

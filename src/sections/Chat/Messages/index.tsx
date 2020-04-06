@@ -21,7 +21,6 @@ export default () => {
   const { socket } = useContext(SocketContext)
 
   const chatAreaRef = useRef<HTMLDivElement>(null)
-
   useEffect(() => {
     if (!chatAreaRef || !chatAreaRef.current) {
       return
@@ -34,7 +33,6 @@ export default () => {
       return
     }
     socket.on('message', (payload: Message) => {
-
       setState((draft) => {
         // delete draft from this user
         const existingDraft = draft.messages.findIndex(
@@ -61,13 +59,23 @@ export default () => {
         }
 
         draft.messages.push({
-          id: draft.messages.length,
-          time: new Date(),
+          timestamp: new Date(payload.timestamp),
           attributes: payload.attributes,
           message: payload.message,
           user: payload.user,
         })
       })
+    })
+    socket.on('history', (payload: Message[]) => {
+      setState(draft => {
+        if (draft.messages.length > 0) {
+          return;
+        }
+        draft.messages = payload.map(eachMessage => {
+          eachMessage.timestamp = new Date(eachMessage.timestamp)
+          return eachMessage
+        });
+      });
     })
   }, [socket, setState])
 
@@ -76,7 +84,7 @@ export default () => {
       <Container>
         <div className={classNames(styles.messageList)}>
           {state.messages.map((eachMessage) => (
-            <MessageComponent key={eachMessage.id} message={eachMessage} />
+            <MessageComponent key={eachMessage.timestamp.toDateString()} message={eachMessage} />
           ))}
         </div>
       </Container>

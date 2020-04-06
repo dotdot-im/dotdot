@@ -6,14 +6,14 @@ export type User = {
 }
 
 export type Message = {
-  id: number
-  time: Date,
+  user: User
+  timestamp: Date
+  message: string
   attributes: {
     draft: boolean
     private: boolean
+    to: string | null
   }
-  message: string
-  user: User
 }
 
 export type AppState = {

@@ -41,6 +41,8 @@ export default produce((draft: AppState, action: Action) => {
       break
     case 'socketConnected':
       draft.socket.connected = action.payload
+      draft.offline = false
+      draft.error = null
       break
     case 'user_password':
       if (draft.auth.user) {

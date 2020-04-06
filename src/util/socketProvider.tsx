@@ -31,6 +31,8 @@ export default (props: Props) => {
       return
     }
 
+    console.log('connect with ', state.auth.token);
+
     // initialize the socket
     const newSocket = socketio(API_URL, {
       reconnection: true,

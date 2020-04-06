@@ -46,6 +46,10 @@ export default () => {
           draft.messages.splice(existingDraft, 1)
         }
 
+        if (payload.message.trim().length < 1) {
+          return;
+        }
+
         if (!payload.attributes.draft) {
           const lastMessage = draft.messages[draft.messages.length - 1]
 

@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Form, Container } from 'react-bootstrap'
 import { useImmer } from 'use-immer'
 import classNames from 'classnames'
+import ReCAPTCHA from "react-google-recaptcha"
 
 import { useGlobalState } from 'store/state'
 import { fetchResource } from 'util/fetch'
@@ -9,6 +10,7 @@ import Logo from 'components/Logo'
 
 import styles from './index.module.scss'
 import { AuthData } from 'store/types'
+import { RECAPTCHA_KEY } from '../../constants'
 
 type State = {
   username: string
@@ -26,10 +28,15 @@ export default () => {
     loading: false,
   })
 
+  const recaptchaRef = useRef<any>(null)
+
   const handleSubmit = (e: React.ChangeEvent<any>) => {
     e.preventDefault()
+    recaptchaRef.current.execute()
+  };
 
-    if (localState.loading) {
+  const onRecaptchaChange = (token: string | null) => {
+    if (!token || localState.loading) {
       return
     }
 
@@ -37,9 +44,12 @@ export default () => {
       draft.loading = true
     })
 
+    recaptchaRef.current.reset()
+
     const body = {
       username: localState.username,
       password: localState.password,
+      recaptchaToken: token,
     }
     fetchResource('/auth', 'POST', body)
       .then((data: AuthData) => {
@@ -73,7 +83,8 @@ export default () => {
             draft.hasPassword = true
           }
         })
-      })
+      }
+    )
   }
 
   return (
@@ -114,6 +125,12 @@ export default () => {
               value={localState.password}
             />
           )}
+          <ReCAPTCHA
+            ref={ recaptchaRef }
+            size='invisible'
+            sitekey={ RECAPTCHA_KEY }
+            onChange={ onRecaptchaChange }
+          />
           <button type="submit" style={{ visibility: 'hidden' }}>
             Login
           </button>

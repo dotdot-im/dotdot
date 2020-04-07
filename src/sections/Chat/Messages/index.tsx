@@ -1,5 +1,5 @@
-import React, { useEffect, useContext, useRef } from 'react'
-import { Container } from 'react-bootstrap'
+import React, { useEffect, useContext, useRef, useCallback } from 'react'
+import { Button } from 'react-bootstrap'
 import { useImmer } from 'use-immer'
 import classNames from 'classnames'
 
@@ -8,25 +8,46 @@ import { Message } from 'store/types'
 import MessageComponent from './Message'
 
 import styles from './index.module.scss'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import ScrollBox from './ScrollBox'
 
 type State = {
-  messages: Message[]
+  messages: Message[],
+  scrollAtBottom: boolean,
+  unseenMessages: boolean, // are there new messages below the scroll point?
 }
 
 export default () => {
   const [state, setState] = useImmer<State>({
     messages: [],
+    scrollAtBottom: true,
+    unseenMessages: false,
   })
 
   const { socket } = useContext(SocketContext)
 
   const chatAreaRef = useRef<HTMLDivElement>(null)
-  useEffect(() => {
+
+  const onScrollChanged = useCallback((isAtBottom: boolean) => {
+    setState(draft => {
+      draft.scrollAtBottom = isAtBottom
+      if (isAtBottom) {
+        draft.unseenMessages = false
+      }
+    })
+  }, [setState])
+
+  const scrollToBottom = useCallback(() => {
     if (!chatAreaRef || !chatAreaRef.current) {
       return
     }
-    chatAreaRef.current.scrollTop = chatAreaRef.current.scrollHeight
-  }, [state.messages])
+    const scrollHeight = chatAreaRef.current.scrollHeight - chatAreaRef.current.offsetHeight
+    chatAreaRef.current.scrollTop = scrollHeight
+
+    setState(draft => {
+      draft.unseenMessages = false
+    })
+  }, [setState])
 
   useEffect(() => {
     if (!socket) {
@@ -47,6 +68,8 @@ export default () => {
         if (payload.message.trim().length < 1) {
           return;
         }
+
+        draft.unseenMessages = !draft.scrollAtBottom
 
         if (!payload.attributes.draft) {
           const lastMessage = draft.messages[draft.messages.length - 1]
@@ -81,14 +104,24 @@ export default () => {
   }, [socket, setState])
 
   return (
-    <div className={classNames(styles.messages, 'my-4')} ref={chatAreaRef}>
-      <Container>
-        <div className={classNames(styles.messageList)}>
+    <div className={ styles.messages }>
+      { state.unseenMessages && (
+        <div className={ styles.unseen }>
+          <Button variant="outline-secondary" size="sm" onClick={ scrollToBottom }>
+            <FontAwesomeIcon icon='arrow-alt-circle-down' /> New messages
+          </Button>
+        </div>
+      ) }
+      <div className={classNames(styles.messageScroll)} ref={chatAreaRef}>
+        <ScrollBox
+          boxRef={ chatAreaRef }
+          onScrollChanged={ onScrollChanged }
+        >
           {state.messages.map((eachMessage) => (
             <MessageComponent key={eachMessage.timestamp.toDateString()} message={eachMessage} />
           ))}
-        </div>
-      </Container>
+        </ScrollBox>
+      </div>
     </div>
   )
 }

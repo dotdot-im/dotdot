@@ -2,10 +2,20 @@
 
 .messages {
   flex: 1;
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+.messageScroll {
+  height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
 }
 
-.messageList {
-  height: 100%;
+.unseen {
+  position: absolute;
+  bottom: 1em;
+  right: 0;
+  z-index: 1;
 }

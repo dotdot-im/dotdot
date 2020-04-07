@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useRef, useCallback } from 'react'
-import { Button } from 'react-bootstrap'
+import { Container, Button } from 'react-bootstrap'
 import { useImmer } from 'use-immer'
 import classNames from 'classnames'
 
@@ -106,22 +106,26 @@ export default () => {
   return (
     <div className={ styles.messages }>
       { state.unseenMessages && (
-        <div className={ styles.unseen }>
-          <Button variant="outline-secondary" size="sm" onClick={ scrollToBottom }>
-            <FontAwesomeIcon icon='arrow-alt-circle-down' /> New messages
-          </Button>
+        <div className={ classNames(styles.unseen) }>
+          <Container className={ styles.unseenContainer }>
+            <Button variant="outline-secondary" size="sm" onClick={ scrollToBottom }>
+              <FontAwesomeIcon icon='arrow-alt-circle-down' /> New messages
+            </Button>
+          </Container>
         </div>
       ) }
-      <div className={classNames(styles.messageScroll)} ref={chatAreaRef}>
-        <ScrollBox
-          boxRef={ chatAreaRef }
-          onScrollChanged={ onScrollChanged }
-        >
-          {state.messages.map((eachMessage) => (
-            <MessageComponent key={eachMessage.timestamp.toDateString()} message={eachMessage} />
-          ))}
-        </ScrollBox>
-      </div>
+        <div className={classNames(styles.messageScroll)} ref={chatAreaRef}>
+          <div className='container'>
+            <ScrollBox
+              boxRef={ chatAreaRef }
+              onScrollChanged={ onScrollChanged }
+            >
+              {state.messages.map((eachMessage) => (
+                <MessageComponent key={eachMessage.timestamp.toDateString()} message={eachMessage} />
+              ))}
+            </ScrollBox>
+          </div>
+        </div>
     </div>
   )
 }

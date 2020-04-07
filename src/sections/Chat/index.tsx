@@ -17,19 +17,21 @@ export default () => {
 
   if (state.socket.connected) {
     chatArea = (
-      <Container className={styles.chat}>
-        <Row>
-          <Col>
-            <PasswordLock />
-          </Col>
-          <Col>
-            <OnlineUsers />
-          </Col>
-        </Row>
+      <div className={styles.chat}>
+        <Container>
+          <Row>
+            <Col>
+              <PasswordLock />
+            </Col>
+            <Col>
+              <OnlineUsers />
+            </Col>
+          </Row>
+        </Container>
 
         <Messages />
         <TextBox />
-      </Container>
+      </div>
     )
   }
 

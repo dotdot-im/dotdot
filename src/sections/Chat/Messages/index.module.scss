@@ -1,4 +1,4 @@
-@import '../../../../assets/scss/variables';
+@import 'assets/scss/variables';
 
 .messages {
   flex: 1;
@@ -18,4 +18,16 @@
   bottom: 1em;
   right: 0;
   z-index: 1;
+  width: 100%;
+  height: 0px;
+
+  .unseenContainer {
+    position: relative;
+  }
+
+  button {
+    position: absolute;
+    bottom: 0;
+    right: 1em;
+  }
 }

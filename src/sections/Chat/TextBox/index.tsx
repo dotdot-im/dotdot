@@ -105,7 +105,7 @@ export default () => {
   }
 
   return (
-    <Form noValidate onSubmit={handleSubmit} className={ classNames(styles.textBox, { [styles.private]: state.private, [styles.command]: state.isCommand }) }>
+    <Form noValidate onSubmit={handleSubmit} className={ classNames(styles.textBox, 'container', { [styles.private]: state.private, [styles.command]: state.isCommand }) }>
       <Form.Group controlId="chatForm.message">
         <Form.Control
           as="input"

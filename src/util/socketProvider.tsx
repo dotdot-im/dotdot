@@ -69,6 +69,10 @@ export default (props: Props) => {
           type: 'error',
           payload: error,
         })
+        dispatch({
+          type: 'login',
+          payload: null,
+        })
       } else {
         dispatch({
           type: 'offline',

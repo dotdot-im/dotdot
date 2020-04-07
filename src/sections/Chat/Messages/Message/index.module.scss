@@ -13,25 +13,26 @@ $padding: 1em;
   white-space: pre-line;
   position: relative;
 
-  margin: 1em -15px;
-  padding: 0 $padding;
+  margin-bottom: 1em;
 
   @media all and (min-width: 30em) {
-    padding-left: 1.3em;
     margin: 1.5em 0;
   }
 }
 
 // Message header
-.header {
+.icon {
   font-size: 1em;
   position: relative;
 
   svg {
     position: absolute;
     top: 0.35em;
-    left: -$padding - 0.9em;
-    filter: drop-shadow(0 0 2px $lighter);
+    left: -0.5em;
+
+    @media all and (min-width: 30em) {
+      left: -1.5 * $padding;
+    }
   }
 }
 
@@ -57,12 +58,10 @@ $padding: 1em;
 
 .timestamp {
   font-weight: 300;
-  display: inline;
   font-size: 0.75em;
   opacity: 0.8;
   color: $text;
   letter-spacing: 0.02em;
-
   float: right;
 
   @media all and (max-width: 30em) {
@@ -80,10 +79,6 @@ $padding: 1em;
     line-height: 1.66;
     letter-spacing: 0.022em;
   }
-}
-
-.op {
-  color: #ec7600;
 }
 
 .draft {

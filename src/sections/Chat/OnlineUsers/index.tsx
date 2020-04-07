@@ -39,7 +39,7 @@ export default () => {
         localState.users.map((user) => {
           let icon: IconProp = 'circle'
           if (user.user_id === state.auth.user?.user_id) {
-            icon = 'dot-circle'
+            icon = ['far', 'dot-circle']
           }
           return (
             <OverlayTrigger

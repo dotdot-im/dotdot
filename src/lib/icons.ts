@@ -7,16 +7,16 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 
 // Icons available in two styles, regular and solid
 // solid tends to have all free icons, while some regular ones are PRO only
-import { faLock, faLockOpen, faCircle, faUser, faDotCircle } from '@fortawesome/free-solid-svg-icons'
+import { faLock, faLockOpen, faCircle, faDotCircle, faCircleNotch } from '@fortawesome/free-solid-svg-icons'
 
-// import {
-
-// } from "@fortawesome/free-regular-svg-icons";
+import {
+  faDotCircle as farDotCircle
+} from "@fortawesome/free-regular-svg-icons";
 
 /**
  * All icons that will be used in this app need to be preloaded here
  */
 
 export default () => {
-  library.add(faLock, faLockOpen, faCircle, faUser, faDotCircle)
+  library.add(faLock, faLockOpen, faCircle, faDotCircle, farDotCircle, faCircleNotch)
 }

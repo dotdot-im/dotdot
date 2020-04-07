@@ -74,7 +74,7 @@ export default () => {
         delay={500}
         overlay={<Tooltip id="passwordLock">{tooltipText}</Tooltip>}
       >
-        <Button variant="link" className={buttonClass} onClick={handleShow}>
+        <Button variant="link" className={buttonClass} style={ { padding: 0 } } onClick={handleShow}>
           <FontAwesomeIcon icon={buttonIcon} />
         </Button>
       </OverlayTrigger>

@@ -45,7 +45,7 @@
     "recharts": "^1.8.5",
     "socket.io-client": "^2.3.0",
     "typescript": "^3.8.3",
-    "use-immer": "^0.3.5"
+    "use-immer": "^0.4.0"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -68,7 +68,7 @@
     "@storybook/addons": "^5.3.18",
     "@storybook/preset-create-react-app": "^2.1.1",
     "@storybook/react": "^5.3.18",
-    "prettier": "^2.0.3",
+    "prettier": "^2.0.4",
     "random-words": "^1.1.1"
   }
 }

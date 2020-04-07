@@ -19,7 +19,9 @@ export default (props: Props) => {
 
   let icon: IconProp = 'circle'
   if (props.message.user.user_id === state.auth.user?.user_id) {
-    icon = 'dot-circle'
+    icon = ['far', 'dot-circle']
+  } else if (props.message.attributes.draft) {
+    icon = 'circle-notch'
   }
   if (props.message.attributes.private) {
     icon = 'lock'
@@ -36,7 +38,7 @@ export default (props: Props) => {
       key={props.message.timestamp.toDateString()}
       style={{ borderLeftColor: userColor, }}
     >
-      <div className={classNames(styles.header, { [styles.private]: props.message.attributes.private })} style={{ color: userColor, background: userColor }}>
+      <div className={classNames(styles.icon, { [styles.private]: props.message.attributes.private })} style={{ color: userColor, background: userColor }}>
         { props.message.attributes.private && (
           <OverlayTrigger
             placement="right"
@@ -51,16 +53,14 @@ export default (props: Props) => {
           </OverlayTrigger>
         ) }
         { !props.message.attributes.private && (
-          <FontAwesomeIcon icon={ icon } />
+          <FontAwesomeIcon icon={ icon } spin={ props.message.attributes.draft } />
         ) }
       </div>
       <div className={classNames(styles.timestamp)}>
         {props.message.attributes.draft ? 'now' : props.message.timestamp.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}
       </div>
       <span
-        className={classNames(styles.user, {
-          [styles.op]: props.message.user.user_id === state.auth.user?.user_id,
-        })}
+        className={classNames(styles.user)}
         style={ { color: userColor } }
       >
         {props.message.user.name}

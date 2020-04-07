@@ -7,11 +7,13 @@ import { SocketContext } from 'util/socketProvider'
 import styles from './index.module.scss'
 import { VALID_USERNAME } from '../../../constants'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { IconProp } from '@fortawesome/fontawesome-svg-core'
 
 type State = {
   message: string,
   private: boolean,
   to: string | null,
+  isCommand: boolean,
 }
 
 export default () => {
@@ -19,6 +21,7 @@ export default () => {
     message: '',
     private: false,
     to: null,
+    isCommand: false,
   })
   const draftTimer = useRef<any>(null)
 
@@ -36,6 +39,7 @@ export default () => {
     setState((draft) => {
       draft.message = ''
       draft.private = false
+      draft.isCommand = false
     })
   }
 
@@ -43,7 +47,11 @@ export default () => {
     if (!draft && (message.length < 1 || message.trim().length < 1)) {
       return
     }
-    socket?.emit('message', {
+    let type = 'message'
+    if (state.isCommand) {
+      type = 'command'
+    }
+    socket?.emit(type, {
       message,
       attributes: {
         draft,
@@ -60,22 +68,29 @@ export default () => {
 
     const value: string = e.currentTarget.value
 
-    // is it a PM?
+    // special messages
+    let isCommand = false;
     let isPM = false;
     let to: string | null = null;
-    const words = value.split(' ')
-    if (words.length > 0 && words[0][0] === '@' && VALID_USERNAME.test(words[0].substr(1))) {
-      isPM = true;
-      to = words[0].substr(1);
+
+    if (value[0] === '/') {
+      isCommand = true;
+    } else {
+      const words = value.split(' ')
+      if (words.length > 0 && words[0][0] === '@' && VALID_USERNAME.test(words[0].substr(1))) {
+        isPM = true;
+        to = words[0].substr(1);
+      }
     }
 
     setState((draft) => {
       draft.message = value
       draft.private = isPM
       draft.to = to
+      draft.isCommand = isCommand
     })
 
-    if (value.length < 3 && value[0] === '@') {
+    if (isPM || isCommand) {
       return;
     }
 
@@ -84,8 +99,13 @@ export default () => {
     }, 100)
   }
 
+  let icon: IconProp = 'lock'
+  if (state.isCommand) {
+    icon = 'code'
+  }
+
   return (
-    <Form noValidate onSubmit={handleSubmit} className={ classNames('container', styles.textBox, { [styles.private]: state.private }) }>
+    <Form noValidate onSubmit={handleSubmit} className={ classNames('container', styles.textBox, { [styles.private]: state.private, [styles.command]: state.isCommand }) }>
       <Form.Group controlId="chatForm.message">
         <Form.Control
           as="input"
@@ -96,7 +116,7 @@ export default () => {
           value={state.message}
         />
         <span>
-          <FontAwesomeIcon icon='lock' />
+          <FontAwesomeIcon icon={ icon } />
         </span>
       </Form.Group>
     </Form>

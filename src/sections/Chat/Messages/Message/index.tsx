@@ -16,6 +16,7 @@ export default (props: Props) => {
   const { state } = useGlobalState()
 
   const userColor = `#${props.message.user.color}`
+  const isSystem = props.message.user.user_id === 'dotdot'
 
   let icon: IconProp = 'circle'
   if (props.message.user.user_id === state.auth.user?.user_id) {
@@ -26,17 +27,20 @@ export default (props: Props) => {
   if (props.message.attributes.private) {
     icon = 'lock'
   }
+  if (isSystem) {
+    icon = 'cog'
+  }
 
   return (
     <div
       className={classNames(styles.message, {
+        [styles.system]: isSystem,
         [styles.draft]: props.message.attributes.draft,
         [styles.private]: props.message.attributes.private,
         [styles.privateDraft]:
           props.message.attributes.private && props.message.attributes.draft,
       })}
       key={props.message.timestamp.toDateString()}
-      style={{ borderLeftColor: userColor, }}
     >
       <div className={classNames(styles.icon, { [styles.private]: props.message.attributes.private })} style={{ color: userColor, background: userColor }}>
         { props.message.attributes.private && (

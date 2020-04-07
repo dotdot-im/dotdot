@@ -11,13 +11,22 @@ $padding: 1em;
 .message {
   position: relative;
   white-space: pre-line;
-  position: relative;
 
-  margin-bottom: 1em;
+  margin: 0 -$padding;
+  padding: $padding;
+
+  border-radius: 0.5em;
 
   @media all and (min-width: 30em) {
-    margin: 1.5em 0;
+    margin-top: $padding/2;
+    margin-bottom: $padding/2;
   }
+}
+
+.system {
+  border: solid 1px fade-out($text, 0.9);
+  font-size: 0.9em;
+  color: fade-out($text, 0.2);
 }
 
 // Message header

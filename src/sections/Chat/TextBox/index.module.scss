@@ -1,5 +1,7 @@
 @import 'assets/scss/variables';
 
+$command: #aaa;
+
 .textBox {
   position: relative;
 
@@ -12,13 +14,29 @@
   }
 }
 
+.private, .command {
+  span {
+    display: block;
+  }
+}
+
 .private {
   input, input:focus {
     border-color: $secondary;
     box-shadow: 0 0 0 0.2rem fade-out($secondary, 0.8);
   }
+}
+
+.command {
+  color: $command;
+
+  input, input:focus {
+    color: inherit;
+    border-color: $command;
+    box-shadow: 0 0 0 0.2rem fade-out($command, 0.8);
+  }
 
   span {
-    display: block;
+    color: inherit;
   }
 }

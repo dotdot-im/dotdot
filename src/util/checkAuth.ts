@@ -34,10 +34,12 @@ export const checkAuth = (dispatch: React.Dispatch<Action>) => {
           checkAuth(dispatch)
         }, OFFLINE_RETRY_DELAY)
       } else {
-        dispatch({
-          type: 'error',
-          payload: reason.errors.join(', '),
-        })
+        if (reason.status !== 401) {
+          dispatch({
+            type: 'error',
+            payload: reason.errors.join(', '),
+          })
+        }
 
         dispatch({
           type: 'login',

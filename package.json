@@ -2,7 +2,7 @@
   "name": "dotdot",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://aurbano.github.io/dotdot/",
+  "homepage": "https://dotdot.im",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

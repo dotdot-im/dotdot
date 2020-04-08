@@ -42,8 +42,6 @@ export default (props: Props) => {
         [styles.offline]: !isUserOnline,
         [styles.draft]: props.message.attributes.draft,
         [styles.private]: props.message.attributes.private,
-        [styles.privateDraft]:
-          props.message.attributes.private && props.message.attributes.draft,
       })}
       key={props.message.timestamp.toDateString()}
     >

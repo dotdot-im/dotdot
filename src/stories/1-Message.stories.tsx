@@ -2,11 +2,12 @@ import React from 'react'
 import randomWords from 'random-words'
 
 import MessageComponent from 'sections/Chat/Messages/Message'
-import { Message, User } from 'store/types'
+import { Message, User, AppState } from 'store/types'
 
 import 'lib/icons'
 
 import '../assets/scss/index.scss'
+import { StateProvider } from 'store/state'
 
 export default { title: 'Message' }
 
@@ -14,33 +15,42 @@ const users: User[] = [
   {
     user_id: '1',
     color: 'eb0000',
-    name: 'alex',
+    name: 'test_user_1',
     hasPassword: false,
   },
   {
     user_id: '2',
     color: 'ec7600',
-    name: 'phil',
+    name: 'test_user_2',
     hasPassword: true,
   },
   {
     user_id: '3',
     color: '38b08c',
-    name: 'jaime',
+    name: 'test_user_3',
     hasPassword: false,
   },
 ]
 
-export const normal = () => {
+const testState: AppState = {
+  auth: {
+    checked: true,
+    loggedIn: true,
+    user: users[0],
+  },
+  socket: {
+    connected: true,
+  },
+  onlineUsers: users,
+  offline: false,
+  error: null,
+};
+
+export const messageByMe = () => {
   const testMessage: Message = {
     timestamp: new Date(),
     message: 'Some random test message',
-    user: {
-      user_id: '123',
-      color: 'eb0000',
-      name: 'Test User',
-      hasPassword: false,
-    },
+    user: users[0],
     attributes: {
       draft: false,
       private: false,
@@ -48,7 +58,27 @@ export const normal = () => {
   }
 
   return (
-    <MessageComponent message={testMessage} />
+    <StateProvider state={ testState }>
+      <MessageComponent message={testMessage} />
+    </StateProvider>
+  );
+}
+
+export const messageByOther = () => {
+  const testMessage: Message = {
+    timestamp: new Date(),
+    message: 'Some random test message',
+    user: users[1],
+    attributes: {
+      draft: false,
+      private: false,
+    },
+  }
+
+  return (
+    <StateProvider state={ testState }>
+      <MessageComponent message={testMessage} />
+    </StateProvider>
   );
 }
 
@@ -56,12 +86,7 @@ export const draft = () => {
   const testMessage: Message = {
     timestamp: new Date(),
     message: 'Some random test message',
-    user: {
-      user_id: '123',
-      color: 'eb0000',
-      name: 'Test User',
-      hasPassword: false,
-    },
+    user: users[1],
     attributes: {
       draft: true,
       private: false,
@@ -69,20 +94,17 @@ export const draft = () => {
   }
 
   return (
-    <MessageComponent message={testMessage} />
+    <StateProvider state={ testState }>
+      <MessageComponent message={testMessage} />
+    </StateProvider>
   );
 }
 
 export const privateMessage = () => {
   const testMessage: Message = {
     timestamp: new Date(),
-    message: 'Some random test message',
-    user: {
-      user_id: '123',
-      color: 'eb0000',
-      name: 'Test User',
-      hasPassword: false,
-    },
+    message: '@someone Some random private test message',
+    user: users[1],
     attributes: {
       draft: false,
       private: true,
@@ -90,7 +112,9 @@ export const privateMessage = () => {
   }
 
   return (
-    <MessageComponent message={testMessage} />
+    <StateProvider state={ testState }>
+      <MessageComponent message={testMessage} />
+    </StateProvider>
   );
 }
 
@@ -98,12 +122,7 @@ export const privateDraft = () => {
   const testMessage: Message = {
     timestamp: new Date(),
     message: 'Some random test message',
-    user: {
-      user_id: '123',
-      color: 'eb0000',
-      name: 'Test User',
-      hasPassword: false,
-    },
+    user: users[1],
     attributes: {
       draft: true,
       private: true,
@@ -111,7 +130,9 @@ export const privateDraft = () => {
   }
 
   return (
-    <MessageComponent message={testMessage} />
+    <StateProvider state={ testState }>
+      <MessageComponent message={testMessage} />
+    </StateProvider>
   );
 }
 
@@ -132,7 +153,41 @@ export const systemMessage = () => {
   }
 
   return (
-    <MessageComponent message={testMessage} />
+    <StateProvider state={ testState }>
+      <MessageComponent message={testMessage} />
+    </StateProvider>
+  );
+}
+
+export const offlineUser = () => {
+  const testMessage: Message = {
+    timestamp: new Date(),
+    message: 'This came from a user that is now offline',
+    user: users[0],
+    attributes: {
+      draft: false,
+      private: false,
+    },
+  }
+
+  const state: AppState = {
+    auth: {
+      checked: true,
+      loggedIn: true,
+      user: users[1],
+    },
+    socket: {
+      connected: true,
+    },
+    onlineUsers: [users[1]],
+    offline: false,
+    error: null,
+  };
+
+  return (
+    <StateProvider state={ state }>
+      <MessageComponent message={testMessage} />
+    </StateProvider>
   );
 }
 
@@ -152,10 +207,10 @@ export const multiple = () => {
   }
 
   return (
-    <>
+    <StateProvider state={ testState }>
       {msgs.map((msg) => (
         <MessageComponent key={msg.timestamp.toUTCString()} message={msg} />
       ))}
-    </>
+    </StateProvider>
   )
 }

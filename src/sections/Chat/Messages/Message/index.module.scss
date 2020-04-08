@@ -33,6 +33,15 @@ $padding: 1em;
   }
 }
 
+.offline {
+  color: #aaa !important;
+  opacity: 0.5;
+
+  .icon, .user {
+    color: inherit !important;
+  }
+}
+
 // Message header
 .icon {
   font-size: 1em;
@@ -56,10 +65,10 @@ $padding: 1em;
   margin-bottom: 0.1em;
   margin-left: 1em;
 
-  i {
-    font-variant: normal;
-    font-style: normal;
-    opacity: 0.45;
+  &:after {
+    opacity: 0.7;
+    font-size: 0.8em;
+    font-weight: 100;
   }
 
   @media all and (min-width: 30em) {

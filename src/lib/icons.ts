@@ -16,7 +16,5 @@ import {
 /**
  * All icons that will be used in this app need to be preloaded here
  */
+library.add(faLock, faLockOpen, faCircle, faDotCircle, farDotCircle, faCircleNotch, faCode, faCog, faArrowAltCircleDown)
 
-export default () => {
-  library.add(faLock, faLockOpen, faCircle, faDotCircle, farDotCircle, faCircleNotch, faCode, faCog, faArrowAltCircleDown)
-}

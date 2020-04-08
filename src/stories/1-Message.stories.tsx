@@ -1,15 +1,12 @@
 import React from 'react'
-import { Container } from 'react-bootstrap'
-
 import randomWords from 'random-words'
 
 import MessageComponent from 'sections/Chat/Messages/Message'
 import { Message, User } from 'store/types'
-import loadIcons from 'lib/icons'
+
+import 'lib/icons'
 
 import '../assets/scss/index.scss'
-
-loadIcons()
 
 export default { title: 'Message' }
 
@@ -51,9 +48,7 @@ export const normal = () => {
   }
 
   return (
-    <Container>
-      <MessageComponent message={testMessage} />
-    </Container>
+    <MessageComponent message={testMessage} />
   );
 }
 
@@ -74,9 +69,7 @@ export const draft = () => {
   }
 
   return (
-    <Container>
-      <MessageComponent message={testMessage} />
-    </Container>
+    <MessageComponent message={testMessage} />
   );
 }
 
@@ -97,9 +90,7 @@ export const privateMessage = () => {
   }
 
   return (
-    <Container>
-      <MessageComponent message={testMessage} />
-    </Container>
+    <MessageComponent message={testMessage} />
   );
 }
 
@@ -120,9 +111,7 @@ export const privateDraft = () => {
   }
 
   return (
-    <Container>
-      <MessageComponent message={testMessage} />
-    </Container>
+    <MessageComponent message={testMessage} />
   );
 }
 
@@ -143,9 +132,7 @@ export const systemMessage = () => {
   }
 
   return (
-    <Container>
-      <MessageComponent message={testMessage} />
-    </Container>
+    <MessageComponent message={testMessage} />
   );
 }
 
@@ -165,10 +152,10 @@ export const multiple = () => {
   }
 
   return (
-    <Container>
+    <>
       {msgs.map((msg) => (
         <MessageComponent key={msg.timestamp.toUTCString()} message={msg} />
       ))}
-    </Container>
+    </>
   )
 }

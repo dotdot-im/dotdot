@@ -44,6 +44,13 @@ export default (props: Props) => {
       })
     })
 
+    newSocket.on('users', (payload: any) => {
+      dispatch({
+        type: 'onlineUsers',
+        payload: payload.users,
+      })
+    })
+
     newSocket.on('connect_error', (error: string) => {
       dispatch({
         type: 'offline',

@@ -24,8 +24,8 @@ export type AppState = {
   }
   socket: {
     connected: boolean
-    key: CryptoKey | null
   }
+  onlineUsers: User[]
   offline: boolean
   error: string | null
 }

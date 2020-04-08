@@ -42,6 +42,9 @@ export default produce((draft: AppState, action: Action) => {
       draft.offline = !action.payload
       draft.error = null
       break
+    case 'onlineUsers':
+      draft.onlineUsers = action.payload
+      break
     case 'user_password':
       if (draft.auth.user) {
         draft.auth.user.hasPassword = true

@@ -11,8 +11,8 @@ const initialState: AppState = {
   },
   socket: {
     connected: false,
-    key: null,
   },
+  onlineUsers: [],
   offline: false,
   error: null,
 }

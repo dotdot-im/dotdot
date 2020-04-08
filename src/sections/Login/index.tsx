@@ -89,6 +89,11 @@ export default () => {
     )
   }
 
+  let theme = 'light'
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    theme = 'dark'
+  }
+
   return (
     <Container className={classNames(styles.login, 'mt-4')}>
       <Logo />
@@ -130,6 +135,7 @@ export default () => {
           <HCaptcha
             ref={ captchaRef }
             size='invisible'
+            theme={ theme }
             sitekey={ CAPTCHA_KEY }
             onVerify={ oncaptchaChange }
           />

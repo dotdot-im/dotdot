@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import { Form, Container } from 'react-bootstrap'
 import { useImmer } from 'use-immer'
 import classNames from 'classnames'
-import ReCAPTCHA from "react-google-recaptcha"
+import HCaptcha from "react-hcaptcha"
 
 import { useGlobalState } from 'store/state'
 import { fetchResource } from 'util/fetch'
@@ -10,7 +10,7 @@ import Logo from 'components/Logo'
 
 import styles from './index.module.scss'
 import { AuthData } from 'store/types'
-import { RECAPTCHA_KEY } from '../../constants'
+import { CAPTCHA_KEY } from '../../constants'
 
 type State = {
   username: string
@@ -28,14 +28,14 @@ export default () => {
     loading: false,
   })
 
-  const recaptchaRef = useRef<any>(null)
+  const captchaRef = useRef<any>(null)
 
   const handleSubmit = (e: React.ChangeEvent<any>) => {
     e.preventDefault()
-    recaptchaRef.current.execute()
+    captchaRef.current.execute()
   };
 
-  const onRecaptchaChange = (token: string | null) => {
+  const oncaptchaChange = (token: string | null) => {
     if (!token || localState.loading) {
       return
     }
@@ -44,12 +44,10 @@ export default () => {
       draft.loading = true
     })
 
-    recaptchaRef.current.reset()
-
     const body = {
       username: localState.username,
       password: localState.password,
-      recaptchaToken: token,
+      captchaToken: token,
     }
     fetchResource('/auth', 'POST', body)
       .then((data: AuthData) => {
@@ -75,6 +73,10 @@ export default () => {
             type: 'error',
             payload: reason.errors.join(', '),
           })
+        }
+
+        if (captchaRef.current.resetCaptcha) {
+          captchaRef.current.resetCaptcha()
         }
 
         setState((draft) => {
@@ -125,11 +127,11 @@ export default () => {
               value={localState.password}
             />
           )}
-          <ReCAPTCHA
-            ref={ recaptchaRef }
+          <HCaptcha
+            ref={ captchaRef }
             size='invisible'
-            sitekey={ RECAPTCHA_KEY }
-            onChange={ onRecaptchaChange }
+            sitekey={ CAPTCHA_KEY }
+            onVerify={ oncaptchaChange }
           />
           <button type="submit" style={{ visibility: 'hidden' }}>
             Login

@@ -15,12 +15,9 @@ $padding: 1em;
   margin: 0 -$padding;
   padding: $padding;
 
-  border-radius: 0.5em;
+  margin-bottom: $padding/2;
 
-  @media all and (min-width: 30em) {
-    margin-top: $padding/2;
-    margin-bottom: $padding/2;
-  }
+  border-radius: 0.5em;
 }
 
 .system {

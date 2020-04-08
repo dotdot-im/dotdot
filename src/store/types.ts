@@ -12,7 +12,7 @@ export type Message = {
   attributes: {
     draft: boolean
     private: boolean
-    to: string | null
+    to?: string | null
   }
 }
 

@@ -44,6 +44,7 @@ const testState: AppState = {
   socket: {
     connected: true,
   },
+  messages: [],
   onlineUsers: users,
   offline: false,
   error: null,
@@ -183,6 +184,7 @@ export const offlineUser = () => {
     socket: {
       connected: true,
     },
+    messages: [],
     onlineUsers: [users[1]],
     offline: false,
     error: null,

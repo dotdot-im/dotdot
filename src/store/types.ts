@@ -27,6 +27,7 @@ export type AppState = {
     connected: boolean
   }
   onlineUsers: User[]
+  messages: Message[]
   offline: boolean
   error: string | null
 }

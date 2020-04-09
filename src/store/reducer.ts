@@ -1,6 +1,7 @@
 import produce from 'immer'
 
-import { AppState, Action } from './types'
+import { AppState, Action, Message } from './types'
+import { MAX_MESSAGE_HISTORY } from '../constants'
 
 // TODO NEW BLOG POST
 // const REDUCER = {
@@ -50,5 +51,52 @@ export default produce((draft: AppState, action: Action) => {
         draft.auth.user.hasPassword = true
       }
       break
+    case 'message':
+      const message: Message = action.payload
+      // delete draft from this user
+      const existingDraft = draft.messages.findIndex(
+        (eachMessage) =>
+          eachMessage.attributes.draft &&
+          eachMessage.user.user_id === message.user.user_id
+      )
+      if (existingDraft > -1) {
+        draft.messages.splice(existingDraft, 1)
+      }
+
+      if (message.message.trim().length < 1) {
+        return;
+      }
+
+      if (!message.attributes.draft) {
+        const lastMessage = draft.messages[draft.messages.length - 1]
+
+        if (lastMessage && lastMessage.user.user_id === message.user.user_id && lastMessage.attributes.private === message.attributes.private) {
+          // last message was by this same user (and it's the same kind of message)
+          lastMessage.message += `\n${message.message}`
+          lastMessage.timestamp = new Date(message.timestamp)
+          return
+        }
+      }
+
+      draft.messages.push({
+        timestamp: new Date(message.timestamp),
+        attributes: message.attributes,
+        message: message.message,
+        user: message.user,
+      })
+
+      if (draft.messages.length > MAX_MESSAGE_HISTORY) {
+        draft.messages.shift()
+      }
+      break;
+    case 'history':
+      if (draft.messages.length > 0) {
+        return;
+      }
+      draft.messages = action.payload.map((eachMessage: Message) => {
+        eachMessage.timestamp = new Date(eachMessage.timestamp)
+        return eachMessage
+      });
+      break;
   }
 })

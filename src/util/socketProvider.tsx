@@ -3,6 +3,7 @@ import socketio from 'socket.io-client'
 
 import { useGlobalState } from 'store/state'
 import { API_URL } from '../constants'
+import { Message } from 'store/types'
 
 type SocketContextType = {
   socket: SocketIOClient.Socket | null
@@ -48,6 +49,19 @@ export default (props: Props) => {
       dispatch({
         type: 'onlineUsers',
         payload: payload.users,
+      })
+    })
+
+    newSocket.on('message', (payload: Message) => {
+      dispatch({
+        type: 'message',
+        payload,
+      })
+    })
+    newSocket.on('history', (payload: Message[]) => {
+      dispatch({
+        type: 'history',
+        payload,
       })
     })
 

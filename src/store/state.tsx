@@ -13,6 +13,7 @@ const initialState: AppState = {
     connected: false,
   },
   onlineUsers: [],
+  messages: [],
   offline: false,
   error: null,
 }

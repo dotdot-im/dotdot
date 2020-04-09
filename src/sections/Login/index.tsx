@@ -86,7 +86,7 @@ export default () => {
 
         setState((draft) => {
           draft.loading = false
-          draft.verified = reason.data && reason.data.verified || false
+          draft.verified = (reason.data && reason.data.verified) || false
           if (reason.status === 400) {
             draft.hasPassword = true
           }

@@ -22,7 +22,6 @@ export const checkAuth = (dispatch: React.Dispatch<Action>) => {
       })
     })
     .catch((reason) => {
-      console.log('Login check failed', reason)
       if (reason.message === 'Network Error') {
         dispatch({
           type: 'offline',

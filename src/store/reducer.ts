@@ -10,8 +10,7 @@ import { MAX_MESSAGE_HISTORY } from '../constants'
 
 export default produce((draft: AppState, action: Action) => {
   // REDUCER[action.type](draft, action.payload);
-
-  console.log('REDUCER', action)
+  // console.log('REDUCER', action)
 
   switch (action.type) {
     case 'login':

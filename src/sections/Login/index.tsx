@@ -15,6 +15,7 @@ import { CAPTCHA_KEY } from '../../constants'
 type State = {
   username: string
   password: string
+  verified: boolean
   hasPassword: boolean
   loading: boolean
 }
@@ -24,6 +25,7 @@ export default () => {
   const [localState, setState] = useImmer<State>({
     username: '',
     password: '',
+    verified: false,
     hasPassword: false,
     loading: false,
   })
@@ -32,6 +34,10 @@ export default () => {
 
   const handleSubmit = (e: React.ChangeEvent<any>) => {
     e.preventDefault()
+    if (localState.verified) {
+      oncaptchaChange('verified')
+      return
+    }
     captchaRef.current.execute()
   };
 
@@ -66,7 +72,6 @@ export default () => {
         })
       })
       .catch((reason) => {
-        console.log('login fail reason', reason)
         if (reason.status !== 400) {
           // username requires password
           dispatch({
@@ -81,6 +86,7 @@ export default () => {
 
         setState((draft) => {
           draft.loading = false
+          draft.verified = reason.data && reason.data.verified || false
           if (reason.status === 400) {
             draft.hasPassword = true
           }

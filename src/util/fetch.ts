@@ -11,6 +11,7 @@ export type FetchError = {
   status: number
   message: string
   errors: string[]
+  data?: any
 }
 
 type FetchReturn<T> = [boolean, T | null, FetchError | null]
@@ -83,6 +84,7 @@ export const fetchResource = async (
         status: error.response.status,
         message: parseAxiosError(error),
         errors: parseErrorList(error),
+        data: error.response.data
       }
       throw returnError
     }

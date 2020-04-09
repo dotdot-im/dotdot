@@ -90,9 +90,6 @@ export default produce((draft: AppState, action: Action) => {
       }
       break;
     case 'history':
-      if (draft.messages.length > 0) {
-        return;
-      }
       draft.messages = action.payload.map((eachMessage: Message) => {
         eachMessage.timestamp = new Date(eachMessage.timestamp)
         return eachMessage

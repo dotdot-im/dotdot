@@ -15,12 +15,17 @@ type Props = {
 export default (props: Props) => {
   const { state } = useGlobalState()
 
-  const userColor = `#${props.message.user.color}`
-  const isSystem = props.message.user.user_id === 'dotdot'
-  const isUserOnline = isSystem || state.onlineUsers.findIndex(user => user.user_id === props.message.user.user_id) > -1
+  // User data comes from online users if available
+  const userData = state.onlineUsers.find(
+    user => user.user_id === props.message.user.user_id
+  ) || props.message.user
+
+  const userColor = `#${userData.color}`
+  const isSystem = userData.user_id === 'dotdot'
+  const isUserOnline = isSystem || (state.onlineUsers.findIndex(user => user.user_id === userData.user_id) > -1 && userData.isActive)
 
   let icon: IconProp = 'circle'
-  if (props.message.user.user_id === state.auth.user?.user_id) {
+  if (userData.user_id === state.auth.user?.user_id) {
     icon = ['far', 'dot-circle']
   } else if (props.message.attributes.draft) {
     icon = 'circle-notch'
@@ -50,8 +55,8 @@ export default (props: Props) => {
           <OverlayTrigger
             placement="right"
             overlay={(
-              <Tooltip id={`user-${props.message.user.user_id}`}>
-                Private message from <b>@{props.message.user.name}</b><br />
+              <Tooltip id={`user-${userData.user_id}`}>
+                Private message from <b>@{userData.name}</b><br />
                 Only you can see this.
               </Tooltip>
             )}
@@ -70,7 +75,7 @@ export default (props: Props) => {
         className={classNames(styles.user)}
         style={ { color: userColor } }
       >
-        {props.message.user.name}
+        {userData.name}
       </span>
       <div className={classNames(styles.body)}>{props.message.message}</div>
     </div>

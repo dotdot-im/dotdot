@@ -2,6 +2,7 @@ export type User = {
   user_id: string
   name: string
   color: string
+  isActive: boolean
   hasPassword: boolean
 }
 

@@ -14,9 +14,14 @@ export default () => {
     <div className={styles.onlineUsers}>
       {
         state.onlineUsers.map((user) => {
+          let color = user.color
           let icon: IconProp = 'circle'
           if (user.user_id === state.auth.user?.user_id) {
             icon = ['far', 'dot-circle']
+          }
+          if (!user.isActive) {
+            icon = 'meh'
+            color = 'aaaaaa'
           }
           return (
             <OverlayTrigger

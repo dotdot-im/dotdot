@@ -16,18 +16,21 @@ const users: User[] = [
     user_id: '1',
     color: 'eb0000',
     name: 'test_user_1',
+    isActive: true,
     hasPassword: false,
   },
   {
     user_id: '2',
     color: 'ec7600',
     name: 'test_user_2',
+    isActive: true,
     hasPassword: true,
   },
   {
     user_id: '3',
     color: '38b08c',
     name: 'test_user_3',
+    isActive: true,
     hasPassword: false,
   },
 ]
@@ -144,6 +147,7 @@ export const systemMessage = () => {
       user_id: 'dotdot',
       color: 'eb0000',
       name: 'dotdot',
+      isActive: true,
       hasPassword: false,
     },
     attributes: {

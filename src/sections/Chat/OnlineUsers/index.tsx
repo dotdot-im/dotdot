@@ -29,7 +29,7 @@ export default () => {
               placement="bottom"
               overlay={<Tooltip id={`user-${user.user_id}`}>@{user.name}</Tooltip>}
             >
-              <span style={{ color: `#${user.color}` }}>
+              <span style={{ color: `#${color}` }}>
                 <FontAwesomeIcon icon={ icon } />
               </span>
             </OverlayTrigger>

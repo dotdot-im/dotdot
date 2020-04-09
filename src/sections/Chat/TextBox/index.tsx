@@ -75,10 +75,10 @@ export default () => {
 
     if (value[0] === '/') {
       isCommand = true;
-    } else {
+    } else if (value[0] === '@') {
       const words = value.split(' ')
+      isPM = true;
       if (words.length > 0 && words[0][0] === '@' && VALID_USERNAME.test(words[0].substr(1))) {
-        isPM = true;
         to = words[0].substr(1);
       }
     }

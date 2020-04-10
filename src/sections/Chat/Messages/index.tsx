@@ -71,7 +71,7 @@ export default () => {
               onScrollChanged={ onScrollChanged }
             >
               {state.messages.map((eachMessage) => (
-                <MessageComponent key={eachMessage.timestamp.toDateString()} message={eachMessage} />
+                <MessageComponent key={eachMessage.timestamp.getTime()} message={eachMessage} />
               ))}
             </ScrollBox>
           </div>

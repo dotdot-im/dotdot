@@ -46,7 +46,8 @@
     "recharts": "^1.8.5",
     "socket.io-client": "^2.3.0",
     "typescript": "^3.8.3",
-    "use-immer": "^0.4.0"
+    "use-immer": "^0.4.0",
+    "use-sound": "^1.0.1"
   },
   "eslintConfig": {
     "extends": "react-app"

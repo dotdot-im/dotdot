@@ -1,12 +1,13 @@
 import React from 'react'
 import classNames from 'classnames'
-import { Message } from 'store/types'
-
-import styles from './index.module.scss'
-import useGlobalState from 'store/state'
+import reactStringReplace from 'react-string-replace'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+
+import { Message } from 'store/types'
+import styles from './index.module.scss'
+import useGlobalState from 'store/state'
 
 type Props = {
   message: Message
@@ -39,6 +40,22 @@ export default (props: Props) => {
   if (!isUserOnline) {
     icon = 'meh'
   }
+
+  // replace mentions with colored version
+  const message = reactStringReplace(props.message.message, /@([A-Za-z0-9]+(?:[_][A-Za-z0-9]+)*_?)/gmi, (username, index) => {
+    let style = {}
+    const userIndex = state.onlineUsers.findIndex(user => user.name === username)
+    if (userIndex > -1) {
+      style = {
+        color: `#${state.onlineUsers[userIndex].color}`
+      }
+    }
+    return (
+      <span key={index} className={ styles.mention } style={ style }>
+        @{username}
+      </span>
+    );
+  })
 
   return (
     <div
@@ -77,7 +94,9 @@ export default (props: Props) => {
       >
         {userData.name}
       </span>
-      <div className={classNames(styles.body)}>{props.message.message}</div>
+      <div className={classNames(styles.body)}>
+        {message}
+      </div>
     </div>
   )
 }

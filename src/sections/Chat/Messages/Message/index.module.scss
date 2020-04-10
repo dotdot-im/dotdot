@@ -18,6 +18,11 @@ $padding: 1em;
   margin-bottom: $padding/2;
 
   border-radius: 0.5em;
+
+  .mention {
+    font-weight: 500;
+    color: #999999;
+  }
 }
 
 .system {

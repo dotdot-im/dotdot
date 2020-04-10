@@ -82,7 +82,7 @@ export default () => {
 
   return (
     <Helmet>
-      <title>{localState.titleNotification ? '• dotdot' : 'dotdot'}</title>
+      <title>{localState.titleNotification ? '•• dotdot' : 'dotdot'}</title>
     </Helmet>
   )
 }

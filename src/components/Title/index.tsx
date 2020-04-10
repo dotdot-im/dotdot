@@ -10,6 +10,7 @@ import newMessageSound from 'assets/sounds/newMessage.mp3'
 import { dateDiff } from 'lib/dateDiff'
 
 const TIME_BETWEEN_SOUND = 5 * 1000 // ms
+const NOTIFICATION_VOLUME = 0.5 // 0-1
 
 type State = {
   lastSound: Date | null,
@@ -28,7 +29,7 @@ export default () => {
   const { socket } = useContext(SocketContext)
   const [ play ] = useSound(newMessageSound, {
     interrupt: true,
-    volume: 0.2,
+    volume: NOTIFICATION_VOLUME,
   });
 
   const onMessage = useCallback((user_id: string) => (msg: Message) => {

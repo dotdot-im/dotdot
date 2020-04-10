@@ -1,10 +1,9 @@
 import React from 'react'
-
+import { IconProp, IconName } from '@fortawesome/fontawesome-svg-core'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import styles from './index.module.scss'
-import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import useGlobalState from 'store/state'
 
 export default () => {
@@ -14,14 +13,24 @@ export default () => {
     <div className={styles.onlineUsers}>
       {
         state.onlineUsers.map((user) => {
-          let icon: IconProp = 'circle'
           const isCurrentUser = user.user_id === state.auth.user?.user_id
-          if (isCurrentUser) {
-            icon = ['far', 'dot-circle']
+
+          let iconName: IconName = 'circle'
+          if (user.icon) {
+            iconName = user.icon
+          } else if (user.user_id === state.auth.user?.user_id) {
+            iconName = 'dot-circle'
           }
+
           if (!user.isActive) {
-            icon = isCurrentUser ? ['far', 'meh'] : 'meh'
+            iconName = 'meh'
           }
+
+          let icon: IconProp = iconName
+          if (isCurrentUser) {
+            icon = ['far', iconName]
+          }
+
           return (
             <OverlayTrigger
               key={user.user_id}

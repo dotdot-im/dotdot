@@ -1,7 +1,10 @@
+import { IconName } from "@fortawesome/fontawesome-svg-core"
+
 export type User = {
   user_id: string
   name: string
   color: string
+  icon: IconName | null
   isActive: boolean
   hasPassword: boolean
 }

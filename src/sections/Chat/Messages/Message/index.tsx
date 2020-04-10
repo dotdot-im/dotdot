@@ -1,7 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import reactStringReplace from 'react-string-replace'
-import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import { IconProp, IconName } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
@@ -25,20 +25,27 @@ export default (props: Props) => {
   const isSystem = userData.user_id === 'dotdot'
   const isUserOnline = isSystem || (state.onlineUsers.findIndex(user => user.user_id === userData.user_id) > -1 && userData.isActive)
 
-  let icon: IconProp = 'circle'
-  if (userData.user_id === state.auth.user?.user_id) {
-    icon = ['far', 'dot-circle']
-  } else if (props.message.attributes.draft) {
-    icon = 'circle-notch'
+  let iconName: IconName = 'circle'
+  if (userData.icon) {
+    iconName = userData.icon
+  } else if (userData.user_id === state.auth.user?.user_id) {
+    iconName = 'dot-circle'
   }
-  if (props.message.attributes.private) {
-    icon = 'lock'
-  }
+
+  // special icons
   if (isSystem) {
-    icon = 'cog'
+    iconName = 'cog'
+  } else if (props.message.attributes.draft) {
+    iconName = 'circle-notch'
+  } else if (props.message.attributes.private) {
+    iconName = 'lock'
+  } else if (!isUserOnline) {
+    iconName = 'meh'
   }
-  if (!isUserOnline) {
-    icon = 'meh'
+
+  let icon: IconProp = iconName
+  if (userData.user_id === state.auth.user?.user_id) {
+    icon = ['far', iconName]
   }
 
   // replace mentions with colored version

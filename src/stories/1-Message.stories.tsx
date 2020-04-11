@@ -7,7 +7,7 @@ import { Message, User, AppState } from 'store/types'
 import 'lib/icons'
 
 import '../assets/scss/index.scss'
-import { StateProvider } from 'store/state'
+import { StateProvider, initialState } from 'store/state'
 
 export default { title: 'Message' }
 
@@ -49,6 +49,7 @@ const testState: AppState = {
   },
   messages: [],
   onlineUsers: users,
+  stats: initialState.stats,
   offline: false,
   error: null,
 };
@@ -190,6 +191,7 @@ export const offlineUser = () => {
     },
     messages: [],
     onlineUsers: [users[1]],
+    stats: initialState.stats,
     offline: false,
     error: null,
   };

@@ -8,6 +8,7 @@ import OfflineCheck from 'components/OfflineCheck'
 import Login from 'sections/Login'
 import useGlobalState from 'store/state'
 import checkAuth from 'util/checkAuth'
+import Admin from 'sections/Admin'
 
 export default () => {
   const { state, dispatch } = useGlobalState()
@@ -24,6 +25,7 @@ export default () => {
       <OfflineCheck />
       <Switch>
         <UnauthenticatedRoute path="/login" component={Login} />
+        <AuthenticatedRoute path="/admin" component={Admin} />
         <AuthenticatedRoute path="/" component={Chat} />
       </Switch>
     </>

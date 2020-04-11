@@ -65,6 +65,13 @@ export default (props: Props) => {
       })
     })
 
+    newSocket.on('stats', (payload: Message[]) => {
+      dispatch({
+        type: 'stats',
+        payload,
+      })
+    })
+
     newSocket.on('connect_error', (error: string) => {
       dispatch({
         type: 'offline',

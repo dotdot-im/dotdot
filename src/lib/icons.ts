@@ -52,6 +52,7 @@ import {
   faSmileWink,
   faSurprise,
   faTired,
+  faShieldAlt,
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -179,4 +180,5 @@ library.add(
   farSmileWink,
   farSurprise,
   farTired,
+  faShieldAlt,
 )

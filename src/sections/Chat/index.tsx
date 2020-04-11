@@ -1,5 +1,6 @@
 import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 import { useGlobalState } from 'store/state'
 import Loader from 'components/Loader'
@@ -9,6 +10,7 @@ import Messages from './Messages'
 import TextBox from './TextBox'
 import OnlineUsers from './OnlineUsers'
 import PasswordLock from './PasswordLock'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default () => {
   const { state } = useGlobalState()
@@ -22,6 +24,11 @@ export default () => {
           <Row>
             <Col>
               <PasswordLock />
+              { state.auth.user?.isAdmin && (
+                <Link to='/admin' style={ { marginLeft: '1em' } }>
+                  <FontAwesomeIcon icon='shield-alt' />
+                </Link>
+              ) }
             </Col>
             <Col>
               <OnlineUsers />

@@ -2,6 +2,7 @@ import produce from 'immer'
 
 import { AppState, Action, Message } from './types'
 import { MAX_MESSAGE_HISTORY } from '../constants'
+import { MAX_STATS_BARS } from 'sections/Admin'
 
 // TODO NEW BLOG POST
 // const REDUCER = {
@@ -93,6 +94,19 @@ export default produce((draft: AppState, action: Action) => {
         eachMessage.timestamp = new Date(eachMessage.timestamp)
         return eachMessage
       });
+      break;
+    case 'stats':
+      draft.stats.messages.push(action.payload.messages)
+      if (draft.stats.messages.length > MAX_STATS_BARS) {
+        draft.stats.messages.shift()
+      }
+
+      draft.stats.users.push(action.payload.users)
+      if (draft.stats.users.length > MAX_STATS_BARS) {
+        draft.stats.users.shift()
+      }
+
+      draft.stats.rooms = action.payload.rooms
       break;
   }
 })

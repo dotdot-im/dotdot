@@ -6,6 +6,7 @@ export type User = {
   color: string
   icon: IconName | null
   isActive: boolean
+  isAdmin?: boolean
   hasPassword: boolean
 }
 
@@ -20,6 +21,11 @@ export type Message = {
   }
 }
 
+export type RoomStats = {
+  active: number,
+  inactive: number,
+}
+
 export type AppState = {
   auth: {
     checked: boolean
@@ -31,6 +37,13 @@ export type AppState = {
   }
   onlineUsers: User[]
   messages: Message[]
+  stats: {
+    messages: number[],
+    users: number[],
+    rooms: RoomStats[],
+    onlineUsers: number,
+    totalMessages: number,
+  }
   offline: boolean
   error: string | null
 }

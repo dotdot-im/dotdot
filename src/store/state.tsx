@@ -3,7 +3,7 @@ import React from 'react'
 import reducer from './reducer'
 import { AppState, AppContext, Action } from './types'
 
-const initialState: AppState = {
+export const initialState: AppState = {
   auth: {
     checked: false,
     loggedIn: false,
@@ -14,6 +14,13 @@ const initialState: AppState = {
   },
   onlineUsers: [],
   messages: [],
+  stats: {
+    messages: [],
+    users: [],
+    rooms: [],
+    onlineUsers: 0,
+    totalMessages: 0,
+  },
   offline: false,
   error: null,
 }

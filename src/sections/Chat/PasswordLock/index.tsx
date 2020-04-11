@@ -6,6 +6,7 @@ import styles from './index.module.scss'
 import { fetchResource } from 'util/fetch'
 import useGlobalState from 'store/state'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import { API_URL } from '../../../constants'
 
 export default () => {
   const { state, dispatch } = useGlobalState()
@@ -68,7 +69,7 @@ export default () => {
   }
 
   return (
-    <div className={styles.passwordLock}>
+    <span className={styles.passwordLock}>
       <OverlayTrigger
         placement="bottom"
         delay={500}
@@ -125,6 +126,9 @@ export default () => {
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
+            <a href={ `${API_URL}/logout` }>
+              Logout
+            </a>
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
@@ -134,6 +138,6 @@ export default () => {
           </Modal.Footer>
         </Form>
       </Modal>
-    </div>
+    </span>
   )
 }

@@ -1,26 +1,26 @@
 {
   "files": {
     "main.css": "/static/css/main.75b50062.chunk.css",
-    "main.js": "/static/js/main.47816939.chunk.js",
-    "main.js.map": "/static/js/main.47816939.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.5243df93.js",
-    "runtime-main.js.map": "/static/js/runtime-main.5243df93.js.map",
-    "static/js/2.4960022d.chunk.js": "/static/js/2.4960022d.chunk.js",
-    "static/js/2.4960022d.chunk.js.map": "/static/js/2.4960022d.chunk.js.map",
-    "static/js/3.a5731287.chunk.js": "/static/js/3.a5731287.chunk.js",
-    "static/js/3.a5731287.chunk.js.map": "/static/js/3.a5731287.chunk.js.map",
+    "main.js": "/static/js/main.a8e821d0.chunk.js",
+    "main.js.map": "/static/js/main.a8e821d0.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.1552ce41.js",
+    "runtime-main.js.map": "/static/js/runtime-main.1552ce41.js.map",
+    "static/js/2.80058d12.chunk.js": "/static/js/2.80058d12.chunk.js",
+    "static/js/2.80058d12.chunk.js.map": "/static/js/2.80058d12.chunk.js.map",
+    "static/js/3.ae3f939c.chunk.js": "/static/js/3.ae3f939c.chunk.js",
+    "static/js/3.ae3f939c.chunk.js.map": "/static/js/3.ae3f939c.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.ccb1f0bb1e999f2f2e2368cf65dd93b8.js": "/precache-manifest.ccb1f0bb1e999f2f2e2368cf65dd93b8.js",
+    "precache-manifest.4cbdd88ed68e4758bb248bcf267b51a5.js": "/precache-manifest.4cbdd88ed68e4758bb248bcf267b51a5.js",
     "service-worker.js": "/service-worker.js",
     "static/css/main.75b50062.chunk.css.map": "/static/css/main.75b50062.chunk.css.map",
-    "static/js/2.4960022d.chunk.js.LICENSE.txt": "/static/js/2.4960022d.chunk.js.LICENSE.txt",
-    "static/js/3.a5731287.chunk.js.LICENSE.txt": "/static/js/3.a5731287.chunk.js.LICENSE.txt",
+    "static/js/2.80058d12.chunk.js.LICENSE.txt": "/static/js/2.80058d12.chunk.js.LICENSE.txt",
+    "static/js/3.ae3f939c.chunk.js.LICENSE.txt": "/static/js/3.ae3f939c.chunk.js.LICENSE.txt",
     "static/media/newMessage.mp3": "/static/media/newMessage.482e2f99.mp3"
   },
   "entrypoints": [
-    "static/js/runtime-main.5243df93.js",
-    "static/js/2.4960022d.chunk.js",
+    "static/js/runtime-main.1552ce41.js",
+    "static/js/2.80058d12.chunk.js",
     "static/css/main.75b50062.chunk.css",
-    "static/js/main.47816939.chunk.js"
+    "static/js/main.a8e821d0.chunk.js"
   ]
 }

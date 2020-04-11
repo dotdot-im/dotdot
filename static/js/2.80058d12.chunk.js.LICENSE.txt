@@ -17,6 +17,8 @@ object-assign
  * @license  MIT
  */
 
+/*! decimal.js-light v2.5.0 https://github.com/MikeMcl/decimal.js-light/LICENCE */
+
 /*! https://mths.be/utf8js v2.1.2 by @mathias */
 
 /** @license React v0.19.1

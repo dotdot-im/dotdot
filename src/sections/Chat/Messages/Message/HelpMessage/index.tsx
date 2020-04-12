@@ -42,7 +42,7 @@ export default () => {
           <tr>
             <td><code>/set icon</code></td>
             <td><code>/set icon smile</code></td>
-            <td>Change your icon, pick any of the ones from <a href="https://fontawesome.com/icons?d=gallery&s=regular&c=emoji&m=free" target='_blank'>this list</a></td>
+            <td>Change your icon, pick any of the ones from <a href="https://fontawesome.com/icons?d=gallery&s=regular&c=emoji&m=free" rel="noopener noreferrer" target='_blank'>this list</a></td>
           </tr>
           <tr>
             <td><code>/list</code></td>

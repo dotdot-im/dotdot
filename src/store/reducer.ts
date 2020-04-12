@@ -1,6 +1,6 @@
 import produce from 'immer'
 
-import { AppState, Action, Message } from './types'
+import { AppState, Action, Message, EVENTS } from './types'
 import { MAX_MESSAGE_HISTORY } from '../constants'
 import { MAX_STATS_BARS } from 'sections/Admin'
 
@@ -38,20 +38,25 @@ export default produce((draft: AppState, action: Action) => {
     case 'error':
       draft.error = action.payload
       break
-    case 'socketConnected':
-      draft.socket.connected = action.payload
-      draft.offline = !action.payload
+    case `socket_${EVENTS.CONNECT}`:
+      draft.socket.connected = true
+      draft.offline = false
       draft.error = null
       break
-    case 'onlineUsers':
-      draft.onlineUsers = action.payload
+    case `socket_${EVENTS.DISCONNECT}`:
+      draft.socket.connected = false
+      draft.offline = true
+      draft.error = null
+      break
+    case `socket_${EVENTS.ONLINE_USERS}`:
+      draft.onlineUsers = action.payload.users
       break
     case 'user_password':
       if (draft.auth.user) {
         draft.auth.user.hasPassword = true
       }
       break
-    case 'message':
+    case `socket_${EVENTS.MESSAGE}`:
       const message: Message = action.payload
       // delete draft from this user
       const existingDraft = draft.messages.findIndex(
@@ -89,13 +94,13 @@ export default produce((draft: AppState, action: Action) => {
         draft.messages.shift()
       }
       break;
-    case 'history':
+    case `socket_${EVENTS.HISTORY}`:
       draft.messages = action.payload.map((eachMessage: Message) => {
         eachMessage.timestamp = new Date(eachMessage.timestamp)
         return eachMessage
       });
       break;
-    case 'stats':
+    case `socket_${EVENTS.STATS}`:
       draft.stats.messages.push(action.payload.messages)
       if (draft.stats.messages.length > MAX_STATS_BARS) {
         draft.stats.messages.shift()
@@ -114,7 +119,7 @@ export default produce((draft: AppState, action: Action) => {
       draft.stats.freeMemory = Math.round(action.payload.freeMemory * 100)
       draft.stats.uptime = Math.round(action.payload.uptime)
       break;
-    case 'control':
+    case `socket_${EVENTS.CONTROL}`:
       Object.keys(action.payload).forEach(key => {
         if (typeof draft[key] !== 'undefined') {
           draft[key] = action.payload[key]

@@ -69,3 +69,15 @@ export type AuthData = {
   user: User
   token: string
 }
+
+export const EVENTS = {
+  CONNECT: 'connect',
+  DISCONNECT: 'disconnect',
+  MESSAGE: 'message',
+  COMMAND: 'command',
+  HISTORY: 'history',
+  ONLINE_USERS: 'users',
+  STATS: 'stats',
+  TIMER: 'timer',
+  CONTROL: 'control',
+};

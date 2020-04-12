@@ -9,6 +9,7 @@ import { VALID_USERNAME } from '../../../constants'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import useGlobalState from 'store/state'
+import { EVENTS } from 'store/types'
 
 type State = {
   message: string,
@@ -49,9 +50,9 @@ export default () => {
     if (!draft && (message.length < 1 || message.trim().length < 1)) {
       return
     }
-    let type = 'message'
+    let type = EVENTS.MESSAGE
     if (localState.isCommand) {
-      type = 'command'
+      type = EVENTS.COMMAND
     }
     socket?.emit(type, {
       message,

@@ -3,9 +3,9 @@ import socketio from 'socket.io-client'
 
 import { useGlobalState } from 'store/state'
 import { API_URL } from '../constants'
-import { Message } from 'store/types'
+import { Message, EVENTS } from 'store/types'
 
-const USAGE_TIMER_INTERAL = 1 * 1000
+const USAGE_TIMER_INTERAL = 30 * 1000
 
 type SocketContextType = {
   socket: SocketIOClient.Socket | null
@@ -40,40 +40,18 @@ export default (props: Props) => {
       timeout: 2000,
     })
 
-    console.log('set ping interval');
     setInterval(() => {
-      console.log('ping')
       if (newSocket.connected) {
-        newSocket.emit('ping')
-      } else {
-        console.log(' not connected')
+        newSocket.emit('timer')
       }
     }, USAGE_TIMER_INTERAL)
 
-    newSocket.on('connect', () => {
-      dispatch({
-        type: 'socketConnected',
-        payload: true,
-      })
-    })
-
-    newSocket.on('users', (payload: any) => {
-      dispatch({
-        type: 'onlineUsers',
-        payload: payload.users,
-      })
-    })
-
-    newSocket.on('message', (payload: Message) => {
-      dispatch({
-        type: 'message',
-        payload,
-      })
-    })
-    newSocket.on('history', (payload: Message[]) => {
-      dispatch({
-        type: 'history',
-        payload,
+    Object.values(EVENTS).forEach(event => {
+      newSocket.on(event, (payload: any) => {
+        dispatch({
+          type: `socket_${event}`,
+          payload: payload,
+        })
       })
     })
 
@@ -95,13 +73,6 @@ export default (props: Props) => {
       dispatch({
         type: 'offline',
         payload: null,
-      })
-    })
-
-    newSocket.on('control', (payload: any) => {
-      dispatch({
-        type: 'control',
-        payload,
       })
     })
 

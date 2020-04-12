@@ -38,6 +38,11 @@ export default produce((draft: AppState, action: Action) => {
     case 'error':
       draft.error = action.payload
       break
+    case 'user_password':
+      if (draft.auth.user) {
+        draft.auth.user.hasPassword = true
+      }
+      break
     case `socket_${EVENTS.CONNECT}`:
       draft.socket.connected = true
       draft.offline = false
@@ -50,11 +55,6 @@ export default produce((draft: AppState, action: Action) => {
       break
     case `socket_${EVENTS.ONLINE_USERS}`:
       draft.onlineUsers = action.payload.users
-      break
-    case 'user_password':
-      if (draft.auth.user) {
-        draft.auth.user.hasPassword = true
-      }
       break
     case `socket_${EVENTS.MESSAGE}`:
       const message: Message = action.payload
@@ -118,6 +118,9 @@ export default produce((draft: AppState, action: Action) => {
       draft.stats.cpuUsage = Math.round(action.payload.cpuUsage * 100)
       draft.stats.freeMemory = Math.round(action.payload.freeMemory * 100)
       draft.stats.uptime = Math.round(action.payload.uptime)
+      draft.stats.timeActive = action.payload.timeActive * 30
+      draft.stats.timeInactive = action.payload.timeInactive * 30
+      draft.stats.sessions = action.payload.sessions
       break;
     case `socket_${EVENTS.CONTROL}`:
       Object.keys(action.payload).forEach(key => {

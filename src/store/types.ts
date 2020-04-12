@@ -48,6 +48,9 @@ export type AppState = {
     cpuUsage: number,
     freeMemory: number,
     uptime: number,
+    timeActive: number,
+    timeInactive: number,
+    sessions: number,
   }
   offline: boolean
   error: string | null

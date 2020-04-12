@@ -8,6 +8,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { Message } from 'store/types'
 import styles from './index.module.scss'
 import useGlobalState from 'store/state'
+import HelpMessage from './HelpMessage'
 
 type Props = {
   message: Message
@@ -48,21 +49,29 @@ export default (props: Props) => {
     icon = ['far', iconName]
   }
 
-  // replace mentions with colored version
-  const message = reactStringReplace(props.message.message, /@([A-Za-z0-9]+(?:[_][A-Za-z0-9]+)*_?)/gmi, (username, index) => {
-    let style = {}
-    const userIndex = state.onlineUsers.findIndex(user => user.name === username)
-    if (userIndex > -1) {
-      style = {
-        color: `#${state.onlineUsers[userIndex].color}`
+  let message
+
+  if (isSystem && props.message.message === '/help') {
+    message = (
+      <HelpMessage />
+    )
+  } else {
+    // replace mentions with colored version
+    message = reactStringReplace(props.message.message, /@([A-Za-z0-9]+(?:[_][A-Za-z0-9]+)*_?)/gmi, (username, index) => {
+      let style = {}
+      const userIndex = state.onlineUsers.findIndex(user => user.name === username)
+      if (userIndex > -1) {
+        style = {
+          color: `#${state.onlineUsers[userIndex].color}`
+        }
       }
-    }
-    return (
-      <span key={index} className={ styles.mention } style={ style }>
-        @{username}
-      </span>
-    );
-  })
+      return (
+        <span key={index} className={ styles.mention } style={ style }>
+          @{username}
+        </span>
+      );
+    })
+  }
 
   return (
     <div

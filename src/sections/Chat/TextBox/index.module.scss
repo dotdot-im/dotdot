@@ -6,18 +6,18 @@ $command: #aaa;
   position: relative;
   margin-top: 1em;
 
-  span {
-    display: none;
+  .textIcon {
     position: absolute;
     top: 0.4em;
     right: 1.8em;
-    color: $secondary;
+    color: #999;
+    cursor: pointer;
   }
 }
 
 .private, .command {
-  span {
-    display: block;
+  .textIcon {
+    cursor: initial;
   }
 }
 
@@ -25,6 +25,10 @@ $command: #aaa;
   input, input:focus {
     border-color: $secondary;
     box-shadow: 0 0 0 0.2rem fade-out($secondary, 0.8);
+  }
+
+  .textIcon {
+    color: $secondary;
   }
 }
 
@@ -37,7 +41,7 @@ $command: #aaa;
     box-shadow: 0 0 0 0.2rem fade-out($command, 0.8);
   }
 
-  span {
+  .textIcon {
     color: inherit;
   }
 }

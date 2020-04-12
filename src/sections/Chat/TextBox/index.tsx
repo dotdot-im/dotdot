@@ -9,7 +9,7 @@ import { VALID_USERNAME } from '../../../constants'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import useGlobalState from 'store/state'
-import { EVENTS } from 'store/types'
+import { EVENTS, Message } from 'store/types'
 
 type State = {
   message: string,
@@ -19,7 +19,7 @@ type State = {
 }
 
 export default () => {
-  const { state } = useGlobalState();
+  const { state, dispatch } = useGlobalState();
   const [localState, setState] = useImmer<State>({
     message: '',
     private: false,
@@ -29,6 +29,12 @@ export default () => {
   const draftTimer = useRef<any>(null)
 
   const { socket } = useContext(SocketContext)
+
+  const askForHelp = () => {
+    dispatch({
+      type: 'help_message'
+    })
+  };
 
   const handleSubmit = (e: React.ChangeEvent<any>) => {
     e.preventDefault()
@@ -50,6 +56,11 @@ export default () => {
     if (!draft && (message.length < 1 || message.trim().length < 1)) {
       return
     }
+
+    if (message === '/help') {
+      return askForHelp();
+    }
+
     let type = EVENTS.MESSAGE
     if (localState.isCommand) {
       type = EVENTS.COMMAND
@@ -104,10 +115,19 @@ export default () => {
     }
   }
 
-  let icon: IconProp = 'lock'
+  let icon: IconProp = 'question-circle'
   if (localState.isCommand) {
     icon = 'code'
+  } else if (localState.private) {
+    icon = 'lock'
   }
+
+  const onIconClick = () => {
+    if (icon !== 'question-circle') {
+      return
+    }
+    askForHelp();
+  };
 
   return (
     <Form noValidate onSubmit={handleSubmit} className={ classNames(styles.textBox, 'container', { [styles.private]: localState.private, [styles.command]: localState.isCommand }) }>
@@ -120,9 +140,9 @@ export default () => {
           onChange={onType}
           value={localState.message}
         />
-        <span>
+        <div className={ styles.textIcon } onClick={ onIconClick }>
           <FontAwesomeIcon icon={ icon } />
-        </span>
+        </div>
       </Form.Group>
     </Form>
   )

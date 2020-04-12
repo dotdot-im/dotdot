@@ -1,6 +1,6 @@
 import produce from 'immer'
 
-import { AppState, Action, Message, EVENTS } from './types'
+import { AppState, Action, Message, EVENTS, User } from './types'
 import { MAX_MESSAGE_HISTORY } from '../constants'
 import { MAX_STATS_BARS } from 'sections/Admin'
 
@@ -43,6 +43,18 @@ export default produce((draft: AppState, action: Action) => {
         draft.auth.user.hasPassword = true
       }
       break
+    case 'help_message':
+      const helpMessage = {
+        user: systemUser,
+        message: '/help',
+        timestamp: new Date(),
+        attributes: {
+          private: false,
+          draft: false,
+        }
+      };
+      draft.messages.push(helpMessage)
+      break;
     case `socket_${EVENTS.CONNECT}`:
       draft.socket.connected = true
       draft.offline = false
@@ -130,3 +142,12 @@ export default produce((draft: AppState, action: Action) => {
       })
   }
 })
+
+const systemUser: User = {
+  user_id: 'dotdot',
+  name: 'dotdot',
+  icon: 'cog',
+  color: 'f75f00',
+  isActive: true,
+  hasPassword: true,
+};

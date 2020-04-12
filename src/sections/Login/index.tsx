@@ -3,6 +3,7 @@ import { Form, Container } from 'react-bootstrap'
 import { useImmer } from 'use-immer'
 import classNames from 'classnames'
 import HCaptcha from "react-hcaptcha"
+import ReCaptcha from "react-google-recaptcha"
 
 import { useGlobalState } from 'store/state'
 import { fetchResource } from 'util/fetch'
@@ -10,7 +11,7 @@ import Logo from 'components/Logo'
 
 import styles from './index.module.scss'
 import { AuthData } from 'store/types'
-import { CAPTCHA_KEY } from '../../constants'
+import { CAPTCHA_KEY, CAPTCHA_PROVIDER } from '../../constants'
 
 type State = {
   username: string
@@ -57,11 +58,15 @@ export default () => {
     }
     fetchResource('/auth', 'POST', body)
       .then((data: AuthData) => {
+        if (captchaRef.current.resetCaptcha) {
+          captchaRef.current.resetCaptcha()
+        }
+
         if (!data || !data.user.user_id) {
           console.warn('Invalid user object')
           dispatch({
             type: 'login',
-            payload: data,
+            payload: null,
           })
           return
         }
@@ -95,7 +100,7 @@ export default () => {
     )
   }
 
-  let theme = 'light'
+  let theme: 'light' | 'dark' = 'light'
   if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
     theme = 'dark'
   }
@@ -138,13 +143,24 @@ export default () => {
               value={localState.password}
             />
           )}
-          <HCaptcha
-            ref={ captchaRef }
-            size='invisible'
-            theme={ theme }
-            sitekey={ CAPTCHA_KEY }
-            onVerify={ oncaptchaChange }
-          />
+          { CAPTCHA_PROVIDER === 'recaptcha' && (
+            <ReCaptcha
+              ref={ captchaRef }
+              size='invisible'
+              theme={ theme }
+              sitekey={ CAPTCHA_KEY }
+              onChange={ oncaptchaChange }
+            />
+          )}
+          { CAPTCHA_PROVIDER === 'hcaptcha' && (
+            <HCaptcha
+              ref={ captchaRef }
+              size='invisible'
+              theme={ theme }
+              sitekey={ CAPTCHA_KEY }
+              onVerify={ oncaptchaChange }
+            />
+          )}
           <button type="submit" style={{ visibility: 'hidden' }}>
             Login
           </button>

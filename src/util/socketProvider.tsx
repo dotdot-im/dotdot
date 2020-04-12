@@ -78,8 +78,7 @@ export default (props: Props) => {
 
     newSocket.on('error', (error: string) => {
       dispatch({
-        type: 'socketConnected',
-        payload: false,
+        type: `socket_${EVENTS.DISCONNECT}`,
       })
 
       if (error) {

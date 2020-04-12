@@ -9,7 +9,7 @@ import { VALID_USERNAME } from '../../../constants'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import useGlobalState from 'store/state'
-import { EVENTS, Message } from 'store/types'
+import { EVENTS } from 'store/types'
 
 type State = {
   message: string

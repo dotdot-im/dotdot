@@ -22,6 +22,7 @@ export type Message = {
 }
 
 export type RoomStats = {
+  id: string,
   active: number,
   inactive: number,
 }
@@ -83,4 +84,5 @@ export const EVENTS = {
   STATS: 'stats',
   TIMER: 'timer',
   CONTROL: 'control',
+  CHANGE_ROOM: 'change_room',
 };

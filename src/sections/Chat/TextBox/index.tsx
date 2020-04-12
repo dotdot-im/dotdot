@@ -12,14 +12,19 @@ import useGlobalState from 'store/state'
 import { EVENTS } from 'store/types'
 
 type State = {
-  message: string,
-  private: boolean,
-  to: string | null,
-  isCommand: boolean,
+  message: string
+  private: boolean
+  to: string | null
+  isCommand: boolean
 }
 
-export default () => {
-  const { state, dispatch } = useGlobalState();
+type Props = {
+  onFocus?: () => void
+  onBlur?: () => void
+}
+
+export default ({ onFocus, onBlur }: Props) => {
+  const { state, dispatch } = useGlobalState()
   const [localState, setState] = useImmer<State>({
     message: '',
     private: false,
@@ -32,9 +37,9 @@ export default () => {
 
   const askForHelp = () => {
     dispatch({
-      type: 'help_message'
+      type: 'help_message',
     })
-  };
+  }
 
   const handleSubmit = (e: React.ChangeEvent<any>) => {
     e.preventDefault()
@@ -43,7 +48,7 @@ export default () => {
       return
     }
 
-    sendMessage(localState.message);
+    sendMessage(localState.message)
 
     setState((draft) => {
       draft.message = ''
@@ -58,7 +63,7 @@ export default () => {
     }
 
     if (message === '/help') {
-      return askForHelp();
+      return askForHelp()
     }
 
     let type = EVENTS.MESSAGE
@@ -83,17 +88,21 @@ export default () => {
     const value: string = e.currentTarget.value
 
     // special messages
-    let isCommand = false;
-    let isPM = false;
-    let to: string | null = null;
+    let isCommand = false
+    let isPM = false
+    let to: string | null = null
 
     if (value[0] === '/') {
-      isCommand = true;
+      isCommand = true
     } else if (value[0] === '@') {
       const words = value.split(' ')
-      isPM = true;
-      if (words.length > 0 && words[0][0] === '@' && VALID_USERNAME.test(words[0].substr(1))) {
-        to = words[0].substr(1);
+      isPM = true
+      if (
+        words.length > 0 &&
+        words[0][0] === '@' &&
+        VALID_USERNAME.test(words[0].substr(1))
+      ) {
+        to = words[0].substr(1)
       }
     }
 
@@ -105,7 +114,7 @@ export default () => {
     })
 
     if (isPM || isCommand) {
-      return;
+      return
     }
 
     if (state.draftTimer > 0) {
@@ -126,11 +135,18 @@ export default () => {
     if (icon !== 'question-circle') {
       return
     }
-    askForHelp();
-  };
+    askForHelp()
+  }
 
   return (
-    <Form noValidate onSubmit={handleSubmit} className={ classNames(styles.textBox, 'container', { [styles.private]: localState.private, [styles.command]: localState.isCommand }) }>
+    <Form
+      noValidate
+      onSubmit={handleSubmit}
+      className={classNames(styles.textBox, 'container', {
+        [styles.private]: localState.private,
+        [styles.command]: localState.isCommand,
+      })}
+    >
       <Form.Group controlId="chatForm.message">
         <Form.Control
           as="input"
@@ -138,10 +154,12 @@ export default () => {
           placeholder="Type a message..."
           autoFocus
           onChange={onType}
+          onFocus={onFocus}
+          onBlur={onBlur}
           value={localState.message}
         />
-        <div className={ styles.textIcon } onClick={ onIconClick }>
-          <FontAwesomeIcon icon={ icon } />
+        <div className={styles.textIcon} onClick={onIconClick}>
+          <FontAwesomeIcon icon={icon} />
         </div>
       </Form.Group>
     </Form>

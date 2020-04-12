@@ -35,6 +35,7 @@ export type AppState = {
   socket: {
     connected: boolean
   }
+  draftTimer: number,
   onlineUsers: User[]
   messages: Message[]
   stats: {
@@ -43,9 +44,15 @@ export type AppState = {
     rooms: RoomStats[],
     onlineUsers: number,
     totalMessages: number,
+    totalUsers: number,
+    cpuUsage: number,
+    freeMemory: number,
+    uptime: number,
   }
   offline: boolean
   error: string | null
+
+  [key: string]: any
 }
 
 export type Action = {

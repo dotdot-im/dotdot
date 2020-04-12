@@ -5,6 +5,8 @@ import { useGlobalState } from 'store/state'
 import { API_URL } from '../constants'
 import { Message } from 'store/types'
 
+const USAGE_TIMER_INTERAL = 1 * 1000
+
 type SocketContextType = {
   socket: SocketIOClient.Socket | null
 }
@@ -37,6 +39,16 @@ export default (props: Props) => {
       reconnection: true,
       timeout: 2000,
     })
+
+    console.log('set ping interval');
+    setInterval(() => {
+      console.log('ping')
+      if (newSocket.connected) {
+        newSocket.emit('ping')
+      } else {
+        console.log(' not connected')
+      }
+    }, USAGE_TIMER_INTERAL)
 
     newSocket.on('connect', () => {
       dispatch({
@@ -72,17 +84,24 @@ export default (props: Props) => {
       })
     })
 
-    newSocket.on('connect_error', (error: string) => {
+    newSocket.on('connect_error', () => {
       dispatch({
         type: 'offline',
         payload: null,
       })
     })
 
-    newSocket.on('connect_timeout', (timeout: string) => {
+    newSocket.on('connect_timeout', () => {
       dispatch({
         type: 'offline',
         payload: null,
+      })
+    })
+
+    newSocket.on('control', (payload: any) => {
+      dispatch({
+        type: 'control',
+        payload,
       })
     })
 

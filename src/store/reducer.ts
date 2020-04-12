@@ -107,6 +107,18 @@ export default produce((draft: AppState, action: Action) => {
       }
 
       draft.stats.rooms = action.payload.rooms
+      draft.stats.onlineUsers = action.payload.users
+      draft.stats.totalUsers = action.payload.totalUsers
+      draft.stats.totalMessages = action.payload.totalMessages
+      draft.stats.cpuUsage = Math.round(action.payload.cpuUsage * 100)
+      draft.stats.freeMemory = Math.round(action.payload.freeMemory * 100)
+      draft.stats.uptime = Math.round(action.payload.uptime)
       break;
+    case 'control':
+      Object.keys(action.payload).forEach(key => {
+        if (typeof draft[key] !== 'undefined') {
+          draft[key] = action.payload[key]
+        }
+      })
   }
 })

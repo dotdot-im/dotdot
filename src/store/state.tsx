@@ -2,6 +2,7 @@ import React from 'react'
 
 import reducer from './reducer'
 import { AppState, AppContext, Action } from './types'
+import { MAX_STATS_BARS } from 'sections/Admin'
 
 export const initialState: AppState = {
   auth: {
@@ -12,14 +13,19 @@ export const initialState: AppState = {
   socket: {
     connected: false,
   },
+  draftTimer: 100,
   onlineUsers: [],
   messages: [],
   stats: {
-    messages: [],
-    users: [],
+    messages: new Array(MAX_STATS_BARS).fill(0),
+    users: new Array(MAX_STATS_BARS).fill(0),
     rooms: [],
     onlineUsers: 0,
+    totalUsers: 0,
     totalMessages: 0,
+    cpuUsage: 0,
+    freeMemory: 0,
+    uptime: 0,
   },
   offline: false,
   error: null,

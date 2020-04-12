@@ -8,6 +8,7 @@ import styles from './index.module.scss'
 import { VALID_USERNAME } from '../../../constants'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import useGlobalState from 'store/state'
 
 type State = {
   message: string,
@@ -17,7 +18,8 @@ type State = {
 }
 
 export default () => {
-  const [state, setState] = useImmer<State>({
+  const { state } = useGlobalState();
+  const [localState, setState] = useImmer<State>({
     message: '',
     private: false,
     to: null,
@@ -30,11 +32,11 @@ export default () => {
   const handleSubmit = (e: React.ChangeEvent<any>) => {
     e.preventDefault()
 
-    if (state.message.length < 1 || state.message.trim().length < 1) {
+    if (localState.message.length < 1 || localState.message.trim().length < 1) {
       return
     }
 
-    sendMessage(state.message);
+    sendMessage(localState.message);
 
     setState((draft) => {
       draft.message = ''
@@ -48,15 +50,15 @@ export default () => {
       return
     }
     let type = 'message'
-    if (state.isCommand) {
+    if (localState.isCommand) {
       type = 'command'
     }
     socket?.emit(type, {
       message,
       attributes: {
         draft,
-        private: state.private,
-        to: state.to,
+        private: localState.private,
+        to: localState.to,
       },
     })
   }
@@ -94,18 +96,20 @@ export default () => {
       return;
     }
 
-    draftTimer.current = setTimeout(() => {
-      sendMessage(value, true)
-    }, 100)
+    if (state.draftTimer > 0) {
+      draftTimer.current = setTimeout(() => {
+        sendMessage(value, true)
+      }, state.draftTimer)
+    }
   }
 
   let icon: IconProp = 'lock'
-  if (state.isCommand) {
+  if (localState.isCommand) {
     icon = 'code'
   }
 
   return (
-    <Form noValidate onSubmit={handleSubmit} className={ classNames(styles.textBox, 'container', { [styles.private]: state.private, [styles.command]: state.isCommand }) }>
+    <Form noValidate onSubmit={handleSubmit} className={ classNames(styles.textBox, 'container', { [styles.private]: localState.private, [styles.command]: localState.isCommand }) }>
       <Form.Group controlId="chatForm.message">
         <Form.Control
           as="input"
@@ -113,7 +117,7 @@ export default () => {
           placeholder="Type a message..."
           autoFocus
           onChange={onType}
-          value={state.message}
+          value={localState.message}
         />
         <span>
           <FontAwesomeIcon icon={ icon } />

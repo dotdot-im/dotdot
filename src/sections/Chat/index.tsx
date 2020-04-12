@@ -25,7 +25,7 @@ export default () => {
             <Col>
               <PasswordLock />
               { state.auth.user?.isAdmin && (
-                <Link to='/admin' style={ { marginLeft: '1em' } }>
+                <Link to='/admin' title='Monitoring' style={ { marginLeft: '1em' } }>
                   <FontAwesomeIcon icon='shield-alt' />
                 </Link>
               ) }

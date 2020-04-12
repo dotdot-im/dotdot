@@ -1,14 +1,42 @@
 import React from 'react'
-import { Container, Row, Col } from 'react-bootstrap'
+import { Container, Row, Col, Table } from 'react-bootstrap'
 import { BarChart, XAxis, YAxis, Bar, Tooltip, ResponsiveContainer, Label, Legend } from 'recharts'
 
 import useGlobalState from 'store/state';
 import RealtimeChart from './RealtimeChart';
+import { forHumans } from 'lib/secondsToHuman';
 
 export const MAX_STATS_BARS = 100;
 
 export default () => {
   const { state } = useGlobalState()
+
+  const tableData = [
+    {
+      header: 'Total users now',
+      data: state.stats.onlineUsers,
+    },
+    {
+      header: 'Total users',
+      data: state.stats.totalUsers,
+    },
+    {
+      header: 'Total messages',
+      data: state.stats.totalMessages,
+    },
+    {
+      header: 'CPU usage',
+      data: state.stats.cpuUsage + '%',
+    },
+    {
+      header: 'Free memory',
+      data: state.stats.freeMemory + '%',
+    },
+    {
+      header: 'Server Uptime',
+      data: forHumans(state.stats.uptime),
+    },
+  ]
 
   const roomData = state.stats.rooms
 
@@ -48,6 +76,20 @@ export default () => {
       </Row>
       <Row>
         <Col>
+          <Table size='sm' variant="dark" className='mt-4'>
+            <tbody>
+              { tableData.map(row => (
+                <tr key={ row.header }>
+                  <th style={ { width: '230px' } }>
+                    { row.header }
+                  </th>
+                  <td>
+                    { row.data }
+                  </td>
+                </tr>
+              )) }
+            </tbody>
+          </Table>
         </Col>
       </Row>
     </Container>

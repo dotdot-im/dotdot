@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import classNames from 'classnames'
 import { Container, Row, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
@@ -12,11 +12,19 @@ import TextBox from './TextBox'
 import OnlineUsers from './OnlineUsers'
 import PasswordLock from './PasswordLock'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useImmer } from 'use-immer'
+
+type State = {
+  isTextBoxFocused: boolean,
+  focusedResizing: boolean,
+}
 
 export default () => {
   const { state } = useGlobalState()
-  const [isTextBoxFocused, setTextBoxFocused] = useState(false)
-  const [focusedResizing, setFocusedResizing] = useState(false)
+  const [ , setState ] = useImmer<State>({
+    isTextBoxFocused: false,
+    focusedResizing: false,
+  })
 
   let chatArea = <Loader />
   let headerStyle = {
@@ -25,34 +33,46 @@ export default () => {
   } as React.CSSProperties
 
   // On window scroll
-  const setHeaderPosition = () => {
-    if (isTextBoxFocused) {
-      // And while focused on field
-      if (!focusedResizing) {
-        setFocusedResizing(true)
-        headerStyle.position = 'absolute'
+  const setHeaderPosition = useCallback(() => {
+    setState(draft => {
+      if (draft.isTextBoxFocused) {
+        // And while focused on field
+        if (!draft.focusedResizing) {
+          draft.focusedResizing = true
+          headerStyle.position = 'absolute'
+        }
+        // Update the header top position
+        headerStyle.top = window.pageYOffset + 'px'
       }
-      // Update the header top position
-      headerStyle.top = window.pageYOffset + 'px'
-    }
-  }
+    })
+    // eslint-disable-next-line
+  }, [setState]);
 
   useEffect(() => {
     window.addEventListener('scroll', setHeaderPosition, true)
-  }, [])
+
+    return () => {
+      window.removeEventListener('scroll', setHeaderPosition)
+    }
+  }, [setHeaderPosition])
 
   const handleTextBoxFocus = () => {
-    setTextBoxFocused(true)
+    setState(draft => {
+      draft.isTextBoxFocused = true
+    })
     setHeaderPosition()
   }
 
   const handleTextBoxBlur = () => {
-    setTextBoxFocused(false)
-    if (focusedResizing) {
-      setFocusedResizing(false)
-      headerStyle.position = 'fixed'
-      headerStyle.top = 0
-    }
+    setState(draft => {
+      draft.isTextBoxFocused = false
+
+      if (draft.focusedResizing) {
+        draft.focusedResizing = false
+        headerStyle.position = 'fixed'
+        headerStyle.top = 0
+      }
+    })
   }
 
   if (state.socket.connected) {

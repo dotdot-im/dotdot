@@ -27,7 +27,7 @@ export default (props: Props) => {
 
   const userColor = `#${userData.color}`
   const isSystem = userData.user_id === 'dotdot'
-  const isUserOnline = isSystem || (state.onlineUsers.findIndex(user => user.user_id === userData.user_id) > -1 && userData.isActive)
+  const isUserOnline = isSystem || (state.onlineUsers.findIndex(user => user.user_id === userData.user_id) > -1)
 
   let iconName: IconName = 'circle'
   if (userData.icon) {
@@ -87,6 +87,7 @@ export default (props: Props) => {
       className={classNames(styles.message, {
         [styles.system]: isSystem,
         [styles.offline]: !isUserOnline,
+        [styles.inactive]: !userData.isActive,
         [styles.draft]: props.message.attributes.draft,
         [styles.private]: props.message.attributes.private,
       })}

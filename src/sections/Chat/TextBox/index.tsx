@@ -38,7 +38,7 @@ export default ({ onFocus, onBlur }: Props) => {
   const askForHelp = () => {
     dispatch({
       type: 'system_message',
-      payload: '/help'
+      payload: '/help',
     })
   }
 
@@ -154,6 +154,7 @@ export default ({ onFocus, onBlur }: Props) => {
           type="text"
           placeholder="Type a message..."
           autoFocus
+          autocomplete="off"
           onChange={onType}
           onFocus={onFocus}
           onBlur={onBlur}

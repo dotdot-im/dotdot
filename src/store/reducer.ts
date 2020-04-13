@@ -69,18 +69,38 @@ export default produce((draft: AppState, action: Action) => {
       draft.onlineUsers = action.payload.users
       break
     case `socket_${EVENTS.MESSAGE}`:
-      const message: Message = action.payload
-      // delete draft from this user
-      const existingDraft = draft.messages.findIndex(
-        (eachMessage) =>
-          eachMessage.attributes.draft &&
-          eachMessage.user.user_id === message.user.user_id
-      )
-      if (existingDraft > -1) {
-        draft.messages.splice(existingDraft, 1)
+      const message: Message = {
+        timestamp: new Date(action.payload.timestamp),
+        attributes: action.payload.attributes,
+        message: action.payload.message,
+        user: action.payload.user,
+      }
+      // delete draft from this user, and if the draft is past messages, stay there
+      let draftIsPastMessage = false;
+      let draftIndex = -1;
+      for (let i = draft.messages.length - 1; i >= 0; i--) {
+        const eachMessage = draft.messages[i]
+        if (!eachMessage.attributes.draft) {
+          draftIsPastMessage = true
+        }
+        if (eachMessage.attributes.draft && eachMessage.user.user_id === message.user.user_id) {
+          draftIndex = i;
+          break;
+        }
       }
 
-      if (message.message.trim().length < 1) {
+      const isEmpty = message.message.trim().length < 1
+
+      if (draftIndex > -1) {
+        if (draftIsPastMessage) {
+          draft.messages.splice(draftIndex, 1)
+        } else if (!isEmpty) {
+          draft.messages[draftIndex] = message
+          return;
+        }
+      }
+
+      if (isEmpty) {
         return;
       }
 
@@ -95,12 +115,7 @@ export default produce((draft: AppState, action: Action) => {
         }
       }
 
-      draft.messages.push({
-        timestamp: new Date(message.timestamp),
-        attributes: message.attributes,
-        message: message.message,
-        user: message.user,
-      })
+      draft.messages.push(message)
 
       if (draft.messages.length > MAX_MESSAGE_HISTORY) {
         draft.messages.shift()

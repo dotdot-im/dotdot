@@ -43,17 +43,17 @@ export default produce((draft: AppState, action: Action) => {
         draft.auth.user.hasPassword = true
       }
       break
-    case 'help_message':
-      const helpMessage = {
+    case 'system_message':
+      const systemMessage = {
         user: systemUser,
-        message: '/help',
+        message: action.payload,
         timestamp: new Date(),
         attributes: {
           private: false,
           draft: false,
         }
       };
-      draft.messages.push(helpMessage)
+      draft.messages.push(systemMessage)
       break;
     case `socket_${EVENTS.CONNECT}`:
       draft.socket.connected = true

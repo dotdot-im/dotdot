@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { OverlayTrigger, Tooltip, Button, Modal, Form } from 'react-bootstrap'
+import classNames from 'classnames'
 
 import styles from './index.module.scss'
 import { fetchResource } from 'util/fetch'
@@ -125,13 +126,11 @@ export default () => {
               </Form.Control.Feedback>
             </Form.Group>
           </Modal.Body>
-          <Modal.Footer>
-            <a href={ `${API_URL}/logout` }>
+          <Modal.Footer className={ styles.footer }>
+            <a href={ `${API_URL}/logout` } className={ classNames(styles.left, 'text-danger') }>
               Logout
             </a>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
+
             <Button type="submit" variant="primary">
               Set password
             </Button>

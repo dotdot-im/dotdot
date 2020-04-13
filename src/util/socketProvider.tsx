@@ -46,6 +46,16 @@ export default (props: Props) => {
       }
     }, USAGE_TIMER_INTERAL)
 
+    // remind to set a password
+    if (!state.auth.user?.hasPassword) {
+      setTimeout(() => {
+        dispatch({
+          type: 'system_message',
+          payload: 'Remember: If you want to keep this username, you must set a password! You can set it by clicking on the lock icon on the top left of the screen.'
+        })
+      }, 60 * 1000);
+    }
+
     Object.values(EVENTS).forEach(event => {
       newSocket.on(event, (payload: any) => {
         dispatch({

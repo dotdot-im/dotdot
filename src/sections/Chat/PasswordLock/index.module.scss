@@ -34,3 +34,12 @@ $lockedColor: fade-out(#fff, 0.7);
     transform: scale(1);
   }
 }
+
+.footer {
+  position: relative;
+
+  .left {
+    position: absolute;
+    left: 1em;
+  }
+}

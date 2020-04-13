@@ -16,64 +16,59 @@ import { useImmer } from 'use-immer'
 
 type State = {
   isTextBoxFocused: boolean,
-  focusedResizing: boolean,
+  scrollingWhileFocused: boolean,
 }
 
 export default () => {
   const { state } = useGlobalState()
   const [ localState, setState ] = useImmer<State>({
     isTextBoxFocused: false,
-    focusedResizing: false,
+    scrollingWhileFocused: false,
   })
 
   let chatArea = <Loader />
-  let headerStyle = {
-    position: 'static',
-    top: '0px',
-  } as React.CSSProperties
 
   // On window scroll
-  // const setHeaderPosition = useCallback(() => {
-  //   setState(draft => {
-  //     if (draft.isTextBoxFocused) {
-  //       // And while focused on field
-  //       if (!draft.focusedResizing) {
-  //         draft.focusedResizing = true
-  //         headerStyle.position = 'absolute'
-  //       }
-  //       // Update the header top position
-  //       headerStyle.top = window.pageYOffset + 'px'
-  //     }
-  //   })
-  //   // eslint-disable-next-line
-  // }, [setState]);
+  const setHeaderPosition = useCallback(() => {
+    setState(draft => {
+      if (draft.isTextBoxFocused) {
+        draft.scrollingWhileFocused = true
+      }
+    })
+    // eslint-disable-next-line
+  }, [setState]);
 
-  // useEffect(() => {
-  //   window.addEventListener('scroll', setHeaderPosition, true)
+  useEffect(() => {
+    window.addEventListener('scroll', setHeaderPosition, true)
 
-  //   return () => {
-  //     window.removeEventListener('scroll', setHeaderPosition)
-  //   }
-  // }, [setHeaderPosition])
+    return () => {
+      window.removeEventListener('scroll', setHeaderPosition)
+    }
+  }, [setHeaderPosition])
 
-  // const handleTextBoxFocus = () => {
-  //   setState(draft => {
-  //     draft.isTextBoxFocused = true
-  //   })
-  //   setHeaderPosition()
-  // }
+  const handleTextBoxFocus = () => {
+    setState(draft => {
+      draft.isTextBoxFocused = true
+    })
+    setHeaderPosition()
+  }
 
-  // const handleTextBoxBlur = () => {
-  //   setState(draft => {
-  //     draft.isTextBoxFocused = false
+  const handleTextBoxBlur = () => {
+    setState(draft => {
+      draft.isTextBoxFocused = false
+      draft.scrollingWhileFocused = false
+    })
+  }
 
-  //     if (draft.focusedResizing) {
-  //       draft.focusedResizing = false
-  //       headerStyle.position = 'fixed'
-  //       headerStyle.top = 0
-  //     }
-  //   })
-  // }
+  const headerStyle = {
+    position: 'static',
+    top: 0,
+  } as React.CSSProperties
+
+  if (localState.scrollingWhileFocused) {
+    headerStyle.position = 'absolute';
+    headerStyle.top = window.pageYOffset + 'px'
+  }
 
   if (state.socket.connected) {
     chatArea = (
@@ -101,8 +96,7 @@ export default () => {
         </div>
 
         <Messages />
-        <TextBox />
-        {/* <TextBox onFocus={handleTextBoxFocus} onBlur={handleTextBoxBlur} /> */}
+        <TextBox onFocus={handleTextBoxFocus} onBlur={handleTextBoxBlur} />
       </div>
     )
   }

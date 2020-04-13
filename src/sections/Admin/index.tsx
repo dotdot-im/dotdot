@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Container, Row, Col, Table } from 'react-bootstrap'
+import { Container, Row, Col } from 'react-bootstrap'
 import { BarChart, XAxis, YAxis, Bar, Tooltip, ResponsiveContainer, Label } from 'recharts'
 
 import useGlobalState from 'store/state';

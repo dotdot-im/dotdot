@@ -72,7 +72,7 @@ export default () => {
 
   if (state.socket.connected) {
     chatArea = (
-      <div className={styles.chat}>
+      <div className={classNames(styles.chat, { [styles.scrollingChat]: localState.scrollingWhileFocused })}>
         <div className={classNames(styles.header)} style={headerStyle}>
           <Container>
             <Row>

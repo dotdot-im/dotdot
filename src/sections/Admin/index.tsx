@@ -52,8 +52,9 @@ export default () => {
       },
       {
         header: 'Server',
-        data: 'CPU: ' + state.stats.cpuUsage + '% - Memory: ' + state.stats.freeMemory + '%',
-        detail: 'Up for ' + forHumans(state.stats.uptime)
+        data: 'CPU: ' + state.stats.cpuUsage + '% - RAM: ' + state.stats.freeMemory + '%',
+        detail: 'Up for ' + forHumans(state.stats.uptime),
+        tooltip: 'Shows CPU usage over the last few seconds, and free RAM',
       },
       {
         header: 'Avg Sessions / user',
@@ -66,6 +67,9 @@ export default () => {
   const roomData = state.stats.rooms
 
   const onRoomClick = (event: any) => {
+    if (!event) {
+      return
+    }
     const room = event.activePayload[0].payload.id
     if (socket) {
       socket.emit(EVENTS.CHANGE_ROOM, {

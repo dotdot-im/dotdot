@@ -23,16 +23,23 @@ export default (props: Props) => {
   const { state, dispatch } = useGlobalState()
   const [socket, setSocket] = useState<SocketIOClient.Socket | null>(null)
 
+  const hasPassword = state.auth.user?.hasPassword;
+
   useEffect(() => {
+    if (!state.auth.loggedIn) {
+      return
+    }
+
+    // socket already set up
+    if (socket) {
+      return;
+    }
+
     // clear any errors
     dispatch({
       type: 'error',
       payload: null,
     })
-
-    if (!state.auth.loggedIn) {
-      return
-    }
 
     // initialize the socket
     const newSocket = socketio(API_URL, {
@@ -47,7 +54,7 @@ export default (props: Props) => {
     }, USAGE_TIMER_INTERAL)
 
     // remind to set a password
-    if (!state.auth.user?.hasPassword) {
+    if (!hasPassword) {
       setTimeout(() => {
         dispatch({
           type: 'system_message',
@@ -109,7 +116,7 @@ export default (props: Props) => {
     })
 
     setSocket(newSocket)
-  }, [dispatch, state.auth.loggedIn])
+  }, [dispatch, socket, state.auth.loggedIn, hasPassword])
 
   let provider = {
     socket,

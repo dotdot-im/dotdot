@@ -164,6 +164,7 @@ export default ({ onFocus, onBlur }: Props) => {
           <FontAwesomeIcon icon={icon} />
         </div>
       </Form.Group>
+      <input type="submit" value='Send' style={ { position: 'relative', left: '-1000px' } } />
     </Form>
   )
 }

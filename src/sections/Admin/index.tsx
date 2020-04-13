@@ -15,6 +15,8 @@ export default () => {
 
   const { socket } = useContext(SocketContext)
 
+  const totalTime = state.stats.timeActive + state.stats.timeInactive
+
   const tableData = [
     {
       header: 'Users Online',
@@ -58,11 +60,11 @@ export default () => {
     },
     {
       header: 'Total Time Active',
-      data: forHumans(state.stats.timeActive),
+      data: forHumans(state.stats.timeActive) + ' (' + Math.round(state.stats.timeActive * 100 / totalTime) + '%)',
     },
     {
       header: 'Total Time Inactive',
-      data: forHumans(state.stats.timeInactive),
+      data: forHumans(state.stats.timeInactive) + ' (' + Math.round(state.stats.timeInactive * 100 / totalTime) + '%)',
     },
   ]
 

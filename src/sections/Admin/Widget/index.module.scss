@@ -1,0 +1,83 @@
+@import 'assets/scss/variables';
+
+$background: fade-out(#fff, 0.95);
+
+a.dashboardWidget {
+  transition-property: box-shadow transform;
+  transition-duration: .15s;
+  text-decoration: none;
+
+  &:hover {
+    box-shadow: 0 10px 1.5rem 0 rgba(0,0,0,.35);
+    transform: translateY(-2px);
+  }
+}
+
+.dashboardWidget {
+    background: $background;
+    border: fade-in($background, 0.1) solid 1px;
+    border-radius: 0.5em;
+    box-shadow: 0 0 1.5rem 0 rgba(0,0,0,.15);
+    color: $light;
+    padding: 1rem;
+    position: relative;
+    min-height: 5em;
+    display: block;
+    margin-bottom: 2rem;
+
+    h2 {
+        font-size: 1.5rem;
+        padding: 0.5em 0 1em;
+        color: $dark;
+    }
+
+    .title {
+        text-transform: uppercase;
+        font-size: 0.9em;
+        font-weight: bold;
+        letter-spacing: 0;
+        color: #8898aa;
+    }
+    .content {
+        font-size: 1.25rem;
+        margin: 0;
+        padding: 0;
+        color: $light;
+    }
+    .icon {
+        position: absolute;
+        border-radius: 50%;
+        top: 1em;
+        right: 1em;
+        background: $green;
+        display: block;
+        padding: 0.4em 0.7em;
+        color: white;
+        font-size: 1.25em;
+
+        &.blue {
+            background: $blue;
+        }
+
+        &.green {
+            background: $green;
+        }
+
+        &.orange {
+            background: $orange;
+        }
+    }
+    .history {
+        margin-bottom: -0.5rem;
+        margin-top: 0.75rem;
+        font-size: 0.9em;
+
+        .change {
+            margin-right: 1rem;
+        }
+
+        .text-muted {
+            font-weight: 100;
+        }
+    }
+}

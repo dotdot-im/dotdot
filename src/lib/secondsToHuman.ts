@@ -1,10 +1,10 @@
 export function forHumans ( seconds: number ) {
   const levels: [number, string][] = [
-      [Math.floor(seconds / 31536000), 'years'],
-      [Math.floor((seconds % 31536000) / 86400), 'days'],
-      [Math.floor(((seconds % 31536000) % 86400) / 3600), 'hours'],
-      [Math.floor((((seconds % 31536000) % 86400) % 3600) / 60), 'minutes'],
-      [(((seconds % 31536000) % 86400) % 3600) % 60, 'seconds'],
+      [Math.floor(seconds / 31536000), 'y'],
+      [Math.floor((seconds % 31536000) / 86400), 'd'],
+      [Math.floor(((seconds % 31536000) % 86400) / 3600), 'h'],
+      [Math.floor((((seconds % 31536000) % 86400) % 3600) / 60), 'm'],
+      [(((seconds % 31536000) % 86400) % 3600) % 60, 's'],
   ];
   let returntext = '';
 

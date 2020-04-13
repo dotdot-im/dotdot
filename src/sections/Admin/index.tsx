@@ -7,8 +7,16 @@ import RealtimeChart from './RealtimeChart';
 import { forHumans } from 'lib/secondsToHuman';
 import { SocketContext } from 'util/socketProvider';
 import { EVENTS } from 'store/types';
+import Widget from './Widget';
 
 export const MAX_STATS_BARS = 100;
+
+type Stat = {
+  header: string,
+  data: string | number,
+  detail?: string,
+  tooltip?: string,
+}
 
 export default () => {
   const { state } = useGlobalState()
@@ -17,55 +25,42 @@ export default () => {
 
   const totalTime = state.stats.timeActive + state.stats.timeInactive
 
-  const tableData = [
-    {
-      header: 'Users Online',
-      data: `${state.stats.onlineUsers}  (${Math.round(state.stats.onlineUsers * 100 / state.stats.totalUsers)}%)`,
-    },
-    {
-      header: 'Total Users',
-      data: state.stats.totalUsers,
-    },
-    {
-      header: 'Total Messages',
-      data: state.stats.totalMessages,
-    },
-    {
-      header: 'CPU Usage',
-      data: state.stats.cpuUsage + '%',
-    },
-    {
-      header: 'Free Memory',
-      data: state.stats.freeMemory + '%',
-    },
-    {
-      header: 'Server Uptime',
-      data: forHumans(state.stats.uptime),
-    },
-    {
-      header: 'Time Active / Ses',
-      data: forHumans(Math.round(state.stats.timeActive / state.stats.sessions)),
-    },
-    {
-      header: 'Time Inactive / Sess',
-      data: forHumans(Math.round(state.stats.timeInactive / state.stats.sessions)),
-    },
-    {
-      header: 'Total Sessions',
-      data: state.stats.sessions,
-    },
-    {
-      header: 'Avg Sessions / user',
-      data: Math.round(state.stats.sessions / state.stats.totalUsers),
-    },
-    {
-      header: 'Total Time Active',
-      data: forHumans(state.stats.timeActive) + ' (' + Math.round(state.stats.timeActive * 100 / totalTime) + '%)',
-    },
-    {
-      header: 'Total Time Inactive',
-      data: forHumans(state.stats.timeInactive) + ' (' + Math.round(state.stats.timeInactive * 100 / totalTime) + '%)',
-    },
+  const statsData: Stat[][] = [
+    [
+      {
+        header: 'Time Active / Session',
+        data: forHumans(Math.round(state.stats.timeActive / state.stats.sessions)),
+        detail: 'Total: ' + forHumans(state.stats.timeActive) + ' (' + Math.round(state.stats.timeActive * 100 / totalTime) + '%)'
+      },
+      {
+        header: 'Time Inactive / Session',
+        data: forHumans(Math.round(state.stats.timeInactive / state.stats.sessions)),
+        detail: 'Total: ' + forHumans(state.stats.timeInactive) + ' (' + Math.round(state.stats.timeInactive * 100 / totalTime) + '%)'
+      },
+    ],
+    [
+      {
+        header: 'Users Online',
+        data: Math.round(state.stats.onlineUsers * 100 / state.stats.totalUsers) + '%',
+        detail: `${state.stats.onlineUsers} out of ${state.stats.totalUsers}`,
+        tooltip: '',
+      },
+      {
+        header: 'Total Messages',
+        data: state.stats.totalMessages,
+        detail: Math.round(state.stats.totalMessages / state.stats.totalUsers) + ' messages / user'
+      },
+      {
+        header: 'Server',
+        data: 'CPU: ' + state.stats.cpuUsage + '% - Memory: ' + state.stats.freeMemory + '%',
+        detail: 'Up for ' + forHumans(state.stats.uptime)
+      },
+      {
+        header: 'Avg Sessions / user',
+        data: Math.round(state.stats.sessions / state.stats.totalUsers),
+        detail: 'Total sessions: ' + state.stats.sessions
+      },
+    ],
   ]
 
   const roomData = state.stats.rooms
@@ -112,25 +107,21 @@ export default () => {
           </div>
         </Col>
       </Row>
-      <Container>
-        <Row>
-          <Col>
-            <Table size='sm' variant="dark" className='mt-4'>
-              <tbody>
-                { tableData.map(row => (
-                  <tr key={ row.header }>
-                    <th style={ { width: '230px' } }>
-                      { row.header }
-                    </th>
-                    <td>
-                      { row.data }
-                    </td>
-                  </tr>
-                )) }
-              </tbody>
-            </Table>
-          </Col>
-        </Row>
+      <Container className='mt-4'>
+        { statsData.map((row, index) => (
+          <Row key={ index }>
+            { row.map(stats => (
+              <Col key={ stats.header }>
+                <Widget
+                  title={ stats.header }
+                  content={ stats.data }
+                  history={ stats.detail }
+                  tooltip={ stats.tooltip }
+                />
+              </Col>
+            )) }
+          </Row>
+        )) }
       </Container>
     </Container>
   )

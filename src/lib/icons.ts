@@ -55,6 +55,8 @@ import {
   faShieldAlt,
   faQuestionCircle,
   faPaperPlane,
+  faTimes,
+  faReply,
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -185,4 +187,6 @@ library.add(
   faShieldAlt,
   faQuestionCircle,
   faPaperPlane,
+  faTimes,
+  faReply,
 )

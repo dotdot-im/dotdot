@@ -13,10 +13,12 @@ import OnlineUsers from './OnlineUsers'
 import PasswordLock from './PasswordLock'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useImmer } from 'use-immer'
+import { Message } from 'store/types'
 
 type State = {
   isTextBoxFocused: boolean,
   scrollingWhileFocused: boolean,
+  replyTo: Message | null,
 }
 
 export default () => {
@@ -24,9 +26,24 @@ export default () => {
   const [ localState, setState ] = useImmer<State>({
     isTextBoxFocused: false,
     scrollingWhileFocused: false,
+    replyTo: null,
   })
 
   let chatArea = <Loader />
+
+  const onMessageClick = useCallback((messageTimestamp: number) => {
+    setState(draft => {
+      const messageReply = state.messages.find(eachMessage => eachMessage.timestamp.getTime() === messageTimestamp) || null
+      console.log('replying to ', messageReply);
+      draft.replyTo = messageReply
+    })
+  }, [state.messages, setState])
+
+  const cancelReply = useCallback(() => {
+    setState(draft => {
+      draft.replyTo = null
+    })
+  }, [setState])
 
   // On window scroll
   const setHeaderPosition = useCallback(() => {
@@ -95,8 +112,15 @@ export default () => {
           </Container>
         </div>
 
-        <Messages />
-        <TextBox onFocus={handleTextBoxFocus} onBlur={handleTextBoxBlur} />
+        <Messages
+          onMessageClick={ onMessageClick }
+        />
+        <TextBox
+          replyTo={ localState.replyTo }
+          onFocus={handleTextBoxFocus}
+          onBlur={handleTextBoxBlur}
+          onCancelReply={ cancelReply }
+        />
       </div>
     )
   }

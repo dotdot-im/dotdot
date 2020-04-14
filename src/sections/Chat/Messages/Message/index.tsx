@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import reactStringReplace from 'react-string-replace'
 import { IconProp, IconName } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { OverlayTrigger, Tooltip, Button } from 'react-bootstrap'
 
 import { Message } from 'store/types'
 import styles from './index.module.scss'
@@ -11,19 +11,21 @@ import useGlobalState from 'store/state'
 import HelpMessage from './HelpMessage'
 
 type Props = {
+  reply?: boolean
   message: Message
+  onClick?: (messageTimestamp: number) => void,
 }
 
 const USER_REGEX = new RegExp('@([A-Za-z0-9]+(?:[_][A-Za-z0-9]+)*_?)', 'gmi');
 const URL_REGEX = new RegExp(/((?:ftp|http|https):\/\/(?:\w+:{0,1}\w*@)?(?:\S+)(?::[0-9]+)?(?:\/|\/(?:[\w#!:.?+=&%@!\-/]))?)/, 'gmi');
 
-export default (props: Props) => {
+const MessageComponent = ({ message, onClick, reply }: Props) => {
   const { state } = useGlobalState()
 
   // User data comes from online users if available
   const userData = state.onlineUsers.find(
-    user => user.user_id === props.message.user.user_id
-  ) || props.message.user
+    user => user.user_id === message.user.user_id
+  ) || message.user
 
   const userColor = `#${userData.color}`
   const isSystem = userData.user_id === 'dotdot'
@@ -39,12 +41,21 @@ export default (props: Props) => {
   // special icons
   if (isSystem) {
     iconName = 'cog'
-  } else if (props.message.attributes.draft) {
+  } else if (message.attributes.draft) {
     iconName = 'circle-notch'
-  } else if (props.message.attributes.private) {
+  } else if (message.attributes.private) {
     iconName = 'lock'
   } else if (!isUserOnline) {
     iconName = 'meh'
+  }
+
+  const isReplyAllowed = !reply && onClick && !isSystem && !message.attributes.draft
+
+  const onReplyClick = () => {
+    if (!isReplyAllowed || !onClick) {
+      return
+    }
+    onClick(message.timestamp.getTime())
   }
 
   let icon: IconProp = iconName
@@ -52,15 +63,15 @@ export default (props: Props) => {
     icon = ['far', iconName]
   }
 
-  let message
+  let messageContent
 
-  if (isSystem && props.message.message === '/help') {
-    message = (
+  if (isSystem && message.message === '/help') {
+    messageContent = (
       <HelpMessage />
     )
   } else {
     // replace mentions with colored version
-    message = reactStringReplace(props.message.message, USER_REGEX, (username, index) => {
+    messageContent = reactStringReplace(message.message, USER_REGEX, (username, index) => {
       let style = {}
       const userIndex = state.onlineUsers.findIndex(user => user.name === username)
       if (userIndex > -1) {
@@ -75,7 +86,7 @@ export default (props: Props) => {
       );
     })
     // auto-link urls
-    message = reactStringReplace(message, URL_REGEX, (url) => {
+    messageContent = reactStringReplace(messageContent, URL_REGEX, (url) => {
       return (
         <a key={ url } href={ url } rel="noopener noreferrer" target='_blank'>{ url }</a>
       )
@@ -85,16 +96,23 @@ export default (props: Props) => {
   return (
     <div
       className={classNames(styles.message, {
+        [styles.reply]: reply,
         [styles.system]: isSystem,
         [styles.offline]: !isUserOnline,
         [styles.inactive]: !userData.isActive,
-        [styles.draft]: props.message.attributes.draft,
-        [styles.private]: props.message.attributes.private,
+        [styles.draft]: message.attributes.draft,
+        [styles.private]: message.attributes.private,
       })}
-      key={props.message.timestamp.toDateString()}
     >
-      <div className={classNames(styles.icon, { [styles.private]: props.message.attributes.private })} style={{ color: userColor, background: userColor }}>
-        { props.message.attributes.private && (
+      { isReplyAllowed && (
+        <div className={ styles.replyButton }>
+          <Button variant='link' onClick={ onReplyClick } title='Reply to this message'>
+            <FontAwesomeIcon icon='reply' />
+          </Button>
+        </div>
+      ) }
+      <div className={classNames(styles.icon, { [styles.private]: message.attributes.private })} style={{ color: userColor, background: userColor }}>
+        { message.attributes.private && (
           <OverlayTrigger
             placement="right"
             overlay={(
@@ -107,12 +125,12 @@ export default (props: Props) => {
             <FontAwesomeIcon icon={ icon } />
           </OverlayTrigger>
         ) }
-        { !props.message.attributes.private && (
-          <FontAwesomeIcon icon={ icon } spin={ props.message.attributes.draft } />
+        { !message.attributes.private && (
+          <FontAwesomeIcon icon={ icon } spin={ message.attributes.draft } />
         ) }
       </div>
       <div className={classNames(styles.timestamp)}>
-        {props.message.attributes.draft ? 'now' : props.message.timestamp.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}
+        {message.attributes.draft ? 'now' : message.timestamp.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}
       </div>
       <span
         className={classNames(styles.user)}
@@ -120,9 +138,19 @@ export default (props: Props) => {
       >
         {userData.name}
       </span>
+      { !reply && message.attributes.replyTo && (
+        <div className={ styles.replyBox } style={ { borderLeftColor: `#${message.attributes.replyTo.user.color}` } }>
+          <MessageComponent
+            reply
+            message={ message.attributes.replyTo }
+          />
+        </div>
+      ) }
       <div className={classNames(styles.body)}>
-        {message}
+        {messageContent}
       </div>
     </div>
   )
 }
+
+export default MessageComponent

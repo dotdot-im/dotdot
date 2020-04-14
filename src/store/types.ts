@@ -18,6 +18,8 @@ export type Message = {
     draft: boolean
     private: boolean
     to?: string | null
+    replyToTimestamp?: number | null
+    replyTo?: Message | null
   }
 }
 

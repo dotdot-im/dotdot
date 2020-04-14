@@ -15,7 +15,11 @@ type State = {
   unseenMessages: boolean, // are there new messages below the scroll point?
 }
 
-export default () => {
+type Props = {
+  onMessageClick: (messageTimestamp: number) => void,
+}
+
+export default (props: Props) => {
   const { state } = useGlobalState()
   const [localState, setLocalState] = useImmer<State>({
     scrollAtBottom: true,
@@ -71,7 +75,11 @@ export default () => {
               onScrollChanged={ onScrollChanged }
             >
               {state.messages.map((eachMessage) => (
-                <MessageComponent key={eachMessage.timestamp.getTime()} message={eachMessage} />
+                <MessageComponent
+                  key={eachMessage.timestamp.getTime()}
+                  onClick={ props.onMessageClick }
+                  message={eachMessage}
+                />
               ))}
             </ScrollBox>
           </div>

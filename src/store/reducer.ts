@@ -71,10 +71,11 @@ export default produce((draft: AppState, action: Action) => {
     case `socket_${EVENTS.MESSAGE}`:
       const msgObject: Message = {
         timestamp: new Date(action.payload.timestamp),
-        attributes: action.payload.attributes,
+        attributes: { ...action.payload.attributes },
         message: action.payload.message,
         user: action.payload.user,
       }
+
       // delete draft from this user, and if the draft is past messages, stay there
       let draftIsPastMessage = false;
       let draftIndex = -1;
@@ -105,10 +106,23 @@ export default produce((draft: AppState, action: Action) => {
         return;
       }
 
+      if (action.payload.attributes.replyTo) {
+        const messageReply = draft.messages.find(eachMessage => eachMessage.timestamp.getTime() === action.payload.attributes.replyTo) || null
+        if (messageReply) {
+          msgObject.attributes.replyTo = messageReply
+        }
+        msgObject.attributes.replyToTimestamp = action.payload.attributes.replyTo
+      }
+
       if (!msgObject.attributes.draft) {
         const lastMessage = draft.messages[draft.messages.length - 1]
 
-        if (lastMessage && lastMessage.user.user_id === msgObject.user.user_id && lastMessage.attributes.private === msgObject.attributes.private) {
+        if (
+            lastMessage &&
+            lastMessage.user.user_id === msgObject.user.user_id &&
+            lastMessage.attributes.private === msgObject.attributes.private &&
+            lastMessage.attributes.replyToTimestamp === msgObject.attributes.replyToTimestamp
+          ) {
           // last message was by this same user (and it's the same kind of message)
           lastMessage.message += `\n${msgObject.message}`
           lastMessage.timestamp = new Date(msgObject.timestamp)

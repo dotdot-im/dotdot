@@ -8,7 +8,8 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { SocketContext } from 'util/socketProvider'
 import { VALID_USERNAME } from '../../../constants'
 import useGlobalState from 'store/state'
-import { EVENTS } from 'store/types'
+import { EVENTS, Message } from 'store/types'
+import MessageComponent from '../Messages/Message'
 
 import styles from './index.module.scss'
 
@@ -21,12 +22,15 @@ type State = {
 }
 
 type Props = {
+  replyTo?: Message | null,
   onFocus?: () => void
   onBlur?: () => void
+  onCancelReply?: () => void
 }
 
-export default ({ onFocus, onBlur }: Props) => {
+export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
   const { state, dispatch } = useGlobalState()
+
   const [localState, setState] = useImmer<State>({
     message: '',
     private: false,
@@ -58,6 +62,8 @@ export default ({ onFocus, onBlur }: Props) => {
       draft.private = false
       draft.isCommand = false
     })
+
+    onCancelReply && onCancelReply()
   }
 
   const sendMessage = (message: string, draft: boolean = false) => {
@@ -79,6 +85,7 @@ export default ({ onFocus, onBlur }: Props) => {
         draft,
         private: localState.private,
         to: localState.to,
+        replyTo: replyTo ? replyTo.timestamp.getTime() : null,
       },
     })
   }
@@ -144,6 +151,19 @@ export default ({ onFocus, onBlur }: Props) => {
   return (
     <div className={ styles.area }>
       <Container>
+        {replyTo && (
+          <div className={ styles.reply } style={ { borderLeftColor: `#${replyTo.user.color}` } }>
+            <div className={ styles.actions }>
+              <Button variant='link' onClick={ onCancelReply }>
+                <FontAwesomeIcon icon='times' />
+              </Button>
+            </div>
+            <MessageComponent
+              reply
+              message={ replyTo }
+            />
+          </div>
+        )}
         <Form
           noValidate
           onSubmit={handleSubmit}

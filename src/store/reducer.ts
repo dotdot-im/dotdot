@@ -92,9 +92,9 @@ export default produce((draft: AppState, action: Action) => {
       const isEmpty = msgObject.message.trim().length < 1
 
       if (draftIndex > -1) {
-        if (draftIsPastMessage) {
+        if (draftIsPastMessage || !msgObject.attributes.draft) {
           draft.messages.splice(draftIndex, 1)
-        } else if (!isEmpty) {
+        } else if (!isEmpty && msgObject.attributes.draft) {
           draft.messages[draftIndex].message = msgObject.message
           draft.messages[draftIndex].timestamp = new Date(msgObject.timestamp)
           return;

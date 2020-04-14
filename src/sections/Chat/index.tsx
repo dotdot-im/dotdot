@@ -78,7 +78,7 @@ export default () => {
             <Row>
               <Col>
                 <PasswordLock />
-                {state.auth.user?.isAdmin && (
+                {state.auth.user && state.auth.user.isAdmin && (
                   <Link
                     to="/admin"
                     title="Monitoring"

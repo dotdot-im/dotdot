@@ -69,7 +69,7 @@ export default produce((draft: AppState, action: Action) => {
       draft.onlineUsers = action.payload.users
       break
     case `socket_${EVENTS.MESSAGE}`:
-      const message: Message = {
+      const msgObject: Message = {
         timestamp: new Date(action.payload.timestamp),
         attributes: action.payload.attributes,
         message: action.payload.message,
@@ -83,19 +83,20 @@ export default produce((draft: AppState, action: Action) => {
         if (!eachMessage.attributes.draft) {
           draftIsPastMessage = true
         }
-        if (eachMessage.attributes.draft && eachMessage.user.user_id === message.user.user_id) {
+        if (eachMessage.attributes.draft && eachMessage.user.user_id === msgObject.user.user_id) {
           draftIndex = i;
           break;
         }
       }
 
-      const isEmpty = message.message.trim().length < 1
+      const isEmpty = msgObject.message.trim().length < 1
 
       if (draftIndex > -1) {
         if (draftIsPastMessage) {
           draft.messages.splice(draftIndex, 1)
         } else if (!isEmpty) {
-          draft.messages[draftIndex] = message
+          draft.messages[draftIndex].message = msgObject.message
+          draft.messages[draftIndex].timestamp = new Date(msgObject.timestamp)
           return;
         }
       }
@@ -104,18 +105,18 @@ export default produce((draft: AppState, action: Action) => {
         return;
       }
 
-      if (!message.attributes.draft) {
+      if (!msgObject.attributes.draft) {
         const lastMessage = draft.messages[draft.messages.length - 1]
 
-        if (lastMessage && lastMessage.user.user_id === message.user.user_id && lastMessage.attributes.private === message.attributes.private) {
+        if (lastMessage && lastMessage.user.user_id === msgObject.user.user_id && lastMessage.attributes.private === msgObject.attributes.private) {
           // last message was by this same user (and it's the same kind of message)
-          lastMessage.message += `\n${message.message}`
-          lastMessage.timestamp = new Date(message.timestamp)
+          lastMessage.message += `\n${msgObject.message}`
+          lastMessage.timestamp = new Date(msgObject.timestamp)
           return
         }
       }
 
-      draft.messages.push(message)
+      draft.messages.push(msgObject)
 
       if (draft.messages.length > MAX_MESSAGE_HISTORY) {
         draft.messages.shift()

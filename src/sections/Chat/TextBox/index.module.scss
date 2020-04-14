@@ -10,12 +10,38 @@ $command: #aaa;
   position: relative;
   margin-top: 1em;
 
+  input {
+    padding-right: 2.5em;
+  }
+
   .textIcon {
     position: absolute;
     top: 0.4em;
-    right: 1.8em;
+    right: 0.8em;
     color: #999;
     cursor: pointer;
+    z-index: 3;
+
+    @media (pointer:coarse) {
+      right: 3.2em;
+    }
+  }
+}
+
+.inputGroup {
+  margin-bottom: 1em;
+
+  .button {
+    display: none;
+
+    button {
+      border-top-right-radius: 0.25em !important;
+      border-bottom-right-radius: 0.25em !important;
+    }
+
+    @media (pointer:coarse) {
+      display: block;
+    }
   }
 }
 

@@ -58,7 +58,7 @@ export default () => {
       { localState.unseenMessages && (
         <div className={ classNames(styles.unseen) }>
           <Container className={ styles.unseenContainer }>
-            <Button variant="outline-secondary" size="sm" onClick={ scrollToBottom }>
+            <Button variant="secondary" size="sm" onClick={ scrollToBottom }>
               <FontAwesomeIcon icon='arrow-alt-circle-down' /> New messages
             </Button>
           </Container>

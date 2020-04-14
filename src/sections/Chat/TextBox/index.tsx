@@ -1,15 +1,17 @@
 import React, { useContext, useRef } from 'react'
-import { Form, Container } from 'react-bootstrap'
+import { Form, Container, InputGroup, Button } from 'react-bootstrap'
 import { useImmer } from 'use-immer'
 import classNames from 'classnames'
-
-import { SocketContext } from 'util/socketProvider'
-import styles from './index.module.scss'
-import { VALID_USERNAME } from '../../../constants'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
+
+import { SocketContext } from 'util/socketProvider'
+import { VALID_USERNAME } from '../../../constants'
 import useGlobalState from 'store/state'
 import { EVENTS } from 'store/types'
+
+import styles from './index.module.scss'
+
 
 type State = {
   message: string
@@ -150,7 +152,7 @@ export default ({ onFocus, onBlur }: Props) => {
             [styles.command]: localState.isCommand,
           })}
         >
-          <Form.Group controlId="chatForm.message">
+          <InputGroup className={ styles.inputGroup }>
             <Form.Control
               as="input"
               type="text"
@@ -162,10 +164,15 @@ export default ({ onFocus, onBlur }: Props) => {
               onBlur={onBlur}
               value={localState.message}
             />
+            <InputGroup.Append className={ styles.button }>
+              <Button type="submit">
+                <FontAwesomeIcon icon='paper-plane' />
+              </Button>
+            </InputGroup.Append>
             <div className={styles.textIcon} onClick={onIconClick}>
               <FontAwesomeIcon icon={icon} />
             </div>
-          </Form.Group>
+          </InputGroup>
         </Form>
       </Container>
     </div>

@@ -54,6 +54,7 @@ import {
   faTired,
   faShieldAlt,
   faQuestionCircle,
+  faPaperPlane,
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -182,5 +183,6 @@ library.add(
   farSurprise,
   farTired,
   faShieldAlt,
-  faQuestionCircle
+  faQuestionCircle,
+  faPaperPlane,
 )

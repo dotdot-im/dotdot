@@ -31,11 +31,19 @@ export default () => {
             icon = ['far', iconName]
           }
 
+          let inactive = '';
+          if (!user.isActive) {
+            inactive = ' (away)'
+          }
+
           return (
             <OverlayTrigger
               key={user.user_id}
               placement="bottom"
-              overlay={<Tooltip id={`user-${user.user_id}`}>@{user.name}</Tooltip>}
+              overlay={<Tooltip id={`user-${user.user_id}`}>
+                @{user.name}
+                { inactive }
+              </Tooltip>}
             >
               <span style={{ color: `#${user.color}` }}>
                 <FontAwesomeIcon icon={ icon } />

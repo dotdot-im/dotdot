@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback, useState, useRef } from 'react'
 
-const SCROLL_THRESHOLD = 250
+const SCROLL_THRESHOLD = 200
 const SCROLL_DEBOUNCE_DELAY = 150
 
 type Props = {

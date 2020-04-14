@@ -113,7 +113,7 @@ export default () => {
           <Form.Control
             as="input"
             type="text"
-            autocomplete="username"
+            autoComplete="username"
             placeholder="What's your name?"
             disabled={localState.loading}
             autoFocus
@@ -133,7 +133,7 @@ export default () => {
               className="mt-2"
               type="password"
               placeholder="Password..."
-              autocomplete="current-password"
+              autoComplete="current-password"
               disabled={localState.loading}
               autoFocus
               onChange={(e) => {

@@ -1,5 +1,5 @@
 import React, { useContext, useRef } from 'react'
-import { Form } from 'react-bootstrap'
+import { Form, Container } from 'react-bootstrap'
 import { useImmer } from 'use-immer'
 import classNames from 'classnames'
 
@@ -140,31 +140,34 @@ export default ({ onFocus, onBlur }: Props) => {
   }
 
   return (
-    <Form
-      noValidate
-      onSubmit={handleSubmit}
-      className={classNames(styles.textBox, 'container', {
-        [styles.private]: localState.private,
-        [styles.command]: localState.isCommand,
-      })}
-    >
-      <Form.Group controlId="chatForm.message">
-        <Form.Control
-          as="input"
-          type="text"
-          placeholder="Type a message..."
-          autoFocus
-          autocomplete="off"
-          onChange={onType}
-          onFocus={onFocus}
-          onBlur={onBlur}
-          value={localState.message}
-        />
-        <div className={styles.textIcon} onClick={onIconClick}>
-          <FontAwesomeIcon icon={icon} />
-        </div>
-      </Form.Group>
-      <input type="submit" value='Send' style={ { position: 'relative', left: '-1000px' } } />
-    </Form>
+    <div className={ styles.area }>
+      <Container>
+        <Form
+          noValidate
+          onSubmit={handleSubmit}
+          className={classNames(styles.textBox, {
+            [styles.private]: localState.private,
+            [styles.command]: localState.isCommand,
+          })}
+        >
+          <Form.Group controlId="chatForm.message">
+            <Form.Control
+              as="input"
+              type="text"
+              placeholder="Type a message..."
+              autoFocus
+              autoComplete="off"
+              onChange={onType}
+              onFocus={onFocus}
+              onBlur={onBlur}
+              value={localState.message}
+            />
+            <div className={styles.textIcon} onClick={onIconClick}>
+              <FontAwesomeIcon icon={icon} />
+            </div>
+          </Form.Group>
+        </Form>
+      </Container>
+    </div>
   )
 }

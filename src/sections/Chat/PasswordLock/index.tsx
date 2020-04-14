@@ -94,7 +94,7 @@ export default () => {
               <Form.Control
                 as="input"
                 type="password"
-                autocomplete="new-password"
+                autoComplete="new-password"
                 placeholder="Password..."
                 autoFocus
                 required
@@ -113,7 +113,7 @@ export default () => {
               <Form.Control
                 as="input"
                 type="password"
-                autocomplete="new-password"
+                autoComplete="new-password"
                 placeholder="Repeat Password..."
                 required
                 minLength={6}

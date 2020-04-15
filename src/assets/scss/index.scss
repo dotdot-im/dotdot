@@ -8,17 +8,12 @@
 html,
 body {
   width: 100%;
-  font-family: 'Rubik', Arial, Helvetica, sans-serif;
+  font-family: 'Manrope', Arial, Helvetica, sans-serif;
 }
 
 body {
-  background: $lighter;
-  color: $light;
-
-  @media (prefers-color-scheme: light) {
-    background: #fcfcfc;
-    color: $lighter;
-  }
+  background: var(--color-background);
+  color: var(--color-text);
 }
 
 html,

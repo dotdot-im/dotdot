@@ -1,30 +1,86 @@
 /**
  * Global variables file
  */
-$primary: rgb(55, 148, 255);
 
-$secondary: #f75f00;
-$secondary-dark: #c93838;
+// Main
+$cyan: #4dcbc3;
+$cyan-text-light: #4dcbc3;
+$cyan-text-dark: #247b75;
 
-$lighter: #293134;
-$light: #e9ecef;
-$dark: #050405;
+$red: #ff5151;
+$red-text-light: #ff5c5c;
+$red-text-dark: #e00000;
+
+$black: #282b2d;
+$grey: #40474a;
+$charcoal: #3a3a3a;
+
+$white: #f3f3f3;
+$fog: #e6e6e6;
+
+$pure-white: #fff;
+$pure-black: #000;
+
+// Semantic
+$color-background-dark: $black;
+$color-background-over-dark: $grey;
+$color-text-dark: $white;
+$color-border-dark: $charcoal;
+
+$color-background-light: $white;
+$color-background-over-light: $fog;
+$color-text-light: $black;
+$color-border-light: #ccc;
+
+// Bootstrap vars from here (?)
+$primary: $cyan-text-dark;
+
+$secondary: $red;
+$secondary-dark: $red-text-dark;
+
+// To be removed / refactored
+/*
+$lighter: $grey;
 $accent: $secondary;
 
-$border-color: #3b4252;
+$border-color: $charcoal;
 
-$input-bg: rgb(47, 57, 61);
-$input-color: $light;
+$input-bg: $charcoal;
+$input-color: $color-text-dark;
 $input-border: $border-color;
 $input-border-focus: scale-color($input-border, $lightness: 10%);
 
-$modal-content-bg: $lighter;
 $modal-content-border-color: transparent;
 
-$close-color: $light;
-$close-text-shadow: $dark;
+// $close-color: $light;
+// $close-text-shadow: $dark;
 
 $border-radius-base: 0.4em;
+*/
+
+:root {
+  --color-cyan: #{$cyan};
+  --color-red: #{$red};
+  --color-background: #{$color-background-dark};
+  --color-background-over: #{$color-background-over-dark};
+  --color-text: #{$color-text-dark};
+  --color-border: #{color-border-dark};
+
+  // Bootstrap vars
+  --light: #{$white};
+  --dark: #{$black};
+
+  @media (prefers-color-scheme: light) {
+    --color-background: #{$color-background-light};
+    --color-background-over: #{$color-background-over-light};
+    --color-text: #{$color-text-light};
+    --color-border: #{color-border-light};
+
+    // Bootstrap vars
+    --light: #{$black};
+    --dark: #{$white};
+  }
+}
 
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';

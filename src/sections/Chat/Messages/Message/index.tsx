@@ -10,8 +10,6 @@ import styles from './index.module.scss'
 import useGlobalState from 'store/state'
 import HelpMessage from './HelpMessage'
 
-import { makeColorReadable } from './../../../../lib/color/makeColorReadable'
-
 type Props = {
   reply?: boolean
   message: Message
@@ -32,8 +30,7 @@ const MessageComponent = ({ message, onClick, reply }: Props) => {
     state.onlineUsers.find((user) => user.user_id === message.user.user_id) ||
     message.user
 
-  const userColor = `#${userData.color}`
-  const userContrastColor = makeColorReadable(userColor)
+  const userContrastColor = userData.contrastColor || `#${userData.color}`
   const isSystem = userData.user_id === 'dotdot'
   const isUserOnline =
     isSystem ||

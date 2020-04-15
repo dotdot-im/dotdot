@@ -13,12 +13,12 @@ export default () => {
     <div className={styles.onlineUsers}>
       {
         state.onlineUsers.map((user) => {
-          const isCurrentUser = user.user_id === state.auth.user?.user_id
+          const isCurrentUser = state.auth.user && user.user_id === state.auth.user.user_id
 
           let iconName: IconName = 'circle'
           if (user.icon) {
             iconName = user.icon
-          } else if (user.user_id === state.auth.user?.user_id) {
+          } else if (state.auth.user && user.user_id === state.auth.user.user_id) {
             iconName = 'dot-circle'
           }
 
@@ -36,6 +36,8 @@ export default () => {
             inactive = ' (away)'
           }
 
+          const userColor = user.contrastColor || `#${user.color}`
+
           return (
             <OverlayTrigger
               key={user.user_id}
@@ -45,7 +47,7 @@ export default () => {
                 { inactive }
               </Tooltip>}
             >
-              <span style={{ color: `#${user.color}` }}>
+              <span style={{ color: userColor }}>
                 <FontAwesomeIcon icon={ icon } />
               </span>
             </OverlayTrigger>

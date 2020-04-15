@@ -3,6 +3,7 @@ import produce from 'immer'
 import { AppState, Action, Message, EVENTS, User } from './types'
 import { MAX_MESSAGE_HISTORY } from '../constants'
 import { MAX_STATS_BARS } from 'sections/Admin'
+import { makeColorReadable } from 'lib/color/makeColorReadable'
 
 // TODO NEW BLOG POST
 // const REDUCER = {
@@ -66,7 +67,10 @@ export default produce((draft: AppState, action: Action) => {
       draft.error = null
       break
     case `socket_${EVENTS.ONLINE_USERS}`:
-      draft.onlineUsers = action.payload.users
+      draft.onlineUsers = action.payload.users.map((user: User) => {
+        user.contrastColor = makeColorReadable('#' + user.color)
+        return user
+      })
       break
     case `socket_${EVENTS.MESSAGE}`:
       const msgObject: Message = {

@@ -4,6 +4,7 @@ export type User = {
   user_id: string
   name: string
   color: string
+  contrastColor?: string
   icon: IconName | null
   isActive: boolean
   isAdmin?: boolean

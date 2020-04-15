@@ -58,7 +58,7 @@ const testState: AppState = {
 export const messageByMe = () => {
   const testMessage: Message = {
     timestamp: new Date(),
-    message: 'Some random test message',
+    content: ['Some random test message'],
     user: users[0],
     attributes: {
       draft: false,
@@ -76,7 +76,7 @@ export const messageByMe = () => {
 export const messageByOther = () => {
   const testMessage: Message = {
     timestamp: new Date(),
-    message: 'Some random test message',
+    content: ['Some random test message'],
     user: users[1],
     attributes: {
       draft: false,
@@ -94,7 +94,7 @@ export const messageByOther = () => {
 export const draft = () => {
   const testMessage: Message = {
     timestamp: new Date(),
-    message: 'Some random test message',
+    content: ['Some random test message'],
     user: users[1],
     attributes: {
       draft: true,
@@ -112,7 +112,7 @@ export const draft = () => {
 export const privateMessage = () => {
   const testMessage: Message = {
     timestamp: new Date(),
-    message: '@someone Some random private test message',
+    content: ['@someone Some random private test message'],
     user: users[1],
     attributes: {
       draft: false,
@@ -130,7 +130,7 @@ export const privateMessage = () => {
 export const privateDraft = () => {
   const testMessage: Message = {
     timestamp: new Date(),
-    message: 'Some random test message',
+    content: ['Some random test message'],
     user: users[1],
     attributes: {
       draft: true,
@@ -148,7 +148,7 @@ export const privateDraft = () => {
 export const systemMessage = () => {
   const testMessage: Message = {
     timestamp: new Date(),
-    message: 'This came from the system',
+    content: ['This came from the system'],
     user: {
       user_id: 'dotdot',
       color: 'eb0000',
@@ -173,7 +173,7 @@ export const systemMessage = () => {
 export const offlineUser = () => {
   const testMessage: Message = {
     timestamp: new Date(),
-    message: 'This came from a user that is now offline',
+    content: ['This came from a user that is now offline'],
     user: users[0],
     attributes: {
       draft: false,
@@ -216,7 +216,7 @@ export const multiple = () => {
         draft: Math.random() > 0.7,
         private: Math.random() < 0.1,
       },
-      message: randomWords(Math.round(3 + Math.random() * 100)).join(' '),
+      content: [randomWords(Math.round(3 + Math.random() * 100)).join(' ')],
     })
   }
 

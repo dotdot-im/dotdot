@@ -8,7 +8,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { SocketContext } from 'util/socketProvider'
 import { VALID_USERNAME } from '../../../constants'
 import useGlobalState from 'store/state'
-import { EVENTS, Message } from 'store/types'
+import { EVENTS, Message, OutgoingMessage } from 'store/types'
 import MessageComponent from '../Messages/Message'
 
 import styles from './index.module.scss'
@@ -79,15 +79,18 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
     if (localState.isCommand) {
       type = EVENTS.COMMAND
     }
-    socket?.emit(type, {
-      message,
+
+    const payload: OutgoingMessage = {
+      content: message,
       attributes: {
         draft,
         private: localState.private,
         to: localState.to,
-        replyTo: replyTo ? replyTo.timestamp.getTime() : null,
+        replyToTimestamp: replyTo ? replyTo.timestamp.getTime() : null,
       },
-    })
+    }
+
+    socket?.emit(type, payload)
   }
 
   const onType = (e: React.ChangeEvent<any>) => {

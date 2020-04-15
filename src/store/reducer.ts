@@ -1,6 +1,6 @@
 import produce from 'immer'
 
-import { AppState, Action, Message, EVENTS, User } from './types'
+import { AppState, Action, Message, EVENTS, User, IncomingMessage } from './types'
 import { MAX_MESSAGE_HISTORY } from '../constants'
 import { MAX_STATS_BARS } from 'sections/Admin'
 import { makeColorReadable } from 'lib/color/makeColorReadable'
@@ -47,7 +47,7 @@ export default produce((draft: AppState, action: Action) => {
     case 'system_message':
       const systemMessage = {
         user: systemUser,
-        message: action.payload,
+        content: [action.payload],
         timestamp: new Date(),
         attributes: {
           private: false,
@@ -73,12 +73,8 @@ export default produce((draft: AppState, action: Action) => {
       })
       break
     case `socket_${EVENTS.MESSAGE}`:
-      const msgObject: Message = {
-        timestamp: new Date(action.payload.timestamp),
-        attributes: { ...action.payload.attributes },
-        message: action.payload.message,
-        user: action.payload.user,
-      }
+      const incomingMessage: IncomingMessage = action.payload;
+      incomingMessage.timestamp = new Date(incomingMessage.timestamp)
 
       // delete draft from this user, and if the draft is past messages, stay there
       let draftIsPastMessage = false;
@@ -88,20 +84,20 @@ export default produce((draft: AppState, action: Action) => {
         if (!eachMessage.attributes.draft) {
           draftIsPastMessage = true
         }
-        if (eachMessage.attributes.draft && eachMessage.user.user_id === msgObject.user.user_id) {
+        if (eachMessage.attributes.draft && eachMessage.user.user_id === incomingMessage.user.user_id) {
           draftIndex = i;
           break;
         }
       }
 
-      const isEmpty = msgObject.message.trim().length < 1
+      const isEmpty = incomingMessage.content.trim().length < 1
 
       if (draftIndex > -1) {
-        if (draftIsPastMessage || !msgObject.attributes.draft) {
+        if (draftIsPastMessage || !incomingMessage.attributes.draft) {
           draft.messages.splice(draftIndex, 1)
-        } else if (!isEmpty && msgObject.attributes.draft) {
-          draft.messages[draftIndex].message = msgObject.message
-          draft.messages[draftIndex].timestamp = new Date(msgObject.timestamp)
+        } else if (!isEmpty && incomingMessage.attributes.draft) {
+          draft.messages[draftIndex].content[0] = incomingMessage.content
+          draft.messages[draftIndex].timestamp = new Date(incomingMessage.timestamp)
           return;
         }
       }
@@ -110,31 +106,37 @@ export default produce((draft: AppState, action: Action) => {
         return;
       }
 
-      if (action.payload.attributes.replyTo) {
-        const messageReply = draft.messages.find(eachMessage => eachMessage.timestamp.getTime() === action.payload.attributes.replyTo) || null
+      if (incomingMessage.attributes.replyToTimestamp) {
+        const messageReply = draft.messages.find(eachMessage => eachMessage.timestamp.getTime() === incomingMessage.attributes.replyToTimestamp) || null
         if (messageReply && messageReply.user) {
-          msgObject.attributes.replyTo = messageReply
+          incomingMessage.attributes.replyTo = messageReply
         }
-        msgObject.attributes.replyToTimestamp = action.payload.attributes.replyTo
       }
 
-      if (!msgObject.attributes.draft) {
+      if (!incomingMessage.attributes.draft) {
         const lastMessage = draft.messages[draft.messages.length - 1]
 
         if (
             lastMessage &&
-            lastMessage.user.user_id === msgObject.user.user_id &&
-            lastMessage.attributes.private === msgObject.attributes.private &&
-            lastMessage.attributes.replyToTimestamp === msgObject.attributes.replyToTimestamp
+            lastMessage.user.user_id === incomingMessage.user.user_id &&
+            lastMessage.attributes.private === incomingMessage.attributes.private &&
+            lastMessage.attributes.replyToTimestamp === incomingMessage.attributes.replyToTimestamp
           ) {
           // last message was by this same user (and it's the same kind of message)
-          lastMessage.message += `\n${msgObject.message}`
-          lastMessage.timestamp = new Date(msgObject.timestamp)
+          lastMessage.content.push(incomingMessage.content)
+          lastMessage.timestamp = new Date(incomingMessage.timestamp)
           return
         }
       }
 
-      draft.messages.push(msgObject)
+      const message: Message = {
+        user: incomingMessage.user,
+        timestamp: incomingMessage.timestamp,
+        attributes: incomingMessage.attributes,
+        content: [incomingMessage.content],
+      }
+
+      draft.messages.push(message)
 
       if (draft.messages.length > MAX_MESSAGE_HISTORY) {
         draft.messages.shift()

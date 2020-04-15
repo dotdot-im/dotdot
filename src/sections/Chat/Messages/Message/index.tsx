@@ -1,6 +1,5 @@
 import React from 'react'
 import classNames from 'classnames'
-import reactStringReplace from 'react-string-replace'
 import { IconProp, IconName } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { OverlayTrigger, Tooltip, Button } from 'react-bootstrap'
@@ -8,7 +7,7 @@ import { OverlayTrigger, Tooltip, Button } from 'react-bootstrap'
 import { Message } from 'store/types'
 import styles from './index.module.scss'
 import useGlobalState from 'store/state'
-import HelpMessage from './HelpMessage'
+import MessageContent from './MessageContent'
 
 type Props = {
   reply?: boolean
@@ -68,42 +67,6 @@ const MessageComponent = ({ message, onClick, reply }: Props) => {
   let icon: IconProp = iconName
   if (userData.user_id === state.auth.user?.user_id) {
     icon = ['far', iconName]
-  }
-
-  let messageContent
-
-  if (isSystem && message.message === '/help') {
-    messageContent = <HelpMessage />
-  } else {
-    // replace mentions with colored version
-    messageContent = reactStringReplace(
-      message.message,
-      USER_REGEX,
-      (username, index) => {
-        let style = {}
-        const userIndex = state.onlineUsers.findIndex(
-          (user) => user.name === username
-        )
-        if (userIndex > -1) {
-          style = {
-            color: `#${state.onlineUsers[userIndex].color}`,
-          }
-        }
-        return (
-          <span key={index} className={styles.mention} style={style}>
-            @{username}
-          </span>
-        )
-      }
-    )
-    // auto-link urls
-    messageContent = reactStringReplace(messageContent, URL_REGEX, (url) => {
-      return (
-        <a key={url} href={url} rel="noopener noreferrer" target="_blank">
-          {url}
-        </a>
-      )
-    })
   }
 
   return (
@@ -176,7 +139,16 @@ const MessageComponent = ({ message, onClick, reply }: Props) => {
           <MessageComponent reply message={message.attributes.replyTo} />
         </div>
       )}
-      <div className={classNames(styles.body)}>{messageContent}</div>
+      <div className={classNames(styles.body)}>
+        { message.content.map((content, index) => (
+          <MessageContent
+            content={ content }
+            isSystem={ isSystem }
+            onlineUsers={ state.onlineUsers }
+            key={ index }
+          />
+        )) }
+      </div>
     </div>
   )
 }

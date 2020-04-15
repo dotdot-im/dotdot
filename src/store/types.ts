@@ -11,17 +11,31 @@ export type User = {
   hasPassword: boolean
 }
 
+export type MessageAttributes = {
+  draft: boolean
+  private: boolean
+  to?: string | null
+  replyToTimestamp?: number | null
+  replyTo?: Message | null
+};
+
 export type Message = {
   user: User
   timestamp: Date
-  message: string
-  attributes: {
-    draft: boolean
-    private: boolean
-    to?: string | null
-    replyToTimestamp?: number | null
-    replyTo?: Message | null
-  }
+  content: string[]
+  attributes: MessageAttributes
+}
+
+export type IncomingMessage = {
+  user: User
+  timestamp: Date
+  content: string
+  attributes: MessageAttributes
+}
+
+export type OutgoingMessage = {
+  content: string
+  attributes: MessageAttributes
 }
 
 export type RoomStats = {

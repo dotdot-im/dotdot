@@ -10,26 +10,35 @@ import styles from './index.module.scss'
 import useGlobalState from 'store/state'
 import HelpMessage from './HelpMessage'
 
+import { makeColorReadable } from './../../../../lib/color/makeColorReadable'
+
 type Props = {
   reply?: boolean
   message: Message
-  onClick?: (messageTimestamp: number) => void,
+  onClick?: (messageTimestamp: number) => void
 }
 
-const USER_REGEX = new RegExp('@([A-Za-z0-9]+(?:[_][A-Za-z0-9]+)*_?)', 'gmi');
-const URL_REGEX = new RegExp(/((?:ftp|http|https):\/\/(?:\w+:{0,1}\w*@)?(?:\S+)(?::[0-9]+)?(?:\/|\/(?:[\w#!:.?+=&%@!\-/]))?)/, 'gmi');
+const USER_REGEX = new RegExp('@([A-Za-z0-9]+(?:[_][A-Za-z0-9]+)*_?)', 'gmi')
+const URL_REGEX = new RegExp(
+  /((?:ftp|http|https):\/\/(?:\w+:{0,1}\w*@)?(?:\S+)(?::[0-9]+)?(?:\/|\/(?:[\w#!:.?+=&%@!\-/]))?)/,
+  'gmi'
+)
 
 const MessageComponent = ({ message, onClick, reply }: Props) => {
   const { state } = useGlobalState()
 
   // User data comes from online users if available
-  const userData = state.onlineUsers.find(
-    user => user.user_id === message.user.user_id
-  ) || message.user
+  const userData =
+    state.onlineUsers.find((user) => user.user_id === message.user.user_id) ||
+    message.user
 
   const userColor = `#${userData.color}`
+  const userContrastColor = makeColorReadable(userColor)
   const isSystem = userData.user_id === 'dotdot'
-  const isUserOnline = isSystem || (state.onlineUsers.findIndex(user => user.user_id === userData.user_id) > -1)
+  const isUserOnline =
+    isSystem ||
+    state.onlineUsers.findIndex((user) => user.user_id === userData.user_id) >
+      -1
 
   let iconName: IconName = 'circle'
   if (userData.icon) {
@@ -49,7 +58,8 @@ const MessageComponent = ({ message, onClick, reply }: Props) => {
     iconName = 'meh'
   }
 
-  const isReplyAllowed = !reply && onClick && !isSystem && !message.attributes.draft
+  const isReplyAllowed =
+    !reply && onClick && !isSystem && !message.attributes.draft
 
   const onReplyClick = () => {
     if (!isReplyAllowed || !onClick) {
@@ -66,29 +76,35 @@ const MessageComponent = ({ message, onClick, reply }: Props) => {
   let messageContent
 
   if (isSystem && message.message === '/help') {
-    messageContent = (
-      <HelpMessage />
-    )
+    messageContent = <HelpMessage />
   } else {
     // replace mentions with colored version
-    messageContent = reactStringReplace(message.message, USER_REGEX, (username, index) => {
-      let style = {}
-      const userIndex = state.onlineUsers.findIndex(user => user.name === username)
-      if (userIndex > -1) {
-        style = {
-          color: `#${state.onlineUsers[userIndex].color}`
+    messageContent = reactStringReplace(
+      message.message,
+      USER_REGEX,
+      (username, index) => {
+        let style = {}
+        const userIndex = state.onlineUsers.findIndex(
+          (user) => user.name === username
+        )
+        if (userIndex > -1) {
+          style = {
+            color: `#${state.onlineUsers[userIndex].color}`,
+          }
         }
+        return (
+          <span key={index} className={styles.mention} style={style}>
+            @{username}
+          </span>
+        )
       }
-      return (
-        <span key={index} className={ styles.mention } style={ style }>
-          @{username}
-        </span>
-      );
-    })
+    )
     // auto-link urls
     messageContent = reactStringReplace(messageContent, URL_REGEX, (url) => {
       return (
-        <a key={ url } href={ url } rel="noopener noreferrer" target='_blank'>{ url }</a>
+        <a key={url} href={url} rel="noopener noreferrer" target="_blank">
+          {url}
+        </a>
       )
     })
   }
@@ -104,51 +120,66 @@ const MessageComponent = ({ message, onClick, reply }: Props) => {
         [styles.private]: message.attributes.private,
       })}
     >
-      { isReplyAllowed && (
-        <div className={ styles.replyButton }>
-          <Button variant='link' onClick={ onReplyClick } title='Reply to this message'>
-            <FontAwesomeIcon icon='reply' />
+      {isReplyAllowed && (
+        <div className={styles.replyButton}>
+          <Button
+            variant="link"
+            onClick={onReplyClick}
+            title="Reply to this message"
+          >
+            <FontAwesomeIcon icon="reply" />
           </Button>
         </div>
-      ) }
-      <div className={classNames(styles.icon, { [styles.private]: message.attributes.private })} style={{ color: userColor, background: userColor }}>
-        { message.attributes.private && (
+      )}
+      <div
+        className={classNames(styles.icon, {
+          [styles.private]: message.attributes.private,
+        })}
+        style={{ color: userContrastColor, background: userContrastColor }}
+      >
+        {message.attributes.private && (
           <OverlayTrigger
             placement="right"
-            overlay={(
+            overlay={
               <Tooltip id={`user-${userData.user_id}`}>
-                Private message from <b>@{userData.name}</b><br />
+                Private message from <b>@{userData.name}</b>
+                <br />
                 Only you can see this.
               </Tooltip>
-            )}
+            }
           >
-            <FontAwesomeIcon icon={ icon } />
+            <FontAwesomeIcon icon={icon} />
           </OverlayTrigger>
-        ) }
-        { !message.attributes.private && (
-          <FontAwesomeIcon icon={ icon } spin={ message.attributes.draft } />
-        ) }
+        )}
+        {!message.attributes.private && (
+          <FontAwesomeIcon icon={icon} spin={message.attributes.draft} />
+        )}
       </div>
       <div className={classNames(styles.timestamp)}>
-        {message.attributes.draft ? 'now' : message.timestamp.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}
+        {message.attributes.draft
+          ? 'now'
+          : message.timestamp.toLocaleTimeString([], {
+              hour: 'numeric',
+              minute: '2-digit',
+            })}
       </div>
       <span
         className={classNames(styles.user)}
-        style={ { color: userColor } }
+        style={{ color: userContrastColor }}
       >
-        {userData.name}
+        {userData.name} {userContrastColor}
       </span>
-      { !reply && message.attributes.replyTo && (
-        <div className={ styles.replyBox } style={ { borderLeftColor: `#${message.attributes.replyTo.user.color}` } }>
-          <MessageComponent
-            reply
-            message={ message.attributes.replyTo }
-          />
+      {!reply && message.attributes.replyTo && (
+        <div
+          className={styles.replyBox}
+          style={{
+            borderLeftColor: `#${message.attributes.replyTo.user.color}`,
+          }}
+        >
+          <MessageComponent reply message={message.attributes.replyTo} />
         </div>
-      ) }
-      <div className={classNames(styles.body)}>
-        {messageContent}
-      </div>
+      )}
+      <div className={classNames(styles.body)}>{messageContent}</div>
     </div>
   )
 }

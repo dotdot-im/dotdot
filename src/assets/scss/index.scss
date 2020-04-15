@@ -5,20 +5,27 @@
 
 @import 'forms';
 
+:root {
+  --color-cyan: #{$cyan};
+  --color-red: #{$red};
+  --color-background: #{$color-background-dark};
+  --color-text: #{$color-text-dark};
+
+  @media (prefers-color-scheme: light) {
+    --color-background: #{$color-background-light};
+    --color-text: #{$color-text-light};
+  }
+}
+
 html,
 body {
   width: 100%;
-  font-family: 'Rubik', Arial, Helvetica, sans-serif;
+  font-family: 'Manrope', Arial, Helvetica, sans-serif;
 }
 
 body {
-  background: $lighter;
-  color: $light;
-
-  @media (prefers-color-scheme: light) {
-    background: #fcfcfc;
-    color: $lighter;
-  }
+  background: var(--color-background);
+  color: var(--color-text);
 }
 
 html,

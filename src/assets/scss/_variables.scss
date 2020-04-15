@@ -1,20 +1,51 @@
 /**
  * Global variables file
  */
-$primary: rgb(55, 148, 255);
 
-$secondary: #f75f00;
-$secondary-dark: #c93838;
+// Main
+$cyan: #4dcbc3;
+$cyan-text-light: #4dcbc3;
+$cyan-text-dark: #247b75;
 
-$lighter: #293134;
-$light: #e9ecef;
-$dark: #050405;
+$red: #ff5151;
+$red-text-light: #ff5c5c;
+$red-text-dark: #e00000;
+
+$black: #282b2d;
+$grey: #40474a;
+$charcoal: #3a3a3a;
+
+$white: #f3f3f3;
+$fog: #e6e6e6;
+
+$pure-white: #fff;
+$pure-black: #000;
+
+// Semantic
+$color-background-dark: $black;
+$color-background-over-dark: $grey;
+$color-text-dark: $white;
+
+$color-background-light: $white;
+$color-background-over-light: $fog;
+$color-text-light: $black;
+
+// Bootstrap vars from here (?)
+$primary: $cyan-text-dark;
+
+$secondary: $red;
+$secondary-dark: $red-text-dark;
+
+// To be removed / refactored
+$light: $white;
+$lighter: $grey;
+$dark: $black;
 $accent: $secondary;
 
-$border-color: #3b4252;
+$border-color: $charcoal;
 
-$input-bg: rgb(47, 57, 61);
-$input-color: $light;
+$input-bg: $charcoal;
+$input-color: $color-text-dark;
 $input-border: $border-color;
 $input-border-focus: scale-color($input-border, $lightness: 10%);
 

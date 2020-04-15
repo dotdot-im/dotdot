@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { Form, Container } from 'react-bootstrap'
+import { Form, Container, Button } from 'react-bootstrap'
 import { useImmer } from 'use-immer'
 import classNames from 'classnames'
 import HCaptcha from "react-hcaptcha"
@@ -163,9 +163,11 @@ export default () => {
               onVerify={ oncaptchaChange }
             />
           )}
-          <button type="submit" style={{ visibility: 'hidden' }}>
-            Login
-          </button>
+          <p className='text-center mt-4'>
+            <Button type="submit">
+              Login
+            </Button>
+          </p>
         </Form.Group>
       </Form>
     </Container>

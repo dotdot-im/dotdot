@@ -44,7 +44,8 @@ $padding: 1em;
   font-size: 0.9em;
   color: fade-out($text, 0.2);
 
-  .user, .timestamp {
+  .user,
+  .timestamp {
     display: none;
   }
 }
@@ -53,7 +54,8 @@ $padding: 1em;
   color: #aaa !important;
   opacity: 0.5;
 
-  .icon, .user {
+  .icon,
+  .user {
     color: inherit !important;
   }
 }
@@ -81,7 +83,8 @@ $padding: 1em;
 // User tag
 .user {
   display: inline-block;
-  font-weight: 500;
+  font-weight: 700;
+  letter-spacing: 0.03em;
   margin-bottom: 0.1em;
   margin-left: 1em;
 
@@ -104,7 +107,7 @@ $padding: 1em;
   opacity: 0.8;
   color: $text;
   letter-spacing: 0.02em;
-  float: right;
+  margin-left: 1em;
 
   @media all and (max-width: 30em) {
     display: none;
@@ -131,7 +134,7 @@ $padding: 1em;
     }
   }
 
-  &>.user {
+  & > .user {
     &:after {
       opacity: 0.7;
       font-size: 0.8em;
@@ -167,7 +170,8 @@ $padding: 1em;
   margin: 0;
   padding: 0;
 
-  .icon, .timestamp {
+  .icon,
+  .timestamp {
     display: none;
   }
 }

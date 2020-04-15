@@ -109,20 +109,18 @@ const MessageComponent = ({ message, onClick, reply }: Props) => {
           <FontAwesomeIcon icon={icon} spin={message.attributes.draft} />
         )}
       </div>
-      <div className={classNames(styles.timestamp)}>
-        {message.attributes.draft
-          ? 'now'
-          : message.timestamp.toLocaleTimeString([], {
+
+      <div className={classNames(styles.user)}>
+        <span style={{ color: userContrastColor }}>{userData.name}</span>
+        {!message.attributes.draft && (
+          <span className={classNames(styles.timestamp)}>
+            {message.timestamp.toLocaleTimeString([], {
               hour: 'numeric',
               minute: '2-digit',
             })}
+          </span>
+        )}
       </div>
-      <span
-        className={classNames(styles.user)}
-        style={{ color: userContrastColor }}
-      >
-        {userData.name}
-      </span>
       {!reply && message.attributes.replyTo && message.attributes.replyTo.user && (
         <div
           className={styles.replyBox}
@@ -134,14 +132,14 @@ const MessageComponent = ({ message, onClick, reply }: Props) => {
         </div>
       )}
       <div className={classNames(styles.body)}>
-        { message.content.map((content, index) => (
+        {message.content.map((content, index) => (
           <MessageContent
-            content={ content }
-            isSystem={ isSystem }
-            onlineUsers={ state.onlineUsers }
-            key={ index }
+            content={content}
+            isSystem={isSystem}
+            onlineUsers={state.onlineUsers}
+            key={index}
           />
-        )) }
+        ))}
       </div>
     </div>
   )

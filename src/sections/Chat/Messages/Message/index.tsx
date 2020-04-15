@@ -15,12 +15,6 @@ type Props = {
   onClick?: (messageTimestamp: number) => void
 }
 
-const USER_REGEX = new RegExp('@([A-Za-z0-9]+(?:[_][A-Za-z0-9]+)*_?)', 'gmi')
-const URL_REGEX = new RegExp(
-  /((?:ftp|http|https):\/\/(?:\w+:{0,1}\w*@)?(?:\S+)(?::[0-9]+)?(?:\/|\/(?:[\w#!:.?+=&%@!\-/]))?)/,
-  'gmi'
-)
-
 const MessageComponent = ({ message, onClick, reply }: Props) => {
   const { state } = useGlobalState()
 

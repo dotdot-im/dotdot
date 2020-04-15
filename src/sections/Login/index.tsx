@@ -164,7 +164,7 @@ export default () => {
             />
           )}
           <p className='text-center mt-4'>
-            <Button type="submit">
+            <Button type="submit" size='sm'>
               Login
             </Button>
           </p>

@@ -12,12 +12,12 @@ body {
 }
 
 body {
-  background: #fcfcfc;
-  color: $lighter;
+  background: $lighter;
+  color: $light;
 
-  @media (prefers-color-scheme: dark) {
-    background: $lighter;
-    color: $light;
+  @media (prefers-color-scheme: light) {
+    background: #fcfcfc;
+    color: $lighter;
   }
 }
 

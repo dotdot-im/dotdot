@@ -5,18 +5,6 @@
 
 @import 'forms';
 
-:root {
-  --color-cyan: #{$cyan};
-  --color-red: #{$red};
-  --color-background: #{$color-background-dark};
-  --color-text: #{$color-text-dark};
-
-  @media (prefers-color-scheme: light) {
-    --color-background: #{$color-background-light};
-    --color-text: #{$color-text-light};
-  }
-}
-
 html,
 body {
   width: 100%;

@@ -25,10 +25,12 @@ $pure-black: #000;
 $color-background-dark: $black;
 $color-background-over-dark: $grey;
 $color-text-dark: $white;
+$color-border-dark: $charcoal;
 
 $color-background-light: $white;
 $color-background-over-light: $fog;
 $color-text-light: $black;
+$color-border-light: #ccc;
 
 // Bootstrap vars from here (?)
 $primary: $cyan-text-dark;
@@ -37,9 +39,8 @@ $secondary: $red;
 $secondary-dark: $red-text-dark;
 
 // To be removed / refactored
-$light: $white;
+/*
 $lighter: $grey;
-$dark: $black;
 $accent: $secondary;
 
 $border-color: $charcoal;
@@ -49,13 +50,37 @@ $input-color: $color-text-dark;
 $input-border: $border-color;
 $input-border-focus: scale-color($input-border, $lightness: 10%);
 
-$modal-content-bg: $lighter;
 $modal-content-border-color: transparent;
 
-$close-color: $light;
-$close-text-shadow: $dark;
+// $close-color: $light;
+// $close-text-shadow: $dark;
 
 $border-radius-base: 0.4em;
+*/
+
+:root {
+  --color-cyan: #{$cyan};
+  --color-red: #{$red};
+  --color-background: #{$color-background-dark};
+  --color-background-over: #{$color-background-over-dark};
+  --color-text: #{$color-text-dark};
+  --color-border: #{color-border-dark};
+
+  // Bootstrap vars
+  --light: #{$white};
+  --dark: #{$black};
+
+  @media (prefers-color-scheme: light) {
+    --color-background: #{$color-background-light};
+    --color-background-over: #{$color-background-over-light};
+    --color-text: #{$color-text-light};
+    --color-border: #{color-border-light};
+
+    // Bootstrap vars
+    --light: #{$black};
+    --dark: #{$white};
+  }
+}
 
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';

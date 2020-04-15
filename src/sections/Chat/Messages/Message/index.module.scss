@@ -1,6 +1,6 @@
 @import 'assets/scss/variables';
 
-$background: rgb(50, 57, 65);
+// $background: rgb(50, 57, 65);
 $border: #3b4252;
 $text: #b5bcc4;
 $text-inverse: #293134;
@@ -40,7 +40,7 @@ $padding: 1em;
 }
 
 .system {
-  border: solid 1px fade-out($text, 0.9);
+  border: solid 1px var(--color-border);
   font-size: 0.9em;
   color: fade-out($text, 0.2);
 
@@ -102,10 +102,10 @@ $padding: 1em;
 }
 
 .timestamp {
-  font-weight: 300;
-  font-size: 0.75em;
-  opacity: 0.8;
-  color: $text;
+  font-weight: 500;
+  font-size: 0.7em;
+  opacity: 0.6;
+  color: var(--color-text);
   letter-spacing: 0.02em;
   margin-left: 1em;
 

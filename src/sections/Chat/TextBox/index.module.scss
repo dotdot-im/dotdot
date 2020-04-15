@@ -13,7 +13,7 @@ $command: #aaa;
   border-radius: 0.2em;
   border: solid 1px rgba(255,255,255,0.1);
   border-left-width: 4px;
-  background: rgba(255,255,255,0.05);
+  background: var(--color-background-over);
   position: relative;
 
   .actions {

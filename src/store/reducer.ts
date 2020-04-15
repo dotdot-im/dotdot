@@ -112,7 +112,7 @@ export default produce((draft: AppState, action: Action) => {
 
       if (action.payload.attributes.replyTo) {
         const messageReply = draft.messages.find(eachMessage => eachMessage.timestamp.getTime() === action.payload.attributes.replyTo) || null
-        if (messageReply) {
+        if (messageReply && messageReply.user) {
           msgObject.attributes.replyTo = messageReply
         }
         msgObject.attributes.replyToTimestamp = action.payload.attributes.replyTo

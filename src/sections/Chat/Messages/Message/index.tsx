@@ -166,7 +166,7 @@ const MessageComponent = ({ message, onClick, reply }: Props) => {
       >
         {userData.name}
       </span>
-      {!reply && message.attributes.replyTo && (
+      {!reply && message.attributes.replyTo && message.attributes.replyTo.user && (
         <div
           className={styles.replyBox}
           style={{

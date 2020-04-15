@@ -167,7 +167,7 @@ const MessageComponent = ({ message, onClick, reply }: Props) => {
         className={classNames(styles.user)}
         style={{ color: userContrastColor }}
       >
-        {userData.name} {userContrastColor}
+        {userData.name}
       </span>
       {!reply && message.attributes.replyTo && (
         <div

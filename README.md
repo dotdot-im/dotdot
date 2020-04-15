@@ -1,4 +1,4 @@
-# dotdot
+![Img](https://github.com/dotdot-im/dotdot-assets/raw/master/transparent/main-black@3x.png)
 
 ![Deploy](https://github.com/aurbano/dotdot/workflows/Deploy/badge.svg)
 

@@ -4,6 +4,7 @@ import { useImmer } from 'use-immer'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import Autosuggest from 'react-autosuggest';
 
 import { SocketContext } from 'util/socketProvider'
 import { VALID_USERNAME } from '../../../constants'

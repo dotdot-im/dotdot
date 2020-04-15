@@ -4,11 +4,12 @@ $command: #aaa;
 
 .area {
   background: rgba(255, 255, 255, 0.01);
+  padding: 0.5em 0;
 }
 
 .reply {
   font-size: 0.9em;
-  margin-bottom: 0.25em;
+  margin-bottom: 0.75rem;
   padding: 0.5em 1em;
   border-radius: 0.2em;
   border: solid 1px rgba(255, 255, 255, 0.1);
@@ -26,7 +27,6 @@ $command: #aaa;
 
 .textBox {
   position: relative;
-  margin-top: 1em;
 
   input {
     padding-right: 2.5em;
@@ -47,7 +47,7 @@ $command: #aaa;
 }
 
 .inputGroup {
-  margin-bottom: 1em;
+  margin-bottom: 0;
 
   .button {
     display: none;

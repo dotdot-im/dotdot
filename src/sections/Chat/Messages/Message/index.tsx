@@ -63,8 +63,24 @@ const MessageComponent = ({ message, onClick, reply }: Props) => {
     icon = ['far', iconName]
   }
 
+  let messageBody;
+
+  if (reply) {
+    messageBody = message.content.join('. ')
+  } else {
+    messageBody = message.content.map((content, index) => (
+      <MessageContent
+        content={content}
+        isSystem={isSystem}
+        onlineUsers={state.onlineUsers}
+        key={index}
+      />
+    ))
+  }
+
   return (
     <div
+      id={ 'message-' + message.timestamp.getTime() }
       className={classNames(styles.message, {
         [styles.reply]: reply,
         [styles.system]: isSystem,
@@ -122,24 +138,18 @@ const MessageComponent = ({ message, onClick, reply }: Props) => {
         )}
       </div>
       {!reply && message.attributes.replyTo && message.attributes.replyTo.user && (
-        <div
+        <a
+          href={ '#message-' + message.attributes.replyToTimestamp }
           className={styles.replyBox}
           style={{
             borderLeftColor: `#${message.attributes.replyTo.user.color}`,
           }}
         >
           <MessageComponent reply message={message.attributes.replyTo} />
-        </div>
+        </a>
       )}
       <div className={classNames(styles.body)}>
-        {message.content.map((content, index) => (
-          <MessageContent
-            content={content}
-            isSystem={isSystem}
-            onlineUsers={state.onlineUsers}
-            key={index}
-          />
-        ))}
+        {messageBody}
       </div>
     </div>
   )

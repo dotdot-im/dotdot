@@ -164,12 +164,25 @@ $padding: 1em;
   border-left-color: #ccc;
   border-left-style: solid;
   border-left-width: 4px;
+  transition: background ease-in-out 50ms;
+  display: block;
+  color: inherit;
+  cursor: pointer;
+
+  &:hover {
+    color: inherit;
+    background: rgba(255, 255, 255, 0.05);
+    text-decoration: none;
+  }
 }
 
 .reply {
   margin: 0;
   padding: 0;
   opacity: 0.5;
+  max-height: 6rem;
+  overflow: auto;
+  border-radius: 0;
 
   .icon,
   .timestamp {

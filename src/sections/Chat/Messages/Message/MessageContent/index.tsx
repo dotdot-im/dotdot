@@ -34,8 +34,9 @@ export default ({ content, isSystem, onlineUsers }: Props) => {
           (user) => user.name === username
         )
         if (userIndex > -1) {
+          const userColor = onlineUsers[userIndex].contrastColor || '#' + onlineUsers[userIndex].color
           style = {
-            color: `#${onlineUsers[userIndex].color}`,
+            color: userColor,
           }
         }
         return (

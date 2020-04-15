@@ -11,7 +11,7 @@ $command: #aaa;
   margin-bottom: 0.25em;
   padding: 0.5em 1em;
   border-radius: 0.2em;
-  border: solid 1px rgba(255,255,255,0.1);
+  border: solid 1px rgba(255, 255, 255, 0.1);
   border-left-width: 4px;
   background: var(--color-background-over);
   position: relative;
@@ -40,7 +40,7 @@ $command: #aaa;
     cursor: pointer;
     z-index: 3;
 
-    @media (pointer:coarse) {
+    @media (pointer: coarse) {
       right: 3.2em;
     }
   }
@@ -57,20 +57,22 @@ $command: #aaa;
       border-bottom-right-radius: 0.25em !important;
     }
 
-    @media (pointer:coarse) {
+    @media (pointer: coarse) {
       display: block;
     }
   }
 }
 
-.private, .command {
+.private,
+.command {
   .textIcon {
     cursor: initial;
   }
 }
 
 .private {
-  input, input:focus {
+  input,
+  input:focus {
     border-color: $secondary;
     box-shadow: 0 0 0 0.2rem fade-out($secondary, 0.8);
   }
@@ -83,7 +85,8 @@ $command: #aaa;
 .command {
   color: $command;
 
-  input, input:focus {
+  input,
+  input:focus {
     color: inherit;
     border-color: $command;
     box-shadow: 0 0 0 0.2rem fade-out($command, 0.8);

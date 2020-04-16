@@ -4,6 +4,18 @@
 
 ## Development
 
+### Local Development
+
+You can use **storybook* to play around with the components locally:
+
+```console
+yarn storybook
+
+# or
+
+npm run storybook
+```
+
 ### Using Icons
 
 We have access to the FontAwesome free icons library. But we only import the ones we need to keep bundle size down.

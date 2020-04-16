@@ -1,0 +1,7 @@
+.wrapper {
+  margin: 0 15px; // TODO: Replace with $margin-side
+
+  @media all and (min-width: 40em) {
+    margin: 0 20px;
+  }
+}

@@ -1,0 +1,19 @@
+.header {
+  background: var(--color-background-over);
+
+  .logo {
+    padding: 0.9em 0;
+  }
+
+  .badge {
+    float: right;
+  }
+
+  @media all and (min-width: 40em) {
+    // background: none;
+
+    .logo {
+      padding: 1.5em 0;
+    }
+  }
+}

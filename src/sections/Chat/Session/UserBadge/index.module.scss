@@ -1,0 +1,65 @@
+@import 'assets/scss/variables';
+
+$lockedColor: fade-out(#fff, 0.7);
+
+.badge {
+  border: 0;
+  background: transparent;
+  height: 57px;
+  padding: 0 15px;
+  border-left: 2px solid var(--color-background);
+  margin-right: -15px;
+}
+
+.dot {
+  // Using pixels cause relative units have small inconsistencies across browsers
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  border-radius: 50%;
+
+  margin-top: 5px;
+  margin-right: 10px;
+}
+
+.name {
+  color: var(--color-text);
+  font-weight: 800;
+
+  @media (max-width: 40em) {
+    display: none;
+  }
+}
+
+// Lock state
+.lock {
+  font-size: 0.7em;
+  color: $white;
+  animation: pulse linear 1s infinite;
+  margin-bottom: 3px;
+
+  &:hover {
+    color: scale-color($secondary, $lightness: -10%) !important;
+  }
+
+  &.closed {
+    color: $lockedColor !important;
+    animation: none;
+
+    &:hover {
+      color: fade-in($lockedColor, 0.2) !important;
+    }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

@@ -55,10 +55,8 @@ export default (props: Props) => {
     })
   }, [state.messages, setLocalState])
 
-  // TODO set this on new messages: draft.unseenMessages = !draft.scrollAtBottom
-
   return (
-    <div className={ styles.messages }>
+    <div className={ styles.messages } ref={chatAreaRef}>
       { localState.unseenMessages && (
         <div className={ classNames(styles.unseen) }>
           <Container className={ styles.unseenContainer }>
@@ -68,7 +66,7 @@ export default (props: Props) => {
           </Container>
         </div>
       ) }
-        <div className={classNames(styles.messageScroll)} ref={chatAreaRef}>
+        <div className={classNames(styles.messageScroll)}>
           <div className='container'>
             <ScrollBox
               boxRef={ chatAreaRef }

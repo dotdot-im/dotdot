@@ -1,6 +1,6 @@
 import randomWords from 'random-words'
 
-import { Message, User, AppState, MessageAttributes } from '../../store/types'
+import { Message, User, AppState, MessageAttributes, IncomingMessage } from '../../store/types'
 import { initialState } from '../../store/state';
 
 export const SYSTEM_USER: User = {
@@ -43,11 +43,15 @@ export function generateRandomUser(): User {
   }
 }
 
+export function getRandomUser(users: User[]): User {
+  return users[Math.floor(Math.random() * users.length)]
+}
+
 export function generateRandomMessages(num: number, users: User[], randomAttributes: boolean = false): Message[] {
   const messages: Message[] = []
 
   Array.from(Array(num)).forEach(() => {
-    const user = users[Math.floor(Math.random() * users.length)]
+    const user = getRandomUser(users)
     messages.push(generateRandomMessage(user, messages, randomAttributes))
   })
 
@@ -56,6 +60,13 @@ export function generateRandomMessages(num: number, users: User[], randomAttribu
 
 export function generateRandomMessageContent(): string {
   return randomWords(Math.round(3 + Math.random() * 100)).join(' ')
+}
+
+export function generateRandomIncomingMessage(user: User, messages: Message[], randomAttributes: boolean = false): IncomingMessage {
+  const message: any = generateRandomMessage(user, messages, randomAttributes)
+  message.content = message.content[0]
+  message.timestamp = new Date()
+  return message
 }
 
 export function generateRandomMessage(user: User, messages: Message[], randomAttributes: boolean = false): Message {

@@ -12,10 +12,11 @@ type Props = {
 }
 
 export default ({ scrollingWhileFocused }: Props) => {
-  const topPosition = scrollingWhileFocused ? window.pageYOffset + 'px' : 0
+  const top = scrollingWhileFocused ? window.pageYOffset + 'px' : 0
+  const position = scrollingWhileFocused ? 'absolute' : 'fixed'
 
   return (
-    <header className={styles.header} style={{ top: topPosition }}>
+    <header className={styles.header} style={{ position, top }}>
       <Wrapper>
         <img className={styles.logo} src={logo} alt="dotdot logo" />
 

@@ -19,6 +19,10 @@ $padding: 1em;
 
   border-radius: 0.5em;
 
+  @media all and (min-width: 40em) {
+    margin: $padding;
+  }
+
   .replyButton {
     position: absolute;
     top: 2em;

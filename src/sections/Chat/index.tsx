@@ -29,10 +29,6 @@ export default () => {
     replyTo: null,
   })
 
-  if (!state.socket.connected) {
-    return <Loader />
-  }
-
   const onMessageClick = useCallback(
     (messageTimestamp: number) => {
       setState((draft) => {
@@ -77,6 +73,10 @@ export default () => {
       draft.isTextBoxFocused = true
     })
     setHeaderPosition()
+  }
+
+  if (!state.socket.connected) {
+    return <Loader />
   }
 
   const handleTextBoxBlur = () => {

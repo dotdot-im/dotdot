@@ -9,12 +9,12 @@
 
 .messageScroll {
   height: 100%;
-  padding-top: 1em;
+  padding: 60px 0 80px;
   overflow-x: hidden;
   overflow-y: auto;
 
   @media (min-width: 60em) {
-    padding-top: 60px;
+    padding-bottom: 120px;
   }
 }
 

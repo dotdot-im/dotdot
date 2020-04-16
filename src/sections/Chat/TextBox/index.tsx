@@ -180,7 +180,7 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
         [styles.focused]: localState.focused,
       })}
     >
-      <Container>
+      <Container className={ styles.container }>
         {replyTo && (
           <div
             className={styles.reply}

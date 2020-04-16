@@ -1,16 +1,17 @@
 @import 'assets/scss/variables';
 
-$lockedColor: fade-out(#fff, 0.7);
-
 .badge {
   border: 0;
   background: transparent;
   color: var(--color-text);
-  height: 57px;
+  height: 75px;
   padding: 0 15px;
-  border-left: 2px solid var(--color-background);
-  margin-right: -15px;
 
+  @media (max-width: 60em) {
+    border-left: 2px solid var(--color-background);
+    margin-right: -15px;
+    height: 57px;
+  }
 
   &:hover {
     .lock {
@@ -26,9 +27,11 @@ $lockedColor: fade-out(#fff, 0.7);
 
 // Lock state
 .lock {
+  position: relative;
+  top: -0.25em;
   font-size: 0.7em;
   animation: pulse linear 1s infinite;
-  margin-bottom: 3px;
+  margin-left: 1.5em;
 }
 
 .dot {
@@ -39,12 +42,15 @@ $lockedColor: fade-out(#fff, 0.7);
   border-radius: 50%;
 
   margin-top: 5px;
-  margin-right: 10px;
 }
 
 .name {
+  position: relative;
+  top: -0.1em;
+  display: inline-block;
   color: var(--color-text);
   font-weight: 800;
+  margin-left: 0.25em;
 
   @media (max-width: 40em) {
     display: none;

@@ -14,6 +14,8 @@ import OnlineUsers from './OnlineUsers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useImmer } from 'use-immer'
 import { Message } from 'store/types'
+import Wrapper from './Wrapper'
+import Panel from './Panel'
 
 // fix for browser with no smooth scrolling
 smoothscroll.polyfill()
@@ -105,19 +107,18 @@ export default () => {
         })}
       >
         <Header />
-        <div className={classNames(styles.header)} style={headerStyle}>
-          <Container>
-            <OnlineUsers />
-          </Container>
-        </div>
 
         <Messages onMessageClick={onMessageClick} />
-        <TextBox
-          replyTo={localState.replyTo}
-          onFocus={handleTextBoxFocus}
-          onBlur={handleTextBoxBlur}
-          onCancelReply={cancelReply}
-        />
+        <Panel>
+          <Wrapper>
+            <TextBox
+              replyTo={localState.replyTo}
+              onFocus={handleTextBoxFocus}
+              onBlur={handleTextBoxBlur}
+              onCancelReply={cancelReply}
+            />
+          </Wrapper>
+        </Panel>
       </div>
     )
   }

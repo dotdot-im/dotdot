@@ -5,12 +5,17 @@ import Wrapper from '../Wrapper'
 
 import styles from './index.module.scss'
 import PasswordLock from '../Session'
+import OnlineUsers from '../OnlineUsers'
 
 export default () => {
   return (
     <header className={styles.header}>
       <Wrapper>
         <img className={styles.logo} src={logo} alt="dotdot logo" />
+
+        <div className={styles.online}>
+          <OnlineUsers />
+        </div>
 
         <div className={styles.badge}>
           <PasswordLock />

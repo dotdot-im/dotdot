@@ -3,17 +3,35 @@
 
   .logo {
     padding: 0.9em 0;
+    float: left;
   }
 
   .badge {
     float: right;
   }
 
+  .onlineUsers {
+    display: none;
+  }
+
   @media all and (min-width: 40em) {
-    // background: none;
+    .online {
+      display: inline-block;
+      margin-left: 1em;
+      margin-top: 0.5em;
+    }
+  }
+
+  @media all and (min-width: 60em) {
+    background: none;
 
     .logo {
       padding: 1.5em 0;
+    }
+
+    .online {
+      margin-top: 1em;
+      margin-left: 3em;
     }
   }
 }

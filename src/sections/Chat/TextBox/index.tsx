@@ -13,7 +13,6 @@ import MessageComponent from '../Messages/Message'
 
 import styles from './index.module.scss'
 
-
 type State = {
   message: string
   private: boolean
@@ -22,7 +21,7 @@ type State = {
 }
 
 type Props = {
-  replyTo?: Message | null,
+  replyTo?: Message | null
   onFocus?: () => void
   onBlur?: () => void
   onCancelReply?: () => void
@@ -152,52 +151,50 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
   }
 
   return (
-    <div className={ styles.area }>
-      <Container>
-        {replyTo && (
-          <div className={ styles.reply } style={ { borderLeftColor: `#${replyTo.user.color}` } }>
-            <div className={ styles.actions }>
-              <Button variant='link' onClick={ onCancelReply }>
-                <FontAwesomeIcon icon='times' />
-              </Button>
-            </div>
-            <MessageComponent
-              reply
-              message={ replyTo }
-            />
-          </div>
-        )}
-        <Form
-          noValidate
-          onSubmit={handleSubmit}
-          className={classNames(styles.textBox, {
-            [styles.private]: localState.private,
-            [styles.command]: localState.isCommand,
-          })}
+    <div className={styles.area}>
+      {replyTo && (
+        <div
+          className={styles.reply}
+          style={{ borderLeftColor: `#${replyTo.user.color}` }}
         >
-          <InputGroup className={ styles.inputGroup }>
-            <Form.Control
-              as="input"
-              type="text"
-              placeholder="Type a message..."
-              autoFocus
-              autoComplete="off"
-              onChange={onType}
-              onFocus={onFocus}
-              onBlur={onBlur}
-              value={localState.message}
-            />
-            <InputGroup.Append className={ styles.button }>
-              <Button type="submit">
-                <FontAwesomeIcon icon='paper-plane' />
-              </Button>
-            </InputGroup.Append>
-            <div className={styles.textIcon} onClick={onIconClick}>
-              <FontAwesomeIcon icon={icon} />
-            </div>
-          </InputGroup>
-        </Form>
-      </Container>
+          <div className={styles.actions}>
+            <Button variant="link" onClick={onCancelReply}>
+              <FontAwesomeIcon icon="times" />
+            </Button>
+          </div>
+          <MessageComponent reply message={replyTo} />
+        </div>
+      )}
+      <Form
+        noValidate
+        onSubmit={handleSubmit}
+        className={classNames(styles.textBox, {
+          [styles.private]: localState.private,
+          [styles.command]: localState.isCommand,
+        })}
+      >
+        <InputGroup className={styles.inputGroup}>
+          <Form.Control
+            as="input"
+            type="text"
+            placeholder="Type a message..."
+            autoFocus
+            autoComplete="off"
+            onChange={onType}
+            onFocus={onFocus}
+            onBlur={onBlur}
+            value={localState.message}
+          />
+          <InputGroup.Append className={styles.button}>
+            <Button type="submit">
+              <FontAwesomeIcon icon="paper-plane" />
+            </Button>
+          </InputGroup.Append>
+          <div className={styles.textIcon} onClick={onIconClick}>
+            <FontAwesomeIcon icon={icon} />
+          </div>
+        </InputGroup>
+      </Form>
     </div>
   )
 }

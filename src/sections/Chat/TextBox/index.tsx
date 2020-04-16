@@ -1,5 +1,5 @@
-import React, { useContext, useRef, ElementType, useCallback } from 'react'
-import { Form, InputGroup, Button, FormControl } from 'react-bootstrap'
+import React, { useContext, useRef, useCallback } from 'react'
+import { Form, InputGroup, Button } from 'react-bootstrap'
 import { useImmer } from 'use-immer'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

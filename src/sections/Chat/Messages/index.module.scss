@@ -6,19 +6,14 @@ $textbox-height-desktop: 120px;
 .messages {
   position: relative;
   height: 100%;
-  overflow: hidden;
+  overflow: auto;
+  flex: 1;
 }
 
 .messageScroll {
-  height: 100%;
-  padding: 60px 0;
-  padding-bottom: $textbox-height-mobile;
+  padding: 4em 0 2em;
   overflow-x: hidden;
   overflow-y: auto;
-
-  @media (min-width: 60em) {
-    padding-bottom: $textbox-height-desktop;
-  }
 }
 
 .unseen {

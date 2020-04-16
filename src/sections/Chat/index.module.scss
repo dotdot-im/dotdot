@@ -1,5 +1,12 @@
 @import 'assets/scss/variables';
 
+.chat {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .scrollingChat {
   scroll-behavior: smooth;
 }

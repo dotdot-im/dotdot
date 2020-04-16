@@ -88,7 +88,7 @@ export default () => {
 
   return (
     <div
-      className={classNames({
+      className={classNames(styles.chat, {
         [styles.scrollingChat]: localState.scrollingWhileFocused,
       })}
     >

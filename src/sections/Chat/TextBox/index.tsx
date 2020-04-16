@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useCallback } from 'react'
-import { Form, InputGroup, Button } from 'react-bootstrap'
+import { Form, InputGroup, Button, Container } from 'react-bootstrap'
 import { useImmer } from 'use-immer'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -176,54 +176,56 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
 
   return (
     <div
-      className={classNames(styles.area, 'container', {
+      className={classNames(styles.area, {
         [styles.focused]: localState.focused,
       })}
     >
-      {replyTo && (
-        <div
-          className={styles.reply}
-          style={{ borderLeftColor: `#${replyTo.user.color}` }}
+      <Container>
+        {replyTo && (
+          <div
+            className={styles.reply}
+            style={{ borderLeftColor: `#${replyTo.user.color}` }}
+          >
+            <div className={styles.actions}>
+              <Button variant="link" onClick={onCancelReply}>
+                <FontAwesomeIcon icon="times" />
+              </Button>
+            </div>
+            <MessageComponent reply message={replyTo} />
+          </div>
+        )}
+        <Form
+          noValidate
+          onSubmit={handleSubmit}
+          className={classNames(styles.textBox, {
+            [styles.private]: localState.private,
+            [styles.command]: localState.isCommand,
+          })}
         >
-          <div className={styles.actions}>
-            <Button variant="link" onClick={onCancelReply}>
-              <FontAwesomeIcon icon="times" />
-            </Button>
-          </div>
-          <MessageComponent reply message={replyTo} />
-        </div>
-      )}
-      <Form
-        noValidate
-        onSubmit={handleSubmit}
-        className={classNames(styles.textBox, {
-          [styles.private]: localState.private,
-          [styles.command]: localState.isCommand,
-        })}
-      >
-        <InputGroup className={classNames(styles.inputGroup)}>
-          <Form.Control
-            as="input"
-            type="text"
-            placeholder="Type a message..."
-            ref={inputRef}
-            autoFocus
-            autoComplete="off"
-            onChange={onType}
-            onFocus={onInputFocus}
-            onBlur={onInputBlur}
-            value={localState.message}
-          />
-          <InputGroup.Append className={styles.button}>
-            <Button type="submit">
-              <FontAwesomeIcon icon="paper-plane" />
-            </Button>
-          </InputGroup.Append>
-          <div className={styles.textIcon} onClick={onIconClick}>
-            <FontAwesomeIcon icon={icon} />
-          </div>
-        </InputGroup>
-      </Form>
+          <InputGroup className={classNames(styles.inputGroup)}>
+            <Form.Control
+              as="input"
+              type="text"
+              placeholder="Type a message..."
+              ref={inputRef}
+              autoFocus
+              autoComplete="off"
+              onChange={onType}
+              onFocus={onInputFocus}
+              onBlur={onInputBlur}
+              value={localState.message}
+            />
+            <InputGroup.Append className={styles.button}>
+              <Button type="submit">
+                <FontAwesomeIcon icon="paper-plane" />
+              </Button>
+            </InputGroup.Append>
+            <div className={styles.textIcon} onClick={onIconClick}>
+              <FontAwesomeIcon icon={icon} />
+            </div>
+          </InputGroup>
+        </Form>
+      </Container>
     </div>
   )
 }

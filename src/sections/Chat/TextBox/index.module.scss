@@ -3,10 +3,6 @@
 $command: #aaa;
 
 .area {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
   background: var(--color-background);
 
   @media (min-width: 40em) {

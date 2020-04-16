@@ -16,7 +16,7 @@ $padding: 1em;
   padding: 0 #{$padding};
 
   @media all and (min-width: 40em) {
-    margin: $padding;
+    margin: $padding $padding * 1.5;
   }
 
   .replyButton {

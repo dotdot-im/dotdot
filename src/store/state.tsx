@@ -13,7 +13,7 @@ export const initialState: AppState = {
   socket: {
     connected: false,
   },
-  draftTimer: 100,
+  draftTimer: 150,
   onlineUsers: [],
   messages: [],
   stats: {

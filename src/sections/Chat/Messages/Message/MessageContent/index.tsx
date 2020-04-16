@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import reactStringReplace from 'react-string-replace'
 
 import { User } from 'store/types'
@@ -18,7 +18,6 @@ const URL_REGEX = new RegExp(
 )
 
 export default ({ content, isSystem, onlineUsers }: Props) => {
-
   let messageContent: React.ReactNodeArray | JSX.Element | string = content
 
   if (isSystem && content === '/help') {

@@ -12,10 +12,14 @@ import { EVENTS, Message, OutgoingMessage } from 'store/types'
 import MessageComponent from '../Messages/Message'
 
 import styles from './index.module.scss'
+import { dateDiff } from 'lib/dateDiff'
 
+type TimedMessage = [string | null, number]
 
 type State = {
   message: string
+  timedMessage: TimedMessage[]
+  lastKeyStroke: Date | null
   private: boolean
   to: string | null
   isCommand: boolean
@@ -33,6 +37,8 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
 
   const [localState, setState] = useImmer<State>({
     message: '',
+    timedMessage: [],
+    lastKeyStroke: null,
     private: false,
     to: null,
     isCommand: false,
@@ -120,10 +126,24 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
     }
 
     setState((draft) => {
+      if (Math.abs(value.length - draft.message.length) === 1) {
+        const timeDiff = draft.lastKeyStroke ? dateDiff(draft.lastKeyStroke) : 0
+        if (value.length > draft.message.length) {
+          // adding
+          draft.timedMessage.push([value[value.length - 1], timeDiff])
+        } else {
+          draft.timedMessage.push([null, timeDiff])
+        }
+      } else {
+        // too different, reset
+        draft.timedMessage = [[value, 0]]
+      }
+
       draft.message = value
       draft.private = isPM
       draft.to = to
       draft.isCommand = isCommand
+      draft.lastKeyStroke = new Date()
     })
 
     if (isPM || isCommand) {
@@ -167,6 +187,9 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
             />
           </div>
         )}
+        <div>
+          { JSON.stringify(localState.timedMessage) }
+        </div>
         <Form
           noValidate
           onSubmit={handleSubmit}

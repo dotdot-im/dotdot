@@ -1,15 +1,23 @@
 .onlineUsers {
-  font-size: 1.5em;
-  padding: 0px;
-  margin: 0px;
-  height: 3rem;
-  text-align: right;
-  position: relative;
-  top: 0.25em;
-  z-index: 3;
+  font-size: 1em;
+  padding: 0.5em;
+  margin: 0;
+  text-align: left;
+  background: var(--color-background-over);
+  border-radius: 50px;
 
-  & > span {
-    position: relative;
-    margin-left: 0.5em;
+  svg {
+    margin-right: 0.5em;
   }
+
+  @media (max-width: 40em) {
+    display: none;
+  }
+}
+
+.count {
+  display: inline-block;
+  width: 2em;
+  text-align: center;
+  font-weight: 800;
 }

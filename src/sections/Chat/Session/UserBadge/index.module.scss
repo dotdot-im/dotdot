@@ -1,0 +1,64 @@
+@import 'assets/scss/variables';
+
+.badge {
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  height: 75px;
+  padding: 0 15px;
+
+  @media (max-width: 60em) {
+    border-left: 2px solid var(--color-background);
+    margin-right: -15px;
+    height: 57px;
+  }
+
+  &:hover {
+    .lock {
+      opacity: 0.75;
+    }
+  }
+
+  .lock.closed {
+    opacity: 0.5;
+    animation: none;
+  }
+}
+
+// Lock state
+.lock {
+  position: relative;
+  top: -0.25em;
+  font-size: 0.7em;
+  animation: pulse linear 1s infinite;
+  margin-left: 1.5em;
+}
+
+.dot {
+  margin-right: 0.5em;
+}
+
+.name {
+  position: relative;
+  top: -0.1em;
+  display: inline-block;
+  color: var(--color-text);
+  font-weight: 800;
+  margin-left: 0.25em;
+
+  @media (max-width: 40em) {
+    display: none;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

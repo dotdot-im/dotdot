@@ -1,7 +1,6 @@
 @import 'assets/scss/variables';
 
 .messages {
-  flex: 1;
   position: relative;
   height: 100%;
   overflow: hidden;
@@ -9,6 +8,7 @@
 
 .messageScroll {
   height: 100%;
+  height: 100vh;
   padding: 60px 0 80px;
   overflow-x: hidden;
   overflow-y: auto;

@@ -6,11 +6,38 @@ $command: #aaa;
   margin: 0 auto;
 
   @media (min-width: 40em) {
+    margin: 0;
     padding: 0 0 0.5em;
   }
 
   @media (min-width: 60em) {
     padding: 1em 0 2em;
+  }
+
+  &.focused {
+    @media (max-width: 40em) {
+      margin: 0;
+      padding: 0;
+
+      .textBox {
+        margin: 0;
+        padding: 0;
+      }
+
+      .inputGroup {
+        box-shadow: none;
+        border-bottom: none;
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+
+        input {
+          padding: 0.25em 0.5em;
+          line-height: initial;
+          height: auto;
+        }
+      }
+    }
   }
 }
 
@@ -82,9 +109,6 @@ $command: #aaa;
   box-shadow: 0 15px 0 -10px $cyan, 0 25px 0 -15px $red;
 
   @media (max-width: 40em) {
-    border-left: 0;
-    border-right: 0;
-
     border-radius: 0.25em;
   }
 

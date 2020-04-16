@@ -1,7 +1,6 @@
 import React, { useEffect, useCallback } from 'react'
 import classNames from 'classnames'
 import smoothscroll from 'smoothscroll-polyfill'
-import { Container } from 'react-bootstrap'
 
 import { useGlobalState } from 'store/state'
 import Loader from 'components/Loader'
@@ -106,14 +105,12 @@ export default () => {
 
         <Messages onMessageClick={onMessageClick} />
 
-        <Container>
-          <TextBox
-            replyTo={localState.replyTo}
-            onFocus={handleTextBoxFocus}
-            onBlur={handleTextBoxBlur}
-            onCancelReply={cancelReply}
-          />
-        </Container>
+        <TextBox
+          replyTo={localState.replyTo}
+          onFocus={handleTextBoxFocus}
+          onBlur={handleTextBoxBlur}
+          onCancelReply={cancelReply}
+        />
       </div>
     )
   }

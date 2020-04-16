@@ -12,9 +12,9 @@ import { EVENTS, Message, OutgoingMessage } from 'store/types'
 import MessageComponent from '../Messages/Message'
 
 import styles from './index.module.scss'
-import { dateDiff } from 'lib/dateDiff'
+import { timedDiff } from './lib/timedDiff'
 
-type TimedMessage = [string | null, number]
+export type TimedMessage = [string | null, number]
 
 type State = {
   message: string
@@ -65,6 +65,8 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
 
     setState((draft) => {
       draft.message = ''
+      draft.timedMessage = []
+      draft.lastKeyStroke = null
       draft.private = false
       draft.isCommand = false
     })
@@ -126,17 +128,14 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
     }
 
     setState((draft) => {
-      if (Math.abs(value.length - draft.message.length) === 1) {
-        const timeDiff = draft.lastKeyStroke ? dateDiff(draft.lastKeyStroke) : 0
-        if (value.length > draft.message.length) {
-          // adding
-          draft.timedMessage.push([value[value.length - 1], timeDiff])
-        } else {
-          draft.timedMessage.push([null, timeDiff])
-        }
-      } else {
-        // too different, reset
+      // Timed messages
+      const timedMessage = timedDiff(value, draft.message, draft.lastKeyStroke)
+      if (timedMessage) {
+        draft.timedMessage.push(timedMessage)
+      } else if (value.length > 0) {
         draft.timedMessage = [[value, 0]]
+      } else {
+        draft.timedMessage = []
       }
 
       draft.message = value

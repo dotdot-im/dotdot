@@ -29,7 +29,9 @@ export default () => {
     replyTo: null,
   })
 
-  let chatArea = <Loader />
+  if (!state.socket.connected) {
+    return <Loader />
+  }
 
   const onMessageClick = useCallback(
     (messageTimestamp: number) => {
@@ -84,26 +86,22 @@ export default () => {
     })
   }
 
-  if (state.socket.connected) {
-    chatArea = (
-      <div
-        className={classNames({
-          [styles.scrollingChat]: localState.scrollingWhileFocused,
-        })}
-      >
-        <Header scrollingWhileFocused={localState.scrollingWhileFocused} />
+  return (
+    <div
+      className={classNames({
+        [styles.scrollingChat]: localState.scrollingWhileFocused,
+      })}
+    >
+      <Header scrollingWhileFocused={localState.scrollingWhileFocused} />
 
-        <Messages onMessageClick={onMessageClick} />
+      <Messages onMessageClick={onMessageClick} />
 
-        <TextBox
-          replyTo={localState.replyTo}
-          onFocus={handleTextBoxFocus}
-          onBlur={handleTextBoxBlur}
-          onCancelReply={cancelReply}
-        />
-      </div>
-    )
-  }
-
-  return chatArea
+      <TextBox
+        replyTo={localState.replyTo}
+        onFocus={handleTextBoxFocus}
+        onBlur={handleTextBoxBlur}
+        onCancelReply={cancelReply}
+      />
+    </div>
+  )
 }

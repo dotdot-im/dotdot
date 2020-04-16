@@ -11,14 +11,13 @@ $textbox-height-desktop: 120px;
 
 .messageScroll {
   height: 100%;
-  height: 100vh;
   padding: 60px 0;
-  margin-bottom: $textbox-height-mobile;
+  padding-bottom: $textbox-height-mobile;
   overflow-x: hidden;
   overflow-y: auto;
 
   @media (min-width: 60em) {
-    margin-bottom: $textbox-height-desktop;
+    padding-bottom: $textbox-height-desktop;
   }
 }
 

@@ -2,6 +2,7 @@ import React, { useEffect, useCallback } from 'react'
 import classNames from 'classnames'
 import { Container, Row, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import smoothscroll from 'smoothscroll-polyfill'
 
 import { useGlobalState } from 'store/state'
 import Loader from 'components/Loader'
@@ -14,6 +15,9 @@ import OnlineUsers from './OnlineUsers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useImmer } from 'use-immer'
 import { Message } from 'store/types'
+
+// fix for browser with no smooth scrolling
+smoothscroll.polyfill();
 
 type State = {
   isTextBoxFocused: boolean

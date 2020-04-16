@@ -51,14 +51,14 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
   }
 
   const onInputFocus = useCallback(() => {
-    setState(draft => {
+    setState((draft) => {
       draft.focused = true
     })
     onFocus && onFocus()
   }, [setState, onFocus])
 
   const onInputBlur = useCallback(() => {
-    setState(draft => {
+    setState((draft) => {
       draft.focused = false
     })
     onBlur && onBlur()
@@ -175,9 +175,11 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
   }
 
   return (
-    <div className={ classNames(styles.area, 'container', {
-      [styles.focused]: localState.focused
-    })}>
+    <div
+      className={classNames(styles.area, 'container', {
+        [styles.focused]: localState.focused,
+      })}
+    >
       {replyTo && (
         <div
           className={styles.reply}
@@ -199,12 +201,12 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
           [styles.command]: localState.isCommand,
         })}
       >
-        <InputGroup className={ classNames(styles.inputGroup) }>
+        <InputGroup className={classNames(styles.inputGroup)}>
           <Form.Control
-            as='input'
+            as="input"
             type="text"
             placeholder="Type a message..."
-            ref={ inputRef }
+            ref={inputRef}
             autoFocus
             autoComplete="off"
             onChange={onType}

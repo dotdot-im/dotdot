@@ -13,9 +13,7 @@ $padding: 1em;
   white-space: pre-line;
 
   margin: #{$padding} #{-$padding};
-  padding: 0.5em #{$padding};
-
-  border-radius: 0.5em;
+  padding: 0 #{$padding};
 
   @media all and (min-width: 40em) {
     margin: $padding;
@@ -45,10 +43,15 @@ $padding: 1em;
   border: solid 1px var(--color-border);
   font-size: 0.9em;
   color: fade-out($text, 0.2);
+  padding: $padding;
 
   .user,
   .timestamp {
     display: none;
+  }
+
+  @media (min-width: 40em) {
+    border-radius: 0.5em;
   }
 }
 

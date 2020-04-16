@@ -35,13 +35,7 @@
 }
 
 .dot {
-  // Using pixels cause relative units have small inconsistencies across browsers
-  width: 18px;
-  height: 18px;
-  display: inline-block;
-  border-radius: 50%;
-
-  margin-top: 5px;
+  margin-right: 0.5em;
 }
 
 .name {

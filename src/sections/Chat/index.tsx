@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback } from 'react'
 import classNames from 'classnames'
 import smoothscroll from 'smoothscroll-polyfill'
+import { Container } from 'react-bootstrap'
 
 import { useGlobalState } from 'store/state'
 import Loader from 'components/Loader'
@@ -11,8 +12,6 @@ import Messages from './Messages'
 import TextBox from './TextBox'
 import { useImmer } from 'use-immer'
 import { Message } from 'store/types'
-import Wrapper from './Wrapper'
-import Panel from './Panel'
 
 // fix for browser with no smooth scrolling
 smoothscroll.polyfill()
@@ -107,14 +106,14 @@ export default () => {
 
         <Messages onMessageClick={onMessageClick} />
 
-        <Panel>
+        <Container>
           <TextBox
             replyTo={localState.replyTo}
             onFocus={handleTextBoxFocus}
             onBlur={handleTextBoxBlur}
             onCancelReply={cancelReply}
           />
-        </Panel>
+        </Container>
       </div>
     )
   }

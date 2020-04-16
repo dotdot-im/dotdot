@@ -3,15 +3,14 @@
 $command: #aaa;
 
 .area {
-  max-width: 960px;
   margin: 0 auto;
 
   @media (min-width: 40em) {
-    padding: 0 15px 0.5em;
+    padding: 0 0 0.5em;
   }
 
   @media (min-width: 60em) {
-    padding: 1em 0 4em;
+    padding: 1em 0 2em;
   }
 }
 

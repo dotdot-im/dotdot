@@ -23,9 +23,11 @@ export default ({ onClick, small }: Props) => {
   return (
     <button className={styles.badge} onClick={onClick}>
       <span
-        className={styles.dot}
-        style={{ background: `#${state.auth.user.color}` }}
-      />
+        className={ styles.dot }
+        style={{ color: `#${state.auth.user.color}` }}
+      >
+        <FontAwesomeIcon icon={ state.auth.user.icon || 'circle' } />
+      </span>
       <span className={styles.name}>{state.auth.user.name}</span>
       <FontAwesomeIcon
         className={classNames(styles.lock, {

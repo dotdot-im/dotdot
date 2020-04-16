@@ -12,18 +12,10 @@ type Props = {
 }
 
 export default ({ scrollingWhileFocused }: Props) => {
-  const headerStyle = {
-    position: 'static',
-    top: 0,
-  } as React.CSSProperties
-
-  if (scrollingWhileFocused) {
-    headerStyle.position = 'absolute'
-    headerStyle.top = window.pageYOffset + 'px'
-  }
+  const topPosition = scrollingWhileFocused ? window.pageYOffset + 'px' : 0
 
   return (
-    <header className={styles.header} style={headerStyle}>
+    <header className={styles.header} style={{ top: topPosition }}>
       <Wrapper>
         <img className={styles.logo} src={logo} alt="dotdot logo" />
 

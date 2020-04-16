@@ -85,16 +85,6 @@ export default () => {
     })
   }
 
-  const headerStyle = {
-    position: 'static',
-    top: 0,
-  } as React.CSSProperties
-
-  if (localState.scrollingWhileFocused) {
-    headerStyle.position = 'absolute'
-    headerStyle.top = window.pageYOffset + 'px'
-  }
-
   if (state.socket.connected) {
     chatArea = (
       <div
@@ -102,7 +92,7 @@ export default () => {
           [styles.scrollingChat]: localState.scrollingWhileFocused,
         })}
       >
-        <Header />
+        <Header scrollingWhileFocused={localState.scrollingWhileFocused} />
 
         <Messages onMessageClick={onMessageClick} />
 

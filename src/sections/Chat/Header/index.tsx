@@ -7,9 +7,23 @@ import styles from './index.module.scss'
 import PasswordLock from '../Session'
 import OnlineUsers from '../OnlineUsers'
 
-export default () => {
+type Props = {
+  scrollingWhileFocused?: boolean
+}
+
+export default ({ scrollingWhileFocused }: Props) => {
+  const headerStyle = {
+    position: 'static',
+    top: 0,
+  } as React.CSSProperties
+
+  if (scrollingWhileFocused) {
+    headerStyle.position = 'absolute'
+    headerStyle.top = window.pageYOffset + 'px'
+  }
+
   return (
-    <header className={styles.header}>
+    <header className={styles.header} style={headerStyle}>
       <Wrapper>
         <img className={styles.logo} src={logo} alt="dotdot logo" />
 

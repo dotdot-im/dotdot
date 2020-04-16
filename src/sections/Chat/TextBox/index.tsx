@@ -13,8 +13,9 @@ import MessageComponent from '../Messages/Message'
 
 import styles from './index.module.scss'
 import { timedDiff } from './lib/timedDiff'
+import PlayBackMessage from './lib/PlayBackMessage'
 
-export type TimedMessage = [string | null, number]
+export type TimedMessage = [number, string | null, number]
 
 type State = {
   message: string
@@ -155,9 +156,9 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
       // Timed messages
       const timedMessage = timedDiff(value, draft.message, draft.lastKeyStroke)
       if (timedMessage) {
-        draft.timedMessage.push(timedMessage)
+        draft.timedMessage.push(...timedMessage)
       } else if (value.length > 0) {
-        draft.timedMessage = [[value, 0]]
+        draft.timedMessage = [[0, value, 0]]
       } else {
         draft.timedMessage = []
       }
@@ -211,10 +212,10 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
           <MessageComponent reply message={replyTo} />
         </div>
       )}
-      <div><code>
-        { JSON.stringify(localState.timedMessage) }
-      </code>
-      </div>
+      <PlayBackMessage
+        timers={ localState.timedMessage }
+        message={ localState.message }
+      />
       <Form
         noValidate
         onSubmit={handleSubmit}

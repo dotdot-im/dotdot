@@ -1,29 +1,26 @@
+import diff from 'fast-diff'
+
 import { dateDiff } from "lib/dateDiff"
 import { TimedMessage } from "../"
 
-export function timedDiff(currentValue: string, previousValue: string, lastKeyStroke: Date | null): TimedMessage | null {
-  if (Math.abs(currentValue.length - previousValue.length) !== 1) {
-    return null
-  }
+export function timedDiff(currentValue: string, previousValue: string, lastKeyStroke: Date | null): TimedMessage[] | null {
+  const diffs = diff(previousValue, currentValue)
 
-  // ok so potentially only one character changed, lets make sure
-  let changeIndex = -1
-  for (let i = 0; i < currentValue.length; i++) {
-    if (currentValue[i] !== previousValue[i]) {
-      changeIndex = i
-      break
+  let currentIndex = 0;
+  const timedMessages: TimedMessage[] = [];
+  const timeDiff = lastKeyStroke ? dateDiff(lastKeyStroke) : 0;
+
+  diffs.forEach(eachDiff => {
+    if (eachDiff[0] === diff.EQUAL) {
+      currentIndex += eachDiff[1].length
+      return
     }
-  }
+    timedMessages.push([
+      currentIndex,
+      eachDiff[0] === diff.INSERT ? eachDiff[1] : null,
+      timeDiff
+    ])
+  })
 
-  if (changeIndex === currentValue.length - 1) {
-    // TODO continue here
-  }
-
-  const timeDiff = lastKeyStroke ? dateDiff(lastKeyStroke) : 0
-  if (currentValue.length > previousValue.length) {
-    // adding
-    return [currentValue[currentValue.length - 1], timeDiff]
-  }
-
-  return [null, timeDiff]
+  return timedMessages
 }

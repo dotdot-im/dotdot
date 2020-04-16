@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import reactStringReplace from 'react-string-replace'
 
 import { User } from 'store/types'

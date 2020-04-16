@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { OverlayTrigger, Tooltip, Button, Modal, Form } from 'react-bootstrap'
+import { Button, Modal, Form } from 'react-bootstrap'
 import classNames from 'classnames'
 
 import { fetchResource } from 'util/fetch'

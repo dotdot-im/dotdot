@@ -1,6 +1,5 @@
 import React, { useEffect, useCallback } from 'react'
 import classNames from 'classnames'
-import { Container } from 'react-bootstrap'
 import smoothscroll from 'smoothscroll-polyfill'
 
 import { useGlobalState } from 'store/state'
@@ -10,8 +9,6 @@ import styles from './index.module.scss'
 import Header from './Header'
 import Messages from './Messages'
 import TextBox from './TextBox'
-import OnlineUsers from './OnlineUsers'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useImmer } from 'use-immer'
 import { Message } from 'store/types'
 import Wrapper from './Wrapper'
@@ -109,15 +106,14 @@ export default () => {
         <Header />
 
         <Messages onMessageClick={onMessageClick} />
+
         <Panel>
-          <Wrapper>
-            <TextBox
-              replyTo={localState.replyTo}
-              onFocus={handleTextBoxFocus}
-              onBlur={handleTextBoxBlur}
-              onCancelReply={cancelReply}
-            />
-          </Wrapper>
+          <TextBox
+            replyTo={localState.replyTo}
+            onFocus={handleTextBoxFocus}
+            onBlur={handleTextBoxBlur}
+            onCancelReply={cancelReply}
+          />
         </Panel>
       </div>
     )

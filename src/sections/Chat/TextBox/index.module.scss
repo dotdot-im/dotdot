@@ -3,8 +3,16 @@
 $command: #aaa;
 
 .area {
-  background: rgba(255, 255, 255, 0.01);
-  padding: 0.5em 0;
+  max-width: 960px;
+  margin: 0 auto;
+
+  @media (min-width: 40em) {
+    padding: 0 15px 0.5em;
+  }
+
+  @media (min-width: 60em) {
+    padding: 1em 0 4em;
+  }
 }
 
 .reply {
@@ -27,34 +35,68 @@ $command: #aaa;
 
 .textBox {
   position: relative;
+  margin-bottom: 1em;
 
   input {
+    color: inherit;
+    background: transparent;
+    border: 0;
     padding-right: 2.5em;
+    border-radius: 0;
+    padding: 1em 15px;
+    height: 52px;
+    line-height: 1.2;
+
+    &:focus {
+      color: inherit !important;
+      background: inherit !important;
+    }
+
+    @media (min-width: 40em) {
+      height: 52px;
+    }
   }
 
   .textIcon {
     position: absolute;
-    top: 0.4em;
+    top: 0.75em;
     right: 0.8em;
-    color: #999;
+    margin: auto;
+    color: --color-text;
+    opacity: 0.6;
     cursor: pointer;
     z-index: 3;
 
     @media (pointer: coarse) {
-      right: 3.2em;
+      right: 4em;
     }
   }
 }
 
 .inputGroup {
+  position: relative;
+  background: var(--color-input);
+  color: var(--color-text);
   margin-bottom: 0;
+  border: 1px solid #fff;
+  border-radius: 0.25em;
+  box-shadow: 0 15px 0 -10px $cyan, 0 25px 0 -15px $red;
+
+  @media (max-width: 40em) {
+    border-left: 0;
+    border-right: 0;
+
+    border-radius: 0.25em;
+  }
 
   .button {
     display: none;
+    margin-top: 5px;
+    margin-right: 6px;
 
     button {
-      border-top-right-radius: 0.25em !important;
-      border-bottom-right-radius: 0.25em !important;
+      border-radius: 0.25em !important;
+      border: 1px solid darken(green, 10%) !important;
     }
 
     @media (pointer: coarse) {

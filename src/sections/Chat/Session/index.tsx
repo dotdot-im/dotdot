@@ -11,7 +11,7 @@ type Props = {
 }
 
 export default ({ children }: Props) => {
-  const { state, dispatch } = useGlobalState()
+  const { state } = useGlobalState()
 
   const [isOpen, setModalOpen] = useState<boolean>(false)
 

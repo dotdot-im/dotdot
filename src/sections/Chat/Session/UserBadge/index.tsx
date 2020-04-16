@@ -29,7 +29,7 @@ export default ({ onClick, small }: Props) => {
       <span className={styles.name}>{state.auth.user.name}</span>
       <FontAwesomeIcon
         className={classNames(styles.lock, {
-          [styles.lockClosed]: isLocked,
+          [styles.closed]: isLocked,
         })}
         icon={icon}
       />

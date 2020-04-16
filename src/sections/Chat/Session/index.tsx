@@ -3,6 +3,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import useGlobalState from 'store/state'
 
 import UserBadge from './UserBadge'
+import AdminBadge from './AdminBadge'
 import PasswordModal from './PasswordModal'
 
 type Props = {
@@ -25,6 +26,7 @@ export default ({ children }: Props) => {
 
   return (
     <>
+      <AdminBadge />
       <OverlayTrigger
         placement="bottom"
         delay={500}

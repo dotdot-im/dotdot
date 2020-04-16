@@ -1,7 +1,6 @@
 import React, { useEffect, useCallback } from 'react'
 import classNames from 'classnames'
-import { Container, Row, Col } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Container } from 'react-bootstrap'
 import smoothscroll from 'smoothscroll-polyfill'
 
 import { useGlobalState } from 'store/state'
@@ -17,7 +16,7 @@ import { useImmer } from 'use-immer'
 import { Message } from 'store/types'
 
 // fix for browser with no smooth scrolling
-smoothscroll.polyfill();
+smoothscroll.polyfill()
 
 type State = {
   isTextBoxFocused: boolean
@@ -108,22 +107,7 @@ export default () => {
         <Header />
         <div className={classNames(styles.header)} style={headerStyle}>
           <Container>
-            <Row>
-              <Col>
-                {state.auth.user && state.auth.user.isAdmin && (
-                  <Link
-                    to="/admin"
-                    title="Monitoring"
-                    style={{ marginLeft: '1em' }}
-                  >
-                    <FontAwesomeIcon icon="shield-alt" />
-                  </Link>
-                )}
-              </Col>
-              <Col>
-                <OnlineUsers />
-              </Col>
-            </Row>
+            <OnlineUsers />
           </Container>
         </div>
 

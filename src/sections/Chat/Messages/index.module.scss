@@ -12,6 +12,10 @@
   padding-top: 1em;
   overflow-x: hidden;
   overflow-y: auto;
+
+  @media (min-width: 60em) {
+    padding-top: 60px;
+  }
 }
 
 .unseen {

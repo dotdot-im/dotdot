@@ -12,12 +12,14 @@ $padding: 1em;
   position: relative;
   white-space: pre-line;
 
-  margin: 0 -$padding;
-  padding: $padding;
-
-  margin-bottom: $padding/2;
+  margin: #{$padding} #{-$padding};
+  padding: 0.5em #{$padding};
 
   border-radius: 0.5em;
+
+  @media all and (min-width: 40em) {
+    margin: $padding;
+  }
 
   .replyButton {
     position: absolute;

@@ -76,7 +76,8 @@ export default produce((draft: AppState, action: Action) => {
       const incomingMessage: IncomingMessage = action.payload;
       incomingMessage.timestamp = new Date(incomingMessage.timestamp)
 
-      // delete draft from this user, and if the draft is past messages, stay there
+      // delete draft from this user, and if the draft is past messages, keep it there
+      // this way if multiple users are typing, their drafts don't keep jumping around
       let draftIsPastMessage = false;
       let draftIndex = -1;
       for (let i = draft.messages.length - 1; i >= 0; i--) {

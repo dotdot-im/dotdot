@@ -7,7 +7,7 @@ import '../lib/icons'
 
 import '../assets/scss/index.scss'
 import useGlobalState, { StateProvider } from 'store/state'
-import { getInitialState, generateRandomUsers, generateRandomMessages, generateRandomMessage, getRandomUser, generateRandomIncomingMessage } from './lib/testData'
+import { getInitialState, generateRandomUsers, generateRandomMessages, getRandomUser, generateRandomIncomingMessage } from './lib/testData'
 
 export default { title: 'Chat' }
 

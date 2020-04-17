@@ -8,7 +8,7 @@ import 'lib/icons'
 
 import 'assets/scss/index.scss'
 import { StateProvider } from 'store/state'
-import { getInitialState, generateRandomUsers, generateRandomMessage, SYSTEM_USER, generateRandomMessages } from './lib/testData'
+import { getInitialState, generateRandomUsers, generateRandomMessage, SYSTEM_USER } from './lib/testData'
 
 export default { title: 'Message' }
 

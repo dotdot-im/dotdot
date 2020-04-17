@@ -10,7 +10,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "storybook": "export NODE_PATH=node_modules:src && start-storybook -p 9009 -s public",
-    "build:storybook": "export NODE_PATH=node_modules:src && build-storybook -s public -o build-storybook"
+    "build:storybook": "export NODE_PATH=node_modules:src && export SASS_PATH=node_modules:src && build-storybook -s public -o build-storybook"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.27",

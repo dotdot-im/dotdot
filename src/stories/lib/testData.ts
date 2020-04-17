@@ -1,8 +1,8 @@
 import randomWords from 'random-words'
 
-import { Message, User, AppState, MessageAttributes } from '../../store/types'
-import { initialState } from '../../store/state'
-import { TimedChange } from 'sections/Chat/TextBox'
+import { Message, User, AppState, MessageAttributes, IncomingMessage } from '../../store/types'
+import { initialState } from '../../store/state';
+import { TimedChange } from 'sections/Chat/TextBox';
 
 export const SYSTEM_USER: User = {
   user_id: 'dotdot',
@@ -33,7 +33,7 @@ export function generateRandomUsers(num: number): User[] {
 
 export function generateRandomUser(): User {
   const name = randomWords(1)
-  const color = Math.floor(Math.random() * 16777215).toString(16)
+  const color = Math.floor(Math.random() * 16777215).toString(16);
   return {
     user_id: '' + Math.floor(Math.random() * 100000),
     color,
@@ -44,15 +44,15 @@ export function generateRandomUser(): User {
   }
 }
 
-export function generateRandomMessages(
-  num: number,
-  users: User[],
-  randomAttributes: boolean = false
-): Message[] {
+export function getRandomUser(users: User[]): User {
+  return users[Math.floor(Math.random() * users.length)]
+}
+
+export function generateRandomMessages(num: number, users: User[], randomAttributes: boolean = false): Message[] {
   const messages: Message[] = []
 
   Array.from(Array(num)).forEach(() => {
-    const user = users[Math.floor(Math.random() * users.length)]
+    const user = getRandomUser(users)
     messages.push(generateRandomMessage(user, messages, randomAttributes))
   })
 
@@ -63,11 +63,14 @@ export function generateRandomMessageContent(): string {
   return randomWords(Math.round(3 + Math.random() * 100)).join(' ')
 }
 
-export function generateRandomMessage(
-  user: User,
-  messages: Message[],
-  randomAttributes: boolean = false
-): Message {
+export function generateRandomIncomingMessage(user: User, messages: Message[], randomAttributes: boolean = false): IncomingMessage {
+  const message: any = generateRandomMessage(user, messages, randomAttributes)
+  message.content = message.content[0]
+  message.timestamp = new Date()
+  return message
+}
+
+export function generateRandomMessage(user: User, messages: Message[], randomAttributes: boolean = false): Message {
   let timestamp = new Date()
 
   if (messages.length > 0) {
@@ -93,7 +96,9 @@ export function generateRandomMessage(
     attributes.private = Math.random() < 0.1
   }
 
-  let content = [generateRandomMessageContent()]
+  let content = [
+    generateRandomMessageContent()
+  ]
   if (Math.random() > 0.7) {
     let contentLength = Math.floor(Math.random() * 5)
     for (let i = 0; i < contentLength; i++) {

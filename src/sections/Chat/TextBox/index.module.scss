@@ -3,7 +3,7 @@
 $command: #aaa;
 
 .area {
-  margin: 0 auto;
+  background: var(--color-background);
 
   @media (min-width: 40em) {
     margin: 0;
@@ -18,6 +18,11 @@ $command: #aaa;
     @media (max-width: 40em) {
       margin: 0;
       padding: 0;
+
+      .container {
+        margin: 0;
+        padding: 0;
+      }
 
       .textBox {
         margin: 0;

@@ -42,6 +42,11 @@ $primary: $cyan-text-dark;
 $secondary: $red;
 $secondary-dark: $red-text-dark;
 
+$container-max-widths: (
+  lg: 960px,
+  xl: 1140px,
+);
+
 // To be removed / refactored
 /*
 $lighter: $grey;

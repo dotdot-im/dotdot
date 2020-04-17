@@ -13,12 +13,10 @@ $padding: 1em;
   white-space: pre-line;
 
   margin: #{$padding} #{-$padding};
-  padding: 0.5em #{$padding};
-
-  border-radius: 0.5em;
+  padding: 0 #{$padding};
 
   @media all and (min-width: 40em) {
-    margin: $padding;
+    margin: $padding $padding * 1.5;
   }
 
   .replyButton {
@@ -45,10 +43,15 @@ $padding: 1em;
   border: solid 1px var(--color-border);
   font-size: 0.9em;
   color: fade-out($text, 0.2);
+  padding: $padding;
 
   .user,
   .timestamp {
     display: none;
+  }
+
+  @media (min-width: 40em) {
+    border-radius: 0.5em;
   }
 }
 
@@ -98,7 +101,6 @@ $padding: 1em;
 
   @media all and (min-width: 30em) {
     margin-left: 0;
-    float: left;
     margin-right: 0.3em;
   }
 }
@@ -160,7 +162,7 @@ $padding: 1em;
 
 .replyBox {
   font-size: 0.9em;
-  margin: 2em 0 0.5em;
+  margin: 0.5em;
   padding: 0.15em 0.75em;
   border-radius: 0.2em;
   border-left-color: #ccc;
@@ -185,6 +187,10 @@ $padding: 1em;
   max-height: 6rem;
   overflow: auto;
   border-radius: 0;
+
+  .user {
+    margin-left: 0;
+  }
 
   .icon,
   .timestamp {

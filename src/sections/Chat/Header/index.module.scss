@@ -1,5 +1,5 @@
 .header {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -30,6 +30,7 @@
   }
 
   @media all and (min-width: 60em) {
+    top: 0 !important;
     background: none;
     text-align: center;
 

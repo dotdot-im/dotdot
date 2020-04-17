@@ -136,6 +136,10 @@ export default produce((draft: AppState, action: Action) => {
         content: [incomingMessage.content],
       }
 
+      if (incomingMessage.attributes.draft) {
+        message.timedContent = incomingMessage.timedContent
+      }
+
       draft.messages.push(message)
 
       if (draft.messages.length > MAX_MESSAGE_HISTORY) {

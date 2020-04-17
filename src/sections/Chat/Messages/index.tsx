@@ -74,7 +74,7 @@ export default (props: Props) => {
             >
               {state.messages.map((eachMessage) => (
                 <MessageComponent
-                  key={eachMessage.timestamp.getTime()}
+                  key={eachMessage.user.user_id + eachMessage.timestamp.getTime()}
                   onClick={ props.onMessageClick }
                   message={eachMessage}
                 />

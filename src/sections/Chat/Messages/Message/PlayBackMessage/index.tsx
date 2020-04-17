@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React from 'react';
 
 import { TimedChange } from '../../../TextBox';
 
@@ -21,6 +21,7 @@ export class PlayBackMessage extends React.PureComponent<Props, State> {
     currentIndex: -1,
     isAnimating: false
   }
+  private timer: NodeJS.Timeout | null = null
 
   componentDidMount() {
     if (this.props.timers.length > 0) {
@@ -37,6 +38,10 @@ export class PlayBackMessage extends React.PureComponent<Props, State> {
     }
 
     this.nextAnimationStep()
+  }
+
+  componentWillUnmount() {
+    this.timer && clearTimeout(this.timer)
   }
 
   private nextAnimationStep() {
@@ -58,7 +63,7 @@ export class PlayBackMessage extends React.PureComponent<Props, State> {
   private animationStep(step: number) {
     const [index, char, timer] = this.props.timers[step]
 
-    setTimeout(() => {
+    this.timer = setTimeout(() => {
       const nextStepAvailable = step + 1 < this.props.timers.length
 
       const updatedText = nextStepAvailable ?

@@ -122,6 +122,10 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
       },
     }
 
+    if (draft) {
+      payload.timedContent = localState.timedMessage
+    }
+
     socket?.emit(type, payload)
   }
 
@@ -211,11 +215,6 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
           <MessageComponent reply message={replyTo} />
         </div>
       )}
-      {/* <PlayBackMessage
-        timers={ localState.timedMessage }
-        message={ localState.message }
-      /> */}
-      { JSON.stringify(localState.timedMessage) }
       <Form
         noValidate
         onSubmit={handleSubmit}

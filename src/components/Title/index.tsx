@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useCallback } from 'react'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet'
 import useSound from 'use-sound'
 import { useImmer } from 'use-immer'
 

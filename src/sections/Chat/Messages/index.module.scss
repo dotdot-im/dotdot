@@ -5,6 +5,10 @@
   position: relative;
   height: 100%;
   overflow: hidden;
+
+  @media (max-width: 60em) {
+    padding-top: 40px;
+  }
 }
 
 .messageScroll {
@@ -12,10 +16,6 @@
   padding-top: 1em;
   overflow-x: hidden;
   overflow-y: auto;
-
-  @media (min-width: 60em) {
-    padding-top: 60px;
-  }
 }
 
 .unseen {

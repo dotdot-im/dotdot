@@ -12,7 +12,10 @@ export default () => {
       <span className={styles.count}>{state.onlineUsers.length}</span>
 
       {state.onlineUsers.map((user) => (
-        <User user={user} />
+        <User
+          key={user.user_id}
+          user={user}
+        />
       ))}
     </div>
   )

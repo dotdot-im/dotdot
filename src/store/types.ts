@@ -32,11 +32,13 @@ export type IncomingMessage = {
   user: User
   timestamp: Date
   content: string
+  timedContent?: TimedChange[]
   attributes: MessageAttributes
 }
 
 export type OutgoingMessage = {
   content: string
+  timedContent?: TimedChange[]
   attributes: MessageAttributes
 }
 

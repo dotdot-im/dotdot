@@ -8,7 +8,13 @@ import 'lib/icons'
 
 import 'assets/scss/index.scss'
 import { StateProvider } from 'store/state'
-import { getInitialState, generateRandomUsers, generateRandomMessage, SYSTEM_USER, generateRandomMessages } from './lib/testData'
+import {
+  getInitialState,
+  generateRandomUsers,
+  generateRandomMessage,
+  SYSTEM_USER,
+  TIMED_CONTENT_TEST,
+} from './lib/testData'
 
 export default { title: 'Message' }
 
@@ -19,7 +25,7 @@ const testState = getInitialState(users)
 
 function renderMessage(message: Message, state = testState) {
   return (
-    <StateProvider state={ state }>
+    <StateProvider state={state}>
       <Container>
         <MessageComponent message={message} />
       </Container>
@@ -72,4 +78,15 @@ export const offlineUser = () => {
   const state = getInitialState([])
 
   return renderMessage(testMessage, state)
+}
+
+export const timedDraft = () => {
+  const testMessage = generateRandomMessage(currentUser, [])
+
+  testMessage.attributes.draft = true
+  testMessage.attributes.private = false
+  testMessage.content[0] = 'Hey man, this is a message with timed characters.'
+  testMessage.timedContent = TIMED_CONTENT_TEST
+
+  return renderMessage(testMessage, testState)
 }

@@ -8,6 +8,7 @@ import { Message } from 'store/types'
 import styles from './index.module.scss'
 import useGlobalState from 'store/state'
 import MessageContent from './MessageContent'
+import PlayBackMessage from './PlayBackMessage'
 
 type Props = {
   reply?: boolean
@@ -67,6 +68,13 @@ const MessageComponent = ({ message, onClick, reply }: Props) => {
 
   if (reply) {
     messageBody = message.content.join('. ')
+  } else if (message.attributes.draft && message.timedContent) {
+    messageBody = (
+      <PlayBackMessage
+        timers={ message.timedContent }
+        message={ message.content[0] }
+      />
+    )
   } else {
     messageBody = message.content.map((content, index) => (
       <MessageContent

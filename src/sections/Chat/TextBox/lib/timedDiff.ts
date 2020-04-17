@@ -1,13 +1,13 @@
 import diff from 'fast-diff'
 
 import { dateDiff } from "lib/dateDiff"
-import { TimedMessage } from "../"
+import { TimedChange } from "../"
 
-export function timedDiff(currentValue: string, previousValue: string, lastKeyStroke: Date | null): TimedMessage[] | null {
+export function timedDiff(currentValue: string, previousValue: string, lastKeyStroke: Date | null): TimedChange[] | null {
   const diffs = diff(previousValue, currentValue)
 
   let currentIndex = 0;
-  const timedMessages: TimedMessage[] = [];
+  const timedMessages: TimedChange[] = [];
   const timeDiff = lastKeyStroke ? dateDiff(lastKeyStroke) : 0;
 
   diffs.forEach(eachDiff => {

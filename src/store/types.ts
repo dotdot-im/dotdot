@@ -1,4 +1,5 @@
 import { IconName } from "@fortawesome/fontawesome-svg-core"
+import { TimedChange } from "sections/Chat/TextBox";
 
 export type User = {
   user_id: string
@@ -23,6 +24,7 @@ export type Message = {
   user: User
   timestamp: Date
   content: string[]
+  timedContent?: TimedChange[]
   attributes: MessageAttributes
 }
 

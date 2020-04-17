@@ -55,8 +55,6 @@ export default (props: Props) => {
     })
   }, [state.messages, setLocalState])
 
-  // TODO set this on new messages: draft.unseenMessages = !draft.scrollAtBottom
-
   return (
     <div className={ styles.messages }>
       { localState.unseenMessages && (

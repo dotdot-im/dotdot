@@ -13,13 +13,13 @@ import MessageComponent from '../Messages/Message'
 
 import styles from './index.module.scss'
 import { timedDiff } from './lib/timedDiff'
-import PlayBackMessage from './lib/PlayBackMessage'
+import PlayBackMessage from '../Messages/Message/PlayBackMessage'
 
-export type TimedMessage = [number, string | null, number]
+export type TimedChange = [number, string | null, number]
 
 type State = {
   message: string
-  timedMessage: TimedMessage[]
+  timedMessage: TimedChange[]
   lastKeyStroke: Date | null
   private: boolean
   to: string | null
@@ -212,10 +212,11 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
           <MessageComponent reply message={replyTo} />
         </div>
       )}
-      <PlayBackMessage
+      {/* <PlayBackMessage
         timers={ localState.timedMessage }
         message={ localState.message }
-      />
+      /> */}
+      { JSON.stringify(localState.timedMessage) }
       <Form
         noValidate
         onSubmit={handleSubmit}

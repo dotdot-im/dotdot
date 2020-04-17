@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
 import { TimedChange } from '../../../TextBox';
-import { messageByMe } from 'stories/1-Message.stories';
-import { useImmer } from 'use-immer';
 
-const MAX_DELAY = 500
+const MAX_DELAY = 1500
 
 type Props = {
   timers: TimedChange[],
@@ -24,10 +22,8 @@ export class PlayBackMessage extends React.PureComponent<Props, State> {
     isAnimating: false
   }
 
-  constructor(props: Props) {
-    super(props)
-
-    if (props.timers.length > 0) {
+  componentDidMount() {
+    if (this.props.timers.length > 0) {
       this.nextAnimationStep()
     }
   }
@@ -45,7 +41,6 @@ export class PlayBackMessage extends React.PureComponent<Props, State> {
 
   private nextAnimationStep() {
     const nextIndex = this.state.currentIndex + 1
-    console.log('animate the next step', nextIndex);
 
     if (!this.props.timers[nextIndex]) {
       // invalid index
@@ -55,17 +50,16 @@ export class PlayBackMessage extends React.PureComponent<Props, State> {
     this.setState({
       currentIndex: nextIndex,
       isAnimating: true
+    }, () => {
+      this.animationStep(nextIndex)
     })
+  }
 
-    const [index, char, timer] = this.props.timers[nextIndex]
-    console.log('animate', index, char, timer)
+  private animationStep(step: number) {
+    const [index, char, timer] = this.props.timers[step]
 
     setTimeout(() => {
-      const nextStepAvailable = nextIndex + 1 < this.props.timers.length
-
-      if (!nextStepAvailable) {
-        console.log('animation is finished!')
-      }
+      const nextStepAvailable = step + 1 < this.props.timers.length
 
       const updatedText = nextStepAvailable ?
         this.applyChangeToText(this.state.shownText, char, index) :
@@ -79,12 +73,11 @@ export class PlayBackMessage extends React.PureComponent<Props, State> {
           this.nextAnimationStep()
         }
       })
-    }, timer)
+    }, Math.min(timer, MAX_DELAY))
   }
 
   private applyChangeToText(text: string, char: string | null, index: number) {
     if (text.length < 1 && char) {
-      console.log('empty text', text)
       return char
     }
     let newText = text
@@ -101,9 +94,7 @@ export class PlayBackMessage extends React.PureComponent<Props, State> {
   public render() {
     return (
       <>
-        <p>Animating: {JSON.stringify(this.state.isAnimating)} - { this.state.currentIndex }/{ this.props.timers.length }</p>
-        <p>{ this.state.shownText }</p>
-        <p>{ this.props.message }</p>
+        { this.state.shownText }
       </>
     );
   }

@@ -1,8 +1,8 @@
 import randomWords from 'random-words'
 
 import { Message, User, AppState, MessageAttributes } from '../../store/types'
-import { initialState } from '../../store/state';
-import { TimedChange } from 'sections/Chat/TextBox';
+import { initialState } from '../../store/state'
+import { TimedChange } from 'sections/Chat/TextBox'
 
 export const SYSTEM_USER: User = {
   user_id: 'dotdot',
@@ -33,7 +33,7 @@ export function generateRandomUsers(num: number): User[] {
 
 export function generateRandomUser(): User {
   const name = randomWords(1)
-  const color = Math.floor(Math.random() * 16777215).toString(16);
+  const color = Math.floor(Math.random() * 16777215).toString(16)
   return {
     user_id: '' + Math.floor(Math.random() * 100000),
     color,
@@ -44,7 +44,11 @@ export function generateRandomUser(): User {
   }
 }
 
-export function generateRandomMessages(num: number, users: User[], randomAttributes: boolean = false): Message[] {
+export function generateRandomMessages(
+  num: number,
+  users: User[],
+  randomAttributes: boolean = false
+): Message[] {
   const messages: Message[] = []
 
   Array.from(Array(num)).forEach(() => {
@@ -59,7 +63,11 @@ export function generateRandomMessageContent(): string {
   return randomWords(Math.round(3 + Math.random() * 100)).join(' ')
 }
 
-export function generateRandomMessage(user: User, messages: Message[], randomAttributes: boolean = false): Message {
+export function generateRandomMessage(
+  user: User,
+  messages: Message[],
+  randomAttributes: boolean = false
+): Message {
   let timestamp = new Date()
 
   if (messages.length > 0) {
@@ -85,9 +93,7 @@ export function generateRandomMessage(user: User, messages: Message[], randomAtt
     attributes.private = Math.random() < 0.1
   }
 
-  let content = [
-    generateRandomMessageContent()
-  ]
+  let content = [generateRandomMessageContent()]
   if (Math.random() > 0.7) {
     let contentLength = Math.floor(Math.random() * 5)
     for (let i = 0; i < contentLength; i++) {
@@ -181,4 +187,16 @@ export const TIMED_CONTENT_TEST: TimedChange[] = [
   [48, '.', 790],
   [0, null, 2938],
   [0, 'H', 309],
+]
+
+export const TIMED_CONTENT_DELETE_TEST: TimedChange[] = [
+  [0, "let's try a chunk", 0],
+  [10, 'c', 2484],
+  [11, 'h', 112],
+  [12, 'a', 158],
+  [13, 'n', 66],
+  [14, 'g', 131],
+  [15, 'i', 79],
+  [16, 'n', 78],
+  [17, 'g', 436],
 ]

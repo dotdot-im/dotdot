@@ -14,6 +14,7 @@ import {
   generateRandomMessage,
   SYSTEM_USER,
   TIMED_CONTENT_TEST,
+  TIMED_CONTENT_DELETE_TEST,
 } from './lib/testData'
 
 export default { title: 'Message' }
@@ -87,6 +88,17 @@ export const timedDraft = () => {
   testMessage.attributes.private = false
   testMessage.content[0] = 'Hey man, this is a message with timed characters.'
   testMessage.timedContent = TIMED_CONTENT_TEST
+
+  return renderMessage(testMessage, testState)
+}
+
+export const timedDraftDelete = () => {
+  const testMessage = generateRandomMessage(currentUser, [])
+
+  testMessage.attributes.draft = true
+  testMessage.attributes.private = false
+  testMessage.content[0] = 'let\'s try changing a chunk'
+  testMessage.timedContent = TIMED_CONTENT_DELETE_TEST
 
   return renderMessage(testMessage, testState)
 }

@@ -1,9 +1,8 @@
 import React, { useContext, useRef, useCallback } from 'react'
-import { Form, InputGroup, Button, Container } from 'react-bootstrap'
+import { Form, Button, InputGroup, Container } from 'react-bootstrap'
 import { useImmer } from 'use-immer'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { IconProp } from '@fortawesome/fontawesome-svg-core'
 
 import { SocketContext } from 'util/socketProvider'
 import { VALID_USERNAME } from '../../../constants'
@@ -13,6 +12,8 @@ import MessageComponent from '../Messages/Message'
 
 import styles from './index.module.scss'
 import Field from './Field'
+import Submit from './Submit'
+import TextIcon from './TextIcon'
 
 type State = {
   message: string
@@ -161,20 +162,6 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
     }
   }
 
-  let icon: IconProp = 'question-circle'
-  if (localState.isCommand) {
-    icon = 'code'
-  } else if (localState.private) {
-    icon = 'lock'
-  }
-
-  const onIconClick = () => {
-    if (icon !== 'question-circle') {
-      return
-    }
-    askForHelp()
-  }
-
   return (
     <div
       className={classNames(styles.area, {
@@ -212,13 +199,13 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
             onBlur={onInputBlur}
           >
             <InputGroup.Append className={styles.button}>
-              <Button type="submit">
-                <FontAwesomeIcon icon="paper-plane" />
-              </Button>
+              <Submit />
             </InputGroup.Append>
-            <div className={styles.textIcon} onClick={onIconClick}>
-              <FontAwesomeIcon icon={icon} />
-            </div>
+            <TextIcon
+              isPrivate={localState.private}
+              isCommand={localState.isCommand}
+              onHelp={askForHelp}
+            />
           </Field>
         </Form>
       </Container>

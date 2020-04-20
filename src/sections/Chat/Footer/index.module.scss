@@ -49,30 +49,10 @@ $borderRadius: 0.25em;
   }
 }
 
-.textIcon {
-  position: absolute;
-  top: 0.75em;
-  right: 0.8em;
-  margin: auto;
-  color: --color-text;
-  opacity: 0.6;
-  cursor: pointer;
-  z-index: 3;
-
-  @include mq($until: mobile) {
-    right: 4em;
-  }
-}
-
 .button {
   display: none;
   margin-top: 5px;
   margin-right: 6px;
-
-  button {
-    border-radius: 0.25em !important;
-    border: 1px solid darken(green, 10%) !important;
-  }
 
   @include mq($until: mobile) {
     display: block;

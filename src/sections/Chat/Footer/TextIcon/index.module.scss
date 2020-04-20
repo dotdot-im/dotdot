@@ -1,0 +1,16 @@
+@import 'assets/scss/variables';
+
+.textIcon {
+  position: absolute;
+  top: 0.75em;
+  right: 0.8em;
+  margin: auto;
+  color: --color-text;
+  opacity: 0.6;
+  cursor: pointer;
+  z-index: 3;
+
+  @include mq($until: mobile) {
+    right: 4em;
+  }
+}

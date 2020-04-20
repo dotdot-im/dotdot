@@ -73,6 +73,7 @@ $border-radius-base: 0.4em;
   --color-red: #{$red};
   --color-background: #{$color-background-dark};
   --color-background-over: #{$color-background-over-dark};
+  --color-background-over-transparent: #{fade-out($color-background-over-dark, 0.6)};
   --color-text: #{$color-text-dark};
   --color-border: #{$color-border-dark};
   --color-input: #{$charcoal};
@@ -84,6 +85,7 @@ $border-radius-base: 0.4em;
   @media (prefers-color-scheme: light) {
     --color-background: #{$color-background-light};
     --color-background-over: #{$color-background-over-light};
+    --color-background-over-transparent: #{fade-out($color-background-over-light, 0.6)};
     --color-text: #{$color-text-light};
     --color-border: #{$color-border-light};
     --color-input: #{$cloud};

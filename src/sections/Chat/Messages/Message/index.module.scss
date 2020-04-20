@@ -12,17 +12,27 @@ $padding: 1em;
   position: relative;
   white-space: pre-line;
 
-  margin: #{$padding} #{-$padding};
-  padding: 0 #{$padding};
+  margin: 0 -$padding;
+  padding: $padding/2 $padding $padding/2;
+  transition: background ease-in-out 100ms;
+  border-radius: 0.5em;
+
+  &:hover {
+    background: var(--color-background-over-transparent);
+
+    .reply {
+      background: transparent;
+    }
+  }
 
   @include mq($from: tablet) {
-    margin: $padding $padding * 1.5;
+    margin: $padding/4 $padding * 1.5;
   }
 
   .replyButton {
     position: absolute;
-    top: 2em;
-    right: 0.2em;
+    top: -0.25em;
+    right: 0;
     display: none;
     z-index: 3;
   }
@@ -132,6 +142,10 @@ $padding: 1em;
 }
 
 .draft {
+  &:hover {
+    background: transparent;
+  }
+
   .header {
     &:before {
       border: 2px solid currentColor;
@@ -188,6 +202,10 @@ $padding: 1em;
   max-height: 6rem;
   overflow: auto;
   border-radius: 0;
+
+  &:hover {
+    opacity: 0.7;
+  }
 
   .user {
     margin-left: 0;

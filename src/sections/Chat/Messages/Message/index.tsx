@@ -97,7 +97,7 @@ const MessageComponent = ({ message, onClick, reply }: Props) => {
             onClick={onReplyClick}
             title="Reply to this message"
           >
-            <FontAwesomeIcon icon="reply" />
+            <FontAwesomeIcon icon="reply" /> Reply
           </Button>
         </div>
       )}
@@ -141,6 +141,7 @@ const MessageComponent = ({ message, onClick, reply }: Props) => {
         <a
           href={ '#message-' + message.attributes.replyToTimestamp }
           className={styles.replyBox}
+          title='Go to original message'
           style={{
             borderLeftColor: `#${message.attributes.replyTo.user.color}`,
           }}

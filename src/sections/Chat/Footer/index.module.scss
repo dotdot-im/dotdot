@@ -31,20 +31,6 @@ $borderRadius: 0.25em;
         margin: 0;
         padding: 0;
       }
-
-      .inputGroup {
-        box-shadow: none;
-        border-bottom: none;
-        border-left: none;
-        border-right: none;
-        border-radius: $borderRadius;
-
-        input {
-          padding: 0.25em 0.5em;
-          line-height: initial;
-          height: auto;
-        }
-      }
     }
   }
 }
@@ -71,32 +57,6 @@ $borderRadius: 0.25em;
   position: relative;
   margin-bottom: 1em;
 
-  input {
-    color: inherit;
-    background: transparent;
-    border: 0;
-    padding-right: 2.5em;
-    border-radius: $borderRadius !important;
-    padding: 1em 15px;
-    height: 52px;
-    line-height: 1.2;
-
-    &:focus {
-      color: inherit !important;
-      background: inherit !important;
-      box-shadow: none !important;
-    }
-
-    @include mq($from: tablet) {
-      height: 52px;
-    }
-
-    @include mq($until: mobile) {
-      border-top-right-radius: 0 !important;
-      border-bottom-right-radius: 0 !important;
-    }
-  }
-
   .textIcon {
     position: absolute;
     top: 0.75em;
@@ -113,32 +73,18 @@ $borderRadius: 0.25em;
   }
 }
 
-.inputGroup {
-  position: relative;
-  background: var(--color-input);
-  color: var(--color-text);
-  margin-bottom: 0;
-  border: 1px solid #fff;
-  border-radius: 0.25em;
-  box-shadow: 0 15px 0 -10px $cyan, 0 25px 0 -15px $red;
+.button {
+  display: none;
+  margin-top: 5px;
+  margin-right: 6px;
 
-  @include mq($until: tablet) {
-    border-radius: 0.25em;
+  button {
+    border-radius: 0.25em !important;
+    border: 1px solid darken(green, 10%) !important;
   }
 
-  .button {
-    display: none;
-    margin-top: 5px;
-    margin-right: 6px;
-
-    button {
-      border-radius: 0.25em !important;
-      border: 1px solid darken(green, 10%) !important;
-    }
-
-    @include mq($until: mobile) {
-      display: block;
-    }
+  @include mq($until: mobile) {
+    display: block;
   }
 }
 

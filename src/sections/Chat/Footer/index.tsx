@@ -12,6 +12,7 @@ import { EVENTS, Message, OutgoingMessage } from 'store/types'
 import MessageComponent from '../Messages/Message'
 
 import styles from './index.module.scss'
+import Field from './Field'
 
 type State = {
   message: string
@@ -180,7 +181,7 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
         [styles.focused]: localState.focused,
       })}
     >
-      <Container className={ styles.container }>
+      <Container className={styles.container}>
         {replyTo && (
           <div
             className={styles.reply}
@@ -202,19 +203,14 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
             [styles.command]: localState.isCommand,
           })}
         >
-          <InputGroup className={classNames(styles.inputGroup)}>
-            <Form.Control
-              as="input"
-              type="text"
-              placeholder="Type a message..."
-              ref={inputRef}
-              autoFocus
-              autoComplete="off"
-              onChange={onType}
-              onFocus={onInputFocus}
-              onBlur={onInputBlur}
-              value={localState.message}
-            />
+          <Field
+            ref={inputRef}
+            value={localState.message}
+            isFocused={localState.focused}
+            onChange={onType}
+            onFocus={onInputFocus}
+            onBlur={onInputBlur}
+          >
             <InputGroup.Append className={styles.button}>
               <Button type="submit">
                 <FontAwesomeIcon icon="paper-plane" />
@@ -223,7 +219,7 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
             <div className={styles.textIcon} onClick={onIconClick}>
               <FontAwesomeIcon icon={icon} />
             </div>
-          </InputGroup>
+          </Field>
         </Form>
       </Container>
     </div>

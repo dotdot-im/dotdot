@@ -8,7 +8,7 @@ import Loader from 'components/Loader'
 import styles from './index.module.scss'
 import Header from './Header'
 import Messages from './Messages'
-import TextBox from './TextBox'
+import TextBox from './Footer'
 import { useImmer } from 'use-immer'
 import { Message } from 'store/types'
 

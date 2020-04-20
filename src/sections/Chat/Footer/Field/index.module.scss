@@ -1,0 +1,59 @@
+@import 'assets/scss/variables';
+
+$borderRadius: 0.25em;
+
+.field {
+  position: relative;
+  background: var(--color-input);
+  color: var(--color-text);
+  margin-bottom: 0;
+  border: 1px solid #fff;
+  border-radius: 0.25em;
+  box-shadow: 0 15px 0 -10px $cyan, 0 25px 0 -15px $red;
+
+  @include mq($until: tablet) {
+    border-radius: 0.25em;
+
+    &.focused {
+      box-shadow: none;
+      border-bottom: none;
+      border-left: none;
+      border-right: none;
+      border-radius: $borderRadius;
+    }
+  }
+}
+
+.inputArea {
+  color: inherit;
+  background: transparent;
+  border: 0;
+  padding-right: 2.5em;
+  border-radius: $borderRadius !important;
+  padding: 1em 15px;
+  height: 52px;
+  line-height: 1.2;
+
+  &:focus {
+    color: inherit !important;
+    background: inherit !important;
+    box-shadow: none !important;
+  }
+
+  @include mq($until: mobile) {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+
+  @include mq($until: tablet) {
+    &:focus {
+      padding: 0.25em 0.5em;
+      line-height: initial;
+      height: auto;
+    }
+  }
+
+  @include mq($from: tablet) {
+    height: 52px;
+  }
+}

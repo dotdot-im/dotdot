@@ -1,9 +1,12 @@
 @import 'assets/scss/variables';
 
 $command: #aaa;
+$borderRadius: 0.25em;
 
 .area {
   background: var(--color-background);
+  box-shadow: 0 0 10px 3px var(--color-background);
+  z-index: 2;
 
   @media (min-width: 40em) {
     margin: 0;
@@ -34,7 +37,7 @@ $command: #aaa;
         border-bottom: none;
         border-left: none;
         border-right: none;
-        border-radius: 0;
+        border-radius: $borderRadius;
 
         input {
           padding: 0.25em 0.5em;
@@ -73,7 +76,7 @@ $command: #aaa;
     background: transparent;
     border: 0;
     padding-right: 2.5em;
-    border-radius: 0;
+    border-radius: $borderRadius !important;
     padding: 1em 15px;
     height: 52px;
     line-height: 1.2;
@@ -81,10 +84,16 @@ $command: #aaa;
     &:focus {
       color: inherit !important;
       background: inherit !important;
+      box-shadow: none !important;
     }
 
     @media (min-width: 40em) {
       height: 52px;
+    }
+
+    @media (pointer: coarse) {
+      border-top-right-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
     }
   }
 

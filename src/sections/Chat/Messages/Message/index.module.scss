@@ -57,10 +57,11 @@ $padding: 1em;
 
 .offline {
   color: #aaa !important;
-  opacity: 0.5;
+  opacity: 0.7;
 
   .icon,
-  .user {
+  .user,
+  .user span {
     color: inherit !important;
   }
 }

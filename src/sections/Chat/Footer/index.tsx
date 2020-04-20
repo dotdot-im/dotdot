@@ -198,7 +198,7 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
         <Form
           noValidate
           onSubmit={handleSubmit}
-          className={classNames(styles.textBox, {
+          className={classNames({
             [styles.private]: localState.private,
             [styles.command]: localState.isCommand,
           })}

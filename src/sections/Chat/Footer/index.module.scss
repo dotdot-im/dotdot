@@ -7,6 +7,7 @@ $borderRadius: 0.25em;
   background: var(--color-background);
   box-shadow: 0 0 10px 3px var(--color-background);
   z-index: 2;
+  margin-bottom: 1em;
 
   @include mq($from: tablet) {
     margin: 0;
@@ -23,11 +24,6 @@ $borderRadius: 0.25em;
       padding: 0;
 
       .container {
-        margin: 0;
-        padding: 0;
-      }
-
-      .textBox {
         margin: 0;
         padding: 0;
       }
@@ -53,23 +49,18 @@ $borderRadius: 0.25em;
   }
 }
 
-.textBox {
-  position: relative;
-  margin-bottom: 1em;
+.textIcon {
+  position: absolute;
+  top: 0.75em;
+  right: 0.8em;
+  margin: auto;
+  color: --color-text;
+  opacity: 0.6;
+  cursor: pointer;
+  z-index: 3;
 
-  .textIcon {
-    position: absolute;
-    top: 0.75em;
-    right: 0.8em;
-    margin: auto;
-    color: --color-text;
-    opacity: 0.6;
-    cursor: pointer;
-    z-index: 3;
-
-    @include mq($until: mobile) {
-      right: 4em;
-    }
+  @include mq($until: mobile) {
+    right: 4em;
   }
 }
 

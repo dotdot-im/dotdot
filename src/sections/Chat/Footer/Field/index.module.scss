@@ -2,6 +2,7 @@
 
 $borderRadius: 0.25em;
 
+// Visually represents entire field
 .field {
   position: relative;
   background: var(--color-input);
@@ -24,6 +25,7 @@ $borderRadius: 0.25em;
   }
 }
 
+// Actual input / textarea portion of it
 .inputArea {
   color: inherit;
   background: transparent;

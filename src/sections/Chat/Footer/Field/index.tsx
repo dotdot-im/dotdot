@@ -7,17 +7,24 @@ type Props = {
   isFocused: boolean
   value: any
   children: React.ReactNode
-  ref: React.Ref<any>
+  inputRef: React.Ref<any>
   onChange: (e: React.ChangeEvent<any>) => void
   onFocus: () => void
   onBlur: () => void
 }
 
-export default ({ ref, onChange, onFocus, onBlur, value, children }: Props) => {
+export default ({
+  inputRef,
+  onChange,
+  onFocus,
+  onBlur,
+  value,
+  children,
+}: Props) => {
   return (
     <InputGroup className={styles.field}>
       <Form.Control
-        ref={ref}
+        ref={inputRef}
         className={styles.inputArea}
         onChange={onChange}
         onFocus={onFocus}

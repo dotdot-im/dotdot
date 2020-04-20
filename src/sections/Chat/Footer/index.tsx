@@ -185,7 +185,7 @@ export default ({
           })}
         >
           <Field
-            ref={inputRef}
+            inputRef={inputRef}
             value={localState.message}
             isFocused={isFocused}
             onChange={onType}

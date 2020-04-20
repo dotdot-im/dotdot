@@ -63,7 +63,7 @@ const MessageComponent = ({ message, onClick, reply }: Props) => {
     icon = ['far', iconName]
   }
 
-  let messageBody;
+  let messageBody
 
   if (reply) {
     messageBody = message.content.join('. ')
@@ -80,7 +80,7 @@ const MessageComponent = ({ message, onClick, reply }: Props) => {
 
   return (
     <div
-      id={ 'message-' + message.timestamp.getTime() }
+      id={'message-' + message.timestamp.getTime()}
       className={classNames(styles.message, {
         [styles.reply]: reply,
         [styles.system]: isSystem,
@@ -139,9 +139,9 @@ const MessageComponent = ({ message, onClick, reply }: Props) => {
       </div>
       {!reply && message.attributes.replyTo && message.attributes.replyTo.user && (
         <a
-          href={ '#message-' + message.attributes.replyToTimestamp }
+          href={'#message-' + message.attributes.replyToTimestamp}
           className={styles.replyBox}
-          title='Go to original message'
+          title="Go to original message"
           style={{
             borderLeftColor: `#${message.attributes.replyTo.user.color}`,
           }}
@@ -149,9 +149,7 @@ const MessageComponent = ({ message, onClick, reply }: Props) => {
           <MessageComponent reply message={message.attributes.replyTo} />
         </a>
       )}
-      <div className={classNames(styles.body)}>
-        {messageBody}
-      </div>
+      <div className={classNames(styles.body)}>{messageBody}</div>
     </div>
   )
 }

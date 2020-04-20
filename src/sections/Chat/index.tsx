@@ -8,7 +8,7 @@ import Loader from 'components/Loader'
 import styles from './index.module.scss'
 import Header from './Header'
 import Messages from './Messages'
-import TextBox from './Footer'
+import Footer from './Footer'
 import { useImmer } from 'use-immer'
 import { Message } from 'store/types'
 
@@ -96,7 +96,8 @@ export default () => {
 
       <Messages onMessageClick={onMessageClick} />
 
-      <TextBox
+      <Footer
+        isFocused={localState.isTextBoxFocused}
         replyTo={localState.replyTo}
         onFocus={handleTextBoxFocus}
         onBlur={handleTextBoxBlur}

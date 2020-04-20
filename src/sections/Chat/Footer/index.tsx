@@ -17,28 +17,31 @@ import TextIcon from './TextIcon'
 
 type State = {
   message: string
-  private: boolean
+  kind: 'private' | 'command' | false
   to: string | null
-  isCommand: boolean
-  focused: boolean
 }
 
 type Props = {
+  isFocused: boolean
   replyTo?: Message | null
-  onFocus?: () => void
-  onBlur?: () => void
+  onFocus: () => void
+  onBlur: () => void
   onCancelReply?: () => void
 }
 
-export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
+export default ({
+  isFocused,
+  replyTo,
+  onFocus,
+  onBlur,
+  onCancelReply,
+}: Props) => {
   const { state, dispatch } = useGlobalState()
 
   const [localState, setState] = useImmer<State>({
     message: '',
-    private: false,
+    kind: false,
     to: null,
-    isCommand: false,
-    focused: false,
   })
   const draftTimer = useRef<any>(null)
   const inputRef = useRef<any>(null)
@@ -52,20 +55,6 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
     })
   }
 
-  const onInputFocus = useCallback(() => {
-    setState((draft) => {
-      draft.focused = true
-    })
-    onFocus && onFocus()
-  }, [setState, onFocus])
-
-  const onInputBlur = useCallback(() => {
-    setState((draft) => {
-      draft.focused = false
-    })
-    onBlur && onBlur()
-  }, [setState, onBlur])
-
   const handleSubmit = (e: React.ChangeEvent<any>) => {
     e.preventDefault()
 
@@ -77,8 +66,7 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
 
     setState((draft) => {
       draft.message = ''
-      draft.private = false
-      draft.isCommand = false
+      draft.kind = false
     })
 
     // refocus the input
@@ -101,7 +89,7 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
     }
 
     let type = EVENTS.MESSAGE
-    if (localState.isCommand) {
+    if (localState.kind === 'command') {
       type = EVENTS.COMMAND
     }
 
@@ -109,7 +97,7 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
       content: message,
       attributes: {
         draft,
-        private: localState.private,
+        private: localState.kind === 'private',
         to: localState.to,
         replyToTimestamp: replyTo ? replyTo.timestamp.getTime() : null,
       },
@@ -118,40 +106,44 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
     socket?.emit(type, payload)
   }
 
+  const isMessageCommand = (val: string) => val[0] === '/'
+  const isMessagePm = (val: string) => val[0] === '@'
+  const getMessageKind = (val: string) => {
+    if (isMessageCommand(val)) return 'command'
+    if (isMessagePm(val)) return 'private'
+    return false
+  }
+
+  const getMessagePmTo = (val: string) => {
+    const words = val.split(' ')
+
+    if (
+      words.length > 0 &&
+      words[0][0] === '@' &&
+      VALID_USERNAME.test(words[0].substr(1))
+    ) {
+      return words[0].substr(1)
+    }
+
+    return null
+  }
+
   const onType = (e: React.ChangeEvent<any>) => {
     e.preventDefault()
 
     clearTimeout(draftTimer.current)
 
     const value: string = e.currentTarget.value
+    const kind = getMessageKind(value)
 
     // special messages
-    let isCommand = false
-    let isPM = false
-    let to: string | null = null
-
-    if (value[0] === '/') {
-      isCommand = true
-    } else if (value[0] === '@') {
-      const words = value.split(' ')
-      isPM = true
-      if (
-        words.length > 0 &&
-        words[0][0] === '@' &&
-        VALID_USERNAME.test(words[0].substr(1))
-      ) {
-        to = words[0].substr(1)
-      }
-    }
-
     setState((draft) => {
       draft.message = value
-      draft.private = isPM
-      draft.to = to
-      draft.isCommand = isCommand
+      draft.kind = kind
+      draft.to = isMessageCommand(value) ? null : getMessagePmTo(value)
     })
 
-    if (isPM || isCommand) {
+    if (kind) {
       return
     }
 
@@ -165,7 +157,7 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
   return (
     <div
       className={classNames(styles.area, {
-        [styles.focused]: localState.focused,
+        [styles.focused]: isFocused,
       })}
     >
       <Container className={styles.container}>
@@ -186,17 +178,17 @@ export default ({ onFocus, onBlur, replyTo, onCancelReply }: Props) => {
           noValidate
           onSubmit={handleSubmit}
           className={classNames({
-            [styles.private]: localState.private,
-            [styles.command]: localState.isCommand,
+            [styles.private]: localState.kind === 'private',
+            [styles.command]: localState.kind === 'command',
           })}
         >
           <Field
             ref={inputRef}
             value={localState.message}
-            isFocused={localState.focused}
+            isFocused={isFocused}
             onChange={onType}
-            onFocus={onInputFocus}
-            onBlur={onInputBlur}
+            onFocus={onFocus}
+            onBlur={onBlur}
           >
             <InputGroup.Append className={styles.button}>
               <Submit />

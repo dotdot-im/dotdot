@@ -8,17 +8,17 @@ $borderRadius: 0.25em;
   box-shadow: 0 0 10px 3px var(--color-background);
   z-index: 2;
 
-  @media (min-width: 40em) {
+  @include mq($from: tablet) {
     margin: 0;
     padding: 0 0 0.5em;
   }
 
-  @media (min-width: 60em) {
+  @include mq($from: desktop) {
     padding: 0 0 2em;
   }
 
   &.focused {
-    @media (max-width: 40em) {
+    @include mq($until: tablet) {
       margin: 0;
       padding: 0;
 
@@ -87,11 +87,11 @@ $borderRadius: 0.25em;
       box-shadow: none !important;
     }
 
-    @media (min-width: 40em) {
+    @include mq($from: tablet) {
       height: 52px;
     }
 
-    @media (pointer: coarse) {
+    @include mq($until: mobile) {
       border-top-right-radius: 0 !important;
       border-bottom-right-radius: 0 !important;
     }
@@ -107,7 +107,7 @@ $borderRadius: 0.25em;
     cursor: pointer;
     z-index: 3;
 
-    @media (pointer: coarse) {
+    @include mq($until: mobile) {
       right: 4em;
     }
   }
@@ -122,7 +122,7 @@ $borderRadius: 0.25em;
   border-radius: 0.25em;
   box-shadow: 0 15px 0 -10px $cyan, 0 25px 0 -15px $red;
 
-  @media (max-width: 40em) {
+  @include mq($until: tablet) {
     border-radius: 0.25em;
   }
 
@@ -136,7 +136,7 @@ $borderRadius: 0.25em;
       border: 1px solid darken(green, 10%) !important;
     }
 
-    @media (pointer: coarse) {
+    @include mq($until: mobile) {
       display: block;
     }
   }

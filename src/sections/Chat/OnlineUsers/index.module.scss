@@ -1,3 +1,5 @@
+@import 'assets/scss/variables';
+
 .onlineUsers {
   font-size: 1em;
   padding: 0.5em;
@@ -10,11 +12,11 @@
     margin-right: 0.5em;
   }
 
-  @media (max-width: 40em) {
+  @include mq($until: tablet) {
     display: none;
   }
 
-  @media all and (min-width: 60em) {
+  @include mq($from: desktop) {
     box-shadow: 0 0 10px 3px var(--color-background);
   }
 }

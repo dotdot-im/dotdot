@@ -15,7 +15,7 @@ $padding: 1em;
   margin: #{$padding} #{-$padding};
   padding: 0 #{$padding};
 
-  @media all and (min-width: 40em) {
+  @include mq($from: tablet) {
     margin: $padding $padding * 1.5;
   }
 
@@ -50,7 +50,7 @@ $padding: 1em;
     display: none;
   }
 
-  @media (min-width: 40em) {
+  @include mq($from: tablet) {
     border-radius: 0.5em;
   }
 }
@@ -80,7 +80,7 @@ $padding: 1em;
     top: 0.35em;
     left: -0.5em;
 
-    @media all and (min-width: 30em) {
+    @include mq($from: mobile) {
       left: -1.5 * $padding;
     }
   }
@@ -100,7 +100,7 @@ $padding: 1em;
     font-weight: 100;
   }
 
-  @media all and (min-width: 30em) {
+  @include mq($from: mobile) {
     margin-left: 0;
     margin-right: 0.3em;
   }
@@ -125,7 +125,7 @@ $padding: 1em;
   letter-spacing: 0.01em;
   clear: both;
 
-  @media all and (min-width: 30em) {
+  @include mq($from: mobile) {
     line-height: 1.66;
     letter-spacing: 0.022em;
   }

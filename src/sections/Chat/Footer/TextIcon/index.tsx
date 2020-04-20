@@ -1,6 +1,5 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Button } from 'react-bootstrap'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 
 import styles from './index.module.scss'

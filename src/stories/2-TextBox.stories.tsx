@@ -8,5 +8,5 @@ import Footer from 'sections/Chat/Footer'
 export default { title: 'Footer' }
 
 export const normal = () => {
-  return <Footer />
+  return <Footer isFocused={false} onFocus={() => {}} onBlur={() => {}} />
 }

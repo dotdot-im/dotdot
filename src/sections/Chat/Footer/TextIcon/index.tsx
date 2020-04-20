@@ -7,15 +7,14 @@ import styles from './index.module.scss'
 
 type Props = {
   onHelp: () => void
-  isCommand: boolean
-  isPrivate: boolean
+  kind: 'private' | 'command' | false
 }
 
-export default ({ onHelp, isCommand, isPrivate }: Props) => {
+export default ({ onHelp, kind }: Props) => {
   let icon: IconProp = 'question-circle'
-  if (isCommand) {
+  if (kind === 'command') {
     icon = 'code'
-  } else if (isPrivate) {
+  } else if (kind === 'private') {
     icon = 'lock'
   }
 

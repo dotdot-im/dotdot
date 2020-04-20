@@ -106,6 +106,7 @@ export default ({
     socket?.emit(type, payload)
   }
 
+  // Message types
   const isMessageCommand = (val: string) => val[0] === '/'
   const isMessagePm = (val: string) => val[0] === '@'
   const getMessageKind = (val: string) => {
@@ -140,9 +141,10 @@ export default ({
     setState((draft) => {
       draft.message = value
       draft.kind = kind
-      draft.to = isMessageCommand(value) ? null : getMessagePmTo(value)
+      draft.to = kind === 'private' ? getMessagePmTo(value) : null
     })
 
+    // What is this for?
     if (kind) {
       return
     }
@@ -193,11 +195,7 @@ export default ({
             <InputGroup.Append className={styles.button}>
               <Submit />
             </InputGroup.Append>
-            <TextIcon
-              isPrivate={localState.private}
-              isCommand={localState.isCommand}
-              onHelp={askForHelp}
-            />
+            <TextIcon kind={localState.kind} onHelp={askForHelp} />
           </Field>
         </Form>
       </Container>

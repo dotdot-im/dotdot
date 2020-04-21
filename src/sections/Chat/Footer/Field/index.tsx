@@ -36,7 +36,7 @@ export default ({
         autoComplete="off"
         placeholder="Type a message..."
       />
-      {children}
+      <div className={styles.actions}>{children}</div>
     </InputGroup>
   )
 }

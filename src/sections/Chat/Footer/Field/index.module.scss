@@ -4,7 +4,7 @@ $borderRadius: 0.25em;
 
 // Visually represents entire field
 .field {
-  position: relative;
+  display: flex;
   background: var(--color-input);
   color: var(--color-text);
   margin-bottom: 0;
@@ -27,20 +27,16 @@ $borderRadius: 0.25em;
 
 // Actual input / textarea portion of it
 .inputArea {
-  color: inherit;
-  background: transparent;
-  border: 0;
+  flex: 1;
+  color: inherit !important;
+  background: inherit !important;
+  box-shadow: none !important;
+  // border: 0 !important;
   padding-right: 2.5em;
-  border-radius: $borderRadius !important;
+  border-radius: 0 !important;
   padding: 1em 15px;
   height: 52px;
   line-height: 1.2;
-
-  &:focus {
-    color: inherit !important;
-    background: inherit !important;
-    box-shadow: none !important;
-  }
 
   @include mq($until: mobile) {
     border-top-right-radius: 0 !important;
@@ -56,6 +52,12 @@ $borderRadius: 0.25em;
   }
 
   @include mq($from: tablet) {
-    height: 52px;
+    // height: 52px;
+  }
+}
+
+.actions {
+  @include mq($until: mobile) {
+    display: block;
   }
 }

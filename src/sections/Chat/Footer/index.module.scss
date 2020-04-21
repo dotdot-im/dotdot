@@ -3,11 +3,12 @@
 $command: #aaa;
 $borderRadius: 0.25em;
 
+// Footer area - full width
 .area {
   background: var(--color-background);
   box-shadow: 0 0 10px 3px var(--color-background);
-  z-index: 2;
   margin-bottom: 1em;
+  z-index: 2;
 
   @include mq($from: tablet) {
     margin: 0;
@@ -49,16 +50,6 @@ $borderRadius: 0.25em;
   }
 }
 
-.button {
-  display: none;
-  margin-top: 5px;
-  margin-right: 6px;
-
-  @include mq($until: mobile) {
-    display: block;
-  }
-}
-
 .private,
 .command {
   .textIcon {
@@ -79,8 +70,6 @@ $borderRadius: 0.25em;
 }
 
 .command {
-  color: $command;
-
   input,
   input:focus {
     color: inherit;

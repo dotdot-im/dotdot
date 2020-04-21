@@ -50,9 +50,9 @@ $padding: 1em;
 }
 
 .system {
+  opacity: 0.7;
   border: solid 1px var(--color-border);
   font-size: 0.9em;
-  color: fade-out($text, 0.2);
   padding: $padding;
 
   .user,

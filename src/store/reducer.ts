@@ -1,6 +1,13 @@
 import produce from 'immer'
 
-import { AppState, Action, Message, EVENTS, User, IncomingMessage } from './types'
+import {
+  AppState,
+  Action,
+  Message,
+  EVENTS,
+  User,
+  IncomingMessage,
+} from './types'
 import { MAX_MESSAGE_HISTORY } from '../constants'
 import { MAX_STATS_BARS } from 'sections/Admin'
 import { makeColorReadable } from 'lib/color/makeColorReadable'
@@ -52,10 +59,10 @@ export default produce((draft: AppState, action: Action) => {
         attributes: {
           private: false,
           draft: false,
-        }
-      };
+        },
+      }
       draft.messages.push(systemMessage)
-      break;
+      break
     case `socket_${EVENTS.CONNECT}`:
       draft.socket.connected = true
       draft.offline = false
@@ -73,20 +80,23 @@ export default produce((draft: AppState, action: Action) => {
       })
       break
     case `socket_${EVENTS.MESSAGE}`:
-      const incomingMessage: IncomingMessage = action.payload;
+      const incomingMessage: IncomingMessage = action.payload
       incomingMessage.timestamp = new Date(incomingMessage.timestamp)
 
       // delete draft from this user, and if the draft is past messages, stay there
-      let draftIsPastMessage = false;
-      let draftIndex = -1;
+      let draftIsPastMessage = false
+      let draftIndex = -1
       for (let i = draft.messages.length - 1; i >= 0; i--) {
         const eachMessage = draft.messages[i]
         if (!eachMessage.attributes.draft) {
           draftIsPastMessage = true
         }
-        if (eachMessage.attributes.draft && eachMessage.user.user_id === incomingMessage.user.user_id) {
-          draftIndex = i;
-          break;
+        if (
+          eachMessage.attributes.draft &&
+          eachMessage.user.user_id === incomingMessage.user.user_id
+        ) {
+          draftIndex = i
+          break
         }
       }
 
@@ -97,17 +107,24 @@ export default produce((draft: AppState, action: Action) => {
           draft.messages.splice(draftIndex, 1)
         } else if (!isEmpty && incomingMessage.attributes.draft) {
           draft.messages[draftIndex].content[0] = incomingMessage.content
-          draft.messages[draftIndex].timestamp = new Date(incomingMessage.timestamp)
-          return;
+          draft.messages[draftIndex].timestamp = new Date(
+            incomingMessage.timestamp
+          )
+          return
         }
       }
 
       if (isEmpty) {
-        return;
+        return
       }
 
       if (incomingMessage.attributes.replyToTimestamp) {
-        const messageReply = draft.messages.find(eachMessage => eachMessage.timestamp.getTime() === incomingMessage.attributes.replyToTimestamp) || null
+        const messageReply =
+          draft.messages.find(
+            (eachMessage) =>
+              eachMessage.timestamp.getTime() ===
+              incomingMessage.attributes.replyToTimestamp
+          ) || null
         if (messageReply && messageReply.user) {
           incomingMessage.attributes.replyTo = messageReply
         }
@@ -117,11 +134,13 @@ export default produce((draft: AppState, action: Action) => {
         const lastMessage = draft.messages[draft.messages.length - 1]
 
         if (
-            lastMessage &&
-            lastMessage.user.user_id === incomingMessage.user.user_id &&
-            lastMessage.attributes.private === incomingMessage.attributes.private &&
-            lastMessage.attributes.replyToTimestamp === incomingMessage.attributes.replyToTimestamp
-          ) {
+          lastMessage &&
+          lastMessage.user.user_id === incomingMessage.user.user_id &&
+          lastMessage.attributes.private ===
+            incomingMessage.attributes.private &&
+          lastMessage.attributes.replyToTimestamp ===
+            incomingMessage.attributes.replyToTimestamp
+        ) {
           // last message was by this same user (and it's the same kind of message)
           lastMessage.content.push(incomingMessage.content)
           lastMessage.timestamp = new Date(incomingMessage.timestamp)
@@ -141,13 +160,13 @@ export default produce((draft: AppState, action: Action) => {
       if (draft.messages.length > MAX_MESSAGE_HISTORY) {
         draft.messages.shift()
       }
-      break;
+      break
     case `socket_${EVENTS.HISTORY}`:
       draft.messages = action.payload.map((eachMessage: Message) => {
         eachMessage.timestamp = new Date(eachMessage.timestamp)
         return eachMessage
-      });
-      break;
+      })
+      break
     case `socket_${EVENTS.STATS}`:
       draft.stats.messages.push(action.payload.messages)
       if (draft.stats.messages.length > MAX_STATS_BARS) {
@@ -169,13 +188,17 @@ export default produce((draft: AppState, action: Action) => {
       draft.stats.timeActive = action.payload.timeActive * 30
       draft.stats.timeInactive = action.payload.timeInactive * 30
       draft.stats.sessions = action.payload.sessions
-      break;
+      break
     case `socket_${EVENTS.CONTROL}`:
-      Object.keys(action.payload).forEach(key => {
+      Object.keys(action.payload).forEach((key) => {
         if (typeof draft[key] !== 'undefined') {
           draft[key] = action.payload[key]
         }
       })
+      break
+    case 'chat_focus':
+      draft.chat.focused = action.payload
+      break
   }
 })
 
@@ -186,4 +209,4 @@ const systemUser: User = {
   color: 'f75f00',
   isActive: true,
   hasPassword: true,
-};
+}

@@ -22,20 +22,12 @@ type State = {
 }
 
 type Props = {
-  isFocused: boolean
   replyTo?: Message | null
-  onFocus: () => void
   onBlur: () => void
   onCancelReply?: () => void
 }
 
-export default ({
-  isFocused,
-  replyTo,
-  onFocus,
-  onBlur,
-  onCancelReply,
-}: Props) => {
+export default ({ replyTo, onBlur, onCancelReply }: Props) => {
   const { state, dispatch } = useGlobalState()
 
   const [localState, setState] = useImmer<State>({
@@ -159,7 +151,7 @@ export default ({
   return (
     <div
       className={classNames(styles.area, {
-        [styles.focused]: isFocused,
+        [styles.focused]: state.chat.focused,
       })}
     >
       <Container className={styles.container}>
@@ -187,13 +179,11 @@ export default ({
           <Field
             inputRef={inputRef}
             value={localState.message}
-            isFocused={isFocused}
             onChange={onType}
-            onFocus={onFocus}
             onBlur={onBlur}
           >
             <TextIcon kind={localState.kind} onHelp={askForHelp} />
-            <Submit disabled={!isFocused} />
+            <Submit disabled={!state.chat.focused} />
           </Field>
         </Form>
       </Container>

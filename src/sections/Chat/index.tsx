@@ -16,7 +16,6 @@ import { Message } from 'store/types'
 smoothscroll.polyfill()
 
 type State = {
-  isTextBoxFocused: boolean
   scrollingWhileFocused: boolean
   replyTo: Message | null
 }
@@ -24,7 +23,6 @@ type State = {
 export default () => {
   const { state } = useGlobalState()
   const [localState, setState] = useImmer<State>({
-    isTextBoxFocused: false,
     scrollingWhileFocused: false,
     replyTo: null,
   })
@@ -53,7 +51,7 @@ export default () => {
   // On window scroll
   const setHeaderPosition = useCallback(() => {
     setState((draft) => {
-      if (draft.isTextBoxFocused) {
+      if (state.chat.focused) {
         draft.scrollingWhileFocused = true
       }
     })
@@ -68,12 +66,11 @@ export default () => {
     }
   }, [setHeaderPosition])
 
-  const handleTextBoxFocus = () => {
-    setState((draft) => {
-      draft.isTextBoxFocused = true
-    })
-    setHeaderPosition()
-  }
+  useEffect(() => {
+    if (state.chat.focused) {
+      setHeaderPosition()
+    }
+  }, [setHeaderPosition, state.chat.focused])
 
   if (!state.socket.connected) {
     return <Loader />
@@ -81,7 +78,6 @@ export default () => {
 
   const handleTextBoxBlur = () => {
     setState((draft) => {
-      draft.isTextBoxFocused = false
       draft.scrollingWhileFocused = false
     })
   }
@@ -97,9 +93,7 @@ export default () => {
       <Messages onMessageClick={onMessageClick} />
 
       <Footer
-        isFocused={localState.isTextBoxFocused}
         replyTo={localState.replyTo}
-        onFocus={handleTextBoxFocus}
         onBlur={handleTextBoxBlur}
         onCancelReply={cancelReply}
       />

@@ -1,12 +1,15 @@
 @import 'assets/scss/variables';
 
 .textIcon {
+  display: inline-block;
+  padding: 0.25em;
   margin: auto;
   color: --color-text;
   opacity: 0.6;
   cursor: pointer;
+  transition: 0.2s;
 
-  @include mq($until: mobile) {
-    right: 4em;
+  &:hover {
+    opacity: 1;
   }
 }

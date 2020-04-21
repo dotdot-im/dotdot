@@ -192,10 +192,8 @@ export default ({
             onFocus={onFocus}
             onBlur={onBlur}
           >
-            <InputGroup.Append>
-              <Submit />
-            </InputGroup.Append>
             <TextIcon kind={localState.kind} onHelp={askForHelp} />
+            <Submit disabled={!isFocused} />
           </Field>
         </Form>
       </Container>

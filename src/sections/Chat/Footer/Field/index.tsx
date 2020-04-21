@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, InputGroup } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 
 import styles from './index.module.scss'
 
@@ -22,7 +22,7 @@ export default ({
   children,
 }: Props) => {
   return (
-    <InputGroup className={styles.field}>
+    <div className={styles.field}>
       <Form.Control
         ref={inputRef}
         className={styles.inputArea}
@@ -37,6 +37,6 @@ export default ({
         placeholder="Type a message..."
       />
       <div className={styles.actions}>{children}</div>
-    </InputGroup>
+    </div>
   )
 }

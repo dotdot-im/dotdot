@@ -69,17 +69,15 @@ export default () => {
   useEffect(() => {
     if (state.chat.focused) {
       setHeaderPosition()
+    } else {
+      setState((draft) => {
+        draft.scrollingWhileFocused = false
+      })
     }
   }, [setHeaderPosition, state.chat.focused])
 
   if (!state.socket.connected) {
     return <Loader />
-  }
-
-  const handleTextBoxBlur = () => {
-    setState((draft) => {
-      draft.scrollingWhileFocused = false
-    })
   }
 
   return (
@@ -92,11 +90,7 @@ export default () => {
 
       <Messages onMessageClick={onMessageClick} />
 
-      <Footer
-        replyTo={localState.replyTo}
-        onBlur={handleTextBoxBlur}
-        onCancelReply={cancelReply}
-      />
+      <Footer replyTo={localState.replyTo} onCancelReply={cancelReply} />
     </div>
   )
 }

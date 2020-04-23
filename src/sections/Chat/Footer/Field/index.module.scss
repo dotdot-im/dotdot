@@ -10,12 +10,11 @@ $borderRadius: 0.25em;
   border-top: 1px solid $pure-white;
 
   @include mq($until: tablet) {
+    padding: 0.5em;
+    transition: 0.2s;
+
     &.focused {
-      box-shadow: none;
-      border-bottom: none;
-      border-left: none;
-      border-right: none;
-      border-radius: $borderRadius;
+      padding: 0 !important;
     }
   }
 

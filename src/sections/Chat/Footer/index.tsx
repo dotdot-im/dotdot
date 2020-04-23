@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { SocketContext } from 'util/socketProvider'
-import { VALID_USERNAME } from '../../../constants'
+import { getMessageKind, getMessagePmTo } from 'lib/messageParse'
 import useGlobalState from 'store/state'
 import { EVENTS, Message, OutgoingMessage } from 'store/types'
 import MessageComponent from '../Messages/Message'
@@ -23,11 +23,10 @@ type State = {
 
 type Props = {
   replyTo?: Message | null
-  onBlur: () => void
   onCancelReply?: () => void
 }
 
-export default ({ replyTo, onBlur, onCancelReply }: Props) => {
+export default ({ replyTo, onCancelReply }: Props) => {
   const { state, dispatch } = useGlobalState()
 
   const [localState, setState] = useImmer<State>({
@@ -98,29 +97,6 @@ export default ({ replyTo, onBlur, onCancelReply }: Props) => {
     socket?.emit(type, payload)
   }
 
-  // Message types
-  const isMessageCommand = (val: string) => val[0] === '/'
-  const isMessagePm = (val: string) => val[0] === '@'
-  const getMessageKind = (val: string) => {
-    if (isMessageCommand(val)) return 'command'
-    if (isMessagePm(val)) return 'private'
-    return false
-  }
-
-  const getMessagePmTo = (val: string) => {
-    const words = val.split(' ')
-
-    if (
-      words.length > 0 &&
-      words[0][0] === '@' &&
-      VALID_USERNAME.test(words[0].substr(1))
-    ) {
-      return words[0].substr(1)
-    }
-
-    return null
-  }
-
   const onType = (e: React.ChangeEvent<any>) => {
     e.preventDefault()
 
@@ -149,11 +125,7 @@ export default ({ replyTo, onBlur, onCancelReply }: Props) => {
   }
 
   return (
-    <div
-      className={classNames(styles.area, {
-        [styles.focused]: state.chat.focused,
-      })}
-    >
+    <div className={styles.area}>
       <Container className={styles.container}>
         {replyTo && (
           <div
@@ -180,7 +152,6 @@ export default ({ replyTo, onBlur, onCancelReply }: Props) => {
             inputRef={inputRef}
             value={localState.message}
             onChange={onType}
-            onBlur={onBlur}
           >
             <TextIcon kind={localState.kind} onHelp={askForHelp} />
             <Submit disabled={!state.chat.focused} />

@@ -3,13 +3,17 @@
 .textIcon {
   display: inline-block;
   padding: 0.25em;
-  margin: auto;
-  color: --color-text;
+  margin: auto 0.25em;
   opacity: 0.6;
+  text-align: center;
   cursor: pointer;
   transition: 0.2s;
 
   &:hover {
     opacity: 1;
+  }
+
+  @include mq($from: mobile) {
+    margin: auto 0.75em;
   }
 }

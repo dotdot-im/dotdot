@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react'
+import React, { useEffect, useCallback, useContext, useRef } from 'react'
 import { Form, Button, InputGroup, Container } from 'react-bootstrap'
 import { useImmer } from 'use-immer'
 import classNames from 'classnames'
@@ -16,6 +16,7 @@ import Submit from './Submit'
 import TextIcon from './TextIcon'
 
 type State = {
+  usingTouch: boolean
   message: string
   kind: 'private' | 'command' | false
   to: string | null
@@ -30,6 +31,7 @@ export default ({ replyTo, onCancelReply }: Props) => {
   const { state, dispatch } = useGlobalState()
 
   const [localState, setState] = useImmer<State>({
+    usingTouch: false,
     message: '',
     kind: false,
     to: null,
@@ -124,6 +126,20 @@ export default ({ replyTo, onCancelReply }: Props) => {
     }
   }
 
+  const isUsingTouch = useCallback(() => {
+    setState((draft) => {
+      draft.usingTouch = true
+    })
+  }, [setState])
+
+  useEffect(() => {
+    window.addEventListener('touchstart', isUsingTouch)
+
+    return () => {
+      window.removeEventListener('touchstart', isUsingTouch)
+    }
+  }, [isUsingTouch])
+
   return (
     <div className={styles.area}>
       <Container className={styles.container}>
@@ -154,7 +170,7 @@ export default ({ replyTo, onCancelReply }: Props) => {
             onChange={onType}
           >
             <TextIcon kind={localState.kind} onHelp={askForHelp} />
-            <Submit disabled={!state.chat.focused} />
+            {localState.usingTouch && <Submit disabled={!state.chat.focused} />}
           </Field>
         </Form>
       </Container>

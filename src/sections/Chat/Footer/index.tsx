@@ -1,22 +1,21 @@
 import React, { useEffect, useCallback, useContext, useRef } from 'react'
-import { Form, Button, InputGroup, Container } from 'react-bootstrap'
+import { Form, Button, Container } from 'react-bootstrap'
 import { useImmer } from 'use-immer'
 import classNames from 'classnames'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { SocketContext } from 'util/socketProvider'
 import { getMessageKind, getMessagePmTo } from 'lib/messageParse'
 import useGlobalState from 'store/state'
 import { EVENTS, Message, OutgoingMessage } from 'store/types'
-import MessageComponent from '../Messages/Message'
 
-import styles from './index.module.scss'
+import Reply from './Reply'
 import Field from './Field'
 import Submit from './Submit'
 import TextIcon from './TextIcon'
 
+import styles from './index.module.scss'
+
 type State = {
-  usingTouch: boolean
   message: string
   kind: 'private' | 'command' | false
   to: string | null
@@ -24,14 +23,13 @@ type State = {
 
 type Props = {
   replyTo?: Message | null
-  onCancelReply?: () => void
+  onCancelReply: () => void
 }
 
 export default ({ replyTo, onCancelReply }: Props) => {
   const { state, dispatch } = useGlobalState()
 
   const [localState, setState] = useImmer<State>({
-    usingTouch: false,
     message: '',
     kind: false,
     to: null,
@@ -126,36 +124,17 @@ export default ({ replyTo, onCancelReply }: Props) => {
     }
   }
 
-  const isUsingTouch = useCallback(() => {
-    setState((draft) => {
-      draft.usingTouch = true
-    })
-  }, [setState])
-
-  useEffect(() => {
-    window.addEventListener('touchstart', isUsingTouch)
-
-    return () => {
-      window.removeEventListener('touchstart', isUsingTouch)
-    }
-  }, [isUsingTouch])
+  const FieldActions = () => (
+    <>
+      <TextIcon kind={localState.kind} onHelp={askForHelp} />
+      <Submit disabled={!state.chat.focused} />
+    </>
+  )
 
   return (
     <div className={styles.area}>
       <Container className={styles.container}>
-        {replyTo && (
-          <div
-            className={styles.reply}
-            style={{ borderLeftColor: `#${replyTo.user.color}` }}
-          >
-            <div className={styles.actions}>
-              <Button variant="link" onClick={onCancelReply}>
-                <FontAwesomeIcon icon="times" />
-              </Button>
-            </div>
-            <MessageComponent reply message={replyTo} />
-          </div>
-        )}
+        {replyTo && <Reply replyTo={replyTo} onCancelReply={onCancelReply} />}
         <Form
           noValidate
           onSubmit={handleSubmit}
@@ -169,8 +148,7 @@ export default ({ replyTo, onCancelReply }: Props) => {
             value={localState.message}
             onChange={onType}
           >
-            <TextIcon kind={localState.kind} onHelp={askForHelp} />
-            {localState.usingTouch && <Submit disabled={!state.chat.focused} />}
+            <FieldActions />
           </Field>
         </Form>
       </Container>

@@ -1,6 +1,7 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import classNames from 'classnames'
 
 import styles from './index.module.scss'
 
@@ -25,7 +26,14 @@ export default ({ onHelp, kind }: Props) => {
   }
 
   return (
-    <div className={styles.textIcon} onClick={handleClick}>
+    <div
+      className={classNames(styles.textIcon, {
+        [styles.interactive]: kind === false,
+        [styles.private]: kind === 'private',
+        [styles.command]: kind === 'command',
+      })}
+      onClick={handleClick}
+    >
       <FontAwesomeIcon icon={icon} />
     </div>
   )

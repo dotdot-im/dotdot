@@ -20,40 +20,11 @@ $borderRadius: 0.25em;
   }
 }
 
-.reply {
-  font-size: 0.9em;
-  margin: 0.25em 1em 0.75em;
-  padding: 0.5em 1em;
-  border-radius: 0.2em;
-  border: solid 1px rgba(255, 255, 255, 0.1);
-  border-left-width: 4px;
-  background: var(--color-background-over);
-  position: relative;
-
-  .actions {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 2;
-  }
-}
-
-.private,
-.command {
-  .textIcon {
-    cursor: initial;
-  }
-}
-
 .private {
   input,
   input:focus {
     border-color: $secondary;
     box-shadow: 0 0 0 0.2rem fade-out($secondary, 0.8);
-  }
-
-  .textIcon {
-    color: $secondary;
   }
 }
 
@@ -63,9 +34,5 @@ $borderRadius: 0.25em;
     color: inherit;
     border-color: $command;
     box-shadow: 0 0 0 0.2rem fade-out($command, 0.8);
-  }
-
-  .textIcon {
-    color: inherit;
   }
 }

@@ -83,10 +83,10 @@ export default () => {
           </tr>
           <tr>
             <td>
-              <code>/list</code>
+              <code>/list users</code>
             </td>
             <td>
-              <code>/list</code>
+              <code>/list users</code>
             </td>
             <td>Get a list of the users who are currently online</td>
           </tr>

@@ -20,7 +20,6 @@ const URL_REGEX = new RegExp(
 )
 
 export default ({ content, isSystem, onlineUsers }: Props) => {
-
   let messageContent: React.ReactNodeArray | JSX.Element | string = content
   const urls: string[] = []
 

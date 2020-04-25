@@ -1,0 +1,22 @@
+@import 'assets/scss/variables';
+
+// Footer area - full width
+.footer {
+  // background: red; // var(--color-background-over);
+  box-shadow: 0 0 10px 3px var(--color-background); // subtle top shadow
+
+  @include mq($from: tablet) {
+    padding: 0 0 2em;
+  }
+
+  @include mq($until: tablet) {
+    .container {
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  @include mq($from: desktop) {
+    padding: 0 0 3em;
+  }
+}

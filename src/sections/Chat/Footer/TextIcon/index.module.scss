@@ -1,0 +1,29 @@
+@import 'assets/scss/variables';
+
+.textIcon {
+  display: none;
+  padding: 0.25em;
+  margin: auto 0.25em;
+  opacity: 0.6;
+  text-align: center;
+  color: inherit;
+  transition: 0.2s;
+  min-height: 1em;
+
+  &.interactive {
+    cursor: pointer;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  @include mq($from: mobile) {
+    display: inline-block;
+    margin: auto 0.75em;
+  }
+}
+
+.private {
+  color: $secondary;
+}

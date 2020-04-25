@@ -11,22 +11,27 @@
   overflow: hidden;
 
   .logo {
-    height: 28px;
-    margin: 0.9em 0;
-    float: left;
+    display: none;
   }
 
   .badge {
     float: right;
   }
 
-  .onlineUsers {
-    display: none;
+  .online {
+    display: inline-block;
+    margin-top: 0.5em;
   }
 
   @include mq($from: tablet) {
-    .online {
+    .logo {
       display: inline-block;
+      height: 28px;
+      margin: 0.9em 0;
+      float: left;
+    }
+
+    .online {
       margin-left: 1em;
       margin-top: 0.5em;
     }

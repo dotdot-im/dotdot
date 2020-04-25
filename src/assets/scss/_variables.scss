@@ -19,6 +19,7 @@ $charcoal: #3a3a3a;
 $white: #f3f3f3;
 $fog: #e6e6e6;
 $cloud: #d6d6d6;
+$light-grey: #ccc;
 
 $pure-white: #fff;
 $pure-black: #000;
@@ -32,7 +33,9 @@ $color-border-dark: $charcoal;
 $color-background-light: $white;
 $color-background-over-light: $fog;
 $color-text-light: $black;
-$color-border-light: #ccc;
+$color-border-light: $light-grey;
+
+$color-command: #aaa;
 
 // Margins
 $margin-side: 0.935em;
@@ -73,9 +76,16 @@ $border-radius-base: 0.4em;
   --color-red: #{$red};
   --color-background: #{$color-background-dark};
   --color-background-over: #{$color-background-over-dark};
-  --color-background-over-transparent: #{fade-out($color-background-over-dark, 0.6)};
+  --color-background-over-transparent: #{fade-out(
+      $color-background-over-dark,
+      0.6
+    )};
   --color-text: #{$color-text-dark};
+  --color-text-cyan: #{$cyan-text-light};
   --color-border: #{$color-border-dark};
+  --color-border-alt: #{$color-border-light};
+  --color-pure: #{$pure-white};
+  --color-pure-alt: #{$pure-black};
   --color-input: #{$charcoal};
 
   // Bootstrap vars
@@ -85,9 +95,16 @@ $border-radius-base: 0.4em;
   @media (prefers-color-scheme: light) {
     --color-background: #{$color-background-light};
     --color-background-over: #{$color-background-over-light};
-    --color-background-over-transparent: #{fade-out($color-background-over-light, 0.6)};
+    --color-background-over-transparent: #{fade-out(
+        $color-background-over-light,
+        0.6
+      )};
     --color-text: #{$color-text-light};
+    --color-text-cyan: #{$cyan-text-dark};
     --color-border: #{$color-border-light};
+    --color-border-alt: #{$color-border-dark};
+    --color-pure: #{$pure-black};
+    --color-pure-alt: #{$pure-white};
     --color-input: #{$cloud};
 
     // Bootstrap vars

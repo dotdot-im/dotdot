@@ -78,6 +78,7 @@ $border-radius-base: 0.4em;
       0.6
     )};
   --color-text: #{$color-text-dark};
+  --color-text-cyan: #{$cyan-text-light};
   --color-border: #{$color-border-dark};
   --color-input: #{$charcoal};
 
@@ -93,6 +94,7 @@ $border-radius-base: 0.4em;
         0.6
       )};
     --color-text: #{$color-text-light};
+    --color-text-cyan: #{$cyan-text-dark};
     --color-border: #{$color-border-light};
     --color-input: #{$cloud};
 

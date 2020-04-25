@@ -57,6 +57,7 @@ import {
   faPaperPlane,
   faTimes,
   faReply,
+  faExternalLinkAlt,
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -189,4 +190,5 @@ library.add(
   faPaperPlane,
   faTimes,
   faReply,
+  faExternalLinkAlt,
 )

@@ -4,6 +4,7 @@ import reactStringReplace from 'react-string-replace'
 import { User } from 'store/types'
 import HelpMessage from '../HelpMessage'
 import styles from './index.module.scss'
+import Embed from './Embed'
 
 type Props = {
   content: string
@@ -20,6 +21,7 @@ const URL_REGEX = new RegExp(
 export default ({ content, isSystem, onlineUsers }: Props) => {
 
   let messageContent: React.ReactNodeArray | JSX.Element | string = content
+  const urls: string[] = []
 
   if (isSystem && content === '/help') {
     messageContent = <HelpMessage />
@@ -48,9 +50,12 @@ export default ({ content, isSystem, onlineUsers }: Props) => {
     )
     // auto-link urls
     messageContent = reactStringReplace(messageContent, URL_REGEX, (url) => {
+      if (!urls.includes(url)) {
+        urls.push(url)
+      }
       return (
-        <a key={url} href={url} rel="noopener noreferrer" target="_blank">
-          {url}
+        <a href={url} rel="noopener noreferrer" target="_blank">
+          { url }
         </a>
       )
     })
@@ -59,6 +64,12 @@ export default ({ content, isSystem, onlineUsers }: Props) => {
   return (
     <div className={ styles.messageContent }>
       { messageContent }
+      { urls.map(url => (
+        <Embed
+          key={ url }
+          url={ url }
+        />
+      ))}
     </div>
   )
 }

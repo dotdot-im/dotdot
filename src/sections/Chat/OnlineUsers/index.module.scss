@@ -12,10 +12,6 @@
     margin-right: 0.5em;
   }
 
-  @include mq($until: tablet) {
-    display: none;
-  }
-
   @include mq($from: desktop) {
     box-shadow: 0 0 10px 3px var(--color-background);
   }

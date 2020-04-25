@@ -4,7 +4,7 @@
   border: 0;
   background: transparent;
   color: var(--color-text);
-  height: 75px;
+  height: 70px;
   padding: 0 15px;
 
   @include mq($until: desktop) {

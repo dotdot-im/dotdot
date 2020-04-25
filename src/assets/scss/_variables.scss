@@ -20,6 +20,7 @@ $white: #f3f3f3;
 $fog: #e6e6e6;
 $cloud: #d6d6d6;
 $light-grey: #ccc;
+$dark-grey: #848484;
 
 $pure-white: #fff;
 $pure-black: #000;
@@ -28,10 +29,10 @@ $pure-black: #000;
 $color-background-dark: $black;
 $color-background-over-dark: $grey;
 $color-text-dark: $white;
-$color-border-dark: $charcoal;
+$color-border-dark: $dark-grey;
 
-$color-background-light: $white;
-$color-background-over-light: $fog;
+$color-background-light: $fog;
+$color-background-over-light: $cloud;
 $color-text-light: $black;
 $color-border-light: $light-grey;
 
@@ -105,7 +106,7 @@ $border-radius-base: 0.4em;
     --color-border-alt: #{$color-border-dark};
     --color-pure: #{$pure-black};
     --color-pure-alt: #{$pure-white};
-    --color-input: #{$cloud};
+    --color-input: #{$white};
 
     // Bootstrap vars
     --light: #{$black};

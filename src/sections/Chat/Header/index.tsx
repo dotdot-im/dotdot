@@ -1,7 +1,6 @@
 import React from 'react'
-import logoBlack from 'assets/img/logo-black.svg'
-import logoWhite from 'assets/img/logo-white.svg'
 
+import Logo from 'components/Logo'
 import Wrapper from '../Wrapper'
 
 import styles from './index.module.scss'
@@ -15,14 +14,14 @@ type Props = {
 export default ({ scrollingWhileFocused }: Props) => {
   const top = scrollingWhileFocused ? window.pageYOffset + 'px' : 0
   const position = scrollingWhileFocused ? 'absolute' : 'fixed'
-  const logo = window.matchMedia('(prefers-color-scheme: light)').matches
-    ? logoBlack
-    : logoWhite
+  const theme = window.matchMedia('(prefers-color-scheme: light)').matches
+    ? 'light'
+    : 'dark'
 
   return (
     <header className={styles.header} style={{ position, top }}>
       <Wrapper>
-        <img className={styles.logo} srcSet={logo} alt="dotdot logo" />
+        <Logo className={styles.logo} theme={theme} />
 
         <div className={styles.online}>
           <OnlineUsers />

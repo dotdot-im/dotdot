@@ -172,11 +172,7 @@ $padding: 1em;
 }
 
 .private {
-  color: $secondary !important;
-
-  .body {
-    color: $secondary;
-  }
+  background: var(--color-pure-alt);
 }
 
 .replyBox {

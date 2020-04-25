@@ -20,8 +20,9 @@
   }
 
   &.private {
-    border-color: $secondary;
-    border-width: 2px;
+    background: var(--color-pure-alt);
+    border-color: var(--color-background-over);
+    // border-width: 2px;
   }
 
   &.command {

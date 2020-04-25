@@ -15,7 +15,7 @@ export default ({ onHelp, kind }: Props) => {
   if (kind === 'command') {
     icon = 'code'
   } else if (kind === 'private') {
-    icon = 'lock'
+    icon = 'eye-slash'
   }
 
   const handleClick = () => {

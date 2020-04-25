@@ -74,7 +74,7 @@ export default () => {
         draft.scrollingWhileFocused = false
       })
     }
-  }, [setHeaderPosition, state.chat.focused])
+  }, [setState, setHeaderPosition, state.chat.focused])
 
   if (!state.socket.connected) {
     return <Loader />

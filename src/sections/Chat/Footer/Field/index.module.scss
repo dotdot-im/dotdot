@@ -1,27 +1,58 @@
 @import 'assets/scss/variables';
 
-$borderRadius: 0.25em;
+@mixin dotdot-shadow($colorA, $colorB, $distance: 5px) {
+  box-shadow: 0 ($distance * 3) 0 ($distance * -2) $colorA,
+    0 ($distance * 5) 0 ($distance * -3) $colorB;
+}
 
 // Visually represents entire field
 .field {
   display: flex;
   background: var(--color-input);
   color: var(--color-text);
-  border-top: 1px solid $pure-white;
+  border-top: 1px solid #848688;
+  transition: 0.2s;
+  padding: 0.5em;
 
-  @include mq($until: tablet) {
-    padding: 0.5em;
-    transition: 0.2s;
+  &.focused {
+    padding: 0;
+    border-color: var(--color-pure);
+  }
 
-    &.focused {
-      padding: 0 !important;
+  &.private {
+    border-color: $secondary;
+    border-width: 2px;
+  }
+
+  &.command {
+    border-color: $color-command;
+
+    input,
+    textarea {
+      font-family: 'Courier New', Courier, monospace;
     }
   }
 
   @include mq($from: tablet) {
-    border: 1px solid #fff;
+    border: 1px solid #848688;
     border-radius: 0.25em;
-    box-shadow: 0 15px 0 -10px $cyan, 0 25px 0 -15px $red;
+    padding: 0;
+
+    // Cool thing to save :)
+    // box-shadow: -5px -5px 0 0 $cyan, 5px 5px 0 0 $red;
+    @include dotdot-shadow($cyan, $red);
+
+    &.focused {
+      @include dotdot-shadow(fade-out($cyan, 0.3), fade-out($red, 0.3));
+    }
+
+    &.private {
+      @include dotdot-shadow($cyan, $red, 0);
+    }
+
+    &.command {
+      @include dotdot-shadow(lighten(green, 50%), lighten(green, 10%));
+    }
   }
 }
 

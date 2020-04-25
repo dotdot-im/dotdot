@@ -7,12 +7,13 @@ import useGlobalState from 'store/state'
 
 type Props = {
   value: any
-  children: React.ReactNode
+  kind: 'private' | 'command' | false
   inputRef: React.Ref<any>
   onChange: (e: React.ChangeEvent<any>) => void
+  children: React.ReactNode
 }
 
-export default ({ inputRef, onChange, value, children }: Props) => {
+export default ({ value, kind, inputRef, onChange, children }: Props) => {
   const { state, dispatch } = useGlobalState()
 
   const handleFocus = (focus: boolean) => () => {
@@ -26,6 +27,8 @@ export default ({ inputRef, onChange, value, children }: Props) => {
     <div
       className={classNames(styles.field, {
         [styles.focused]: state.chat.focused,
+        [styles.private]: kind === 'private',
+        [styles.command]: kind === 'command',
       })}
     >
       <Form.Control

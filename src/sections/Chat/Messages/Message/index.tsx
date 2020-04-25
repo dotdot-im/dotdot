@@ -41,7 +41,6 @@ const MessageComponent = ({ message, onClick, reply }: Props) => {
   }
 
   let messageBody
-
   if (reply) {
     messageBody = message.content.join('. ')
   } else {

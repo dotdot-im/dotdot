@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo, useEffect } from 'react'
 import reactStringReplace from 'react-string-replace'
 import ReactMarkdown from 'react-markdown'
 
@@ -20,6 +20,9 @@ const URL_REGEX = new RegExp(
 )
 
 export default ({ content, isSystem, onlineUsers }: Props) => {
+  useEffect(() => {
+    console.log('first render message content', content);
+  }, [])
   let messageContent: React.ReactNodeArray | JSX.Element | string = content
   const urls: string[] = []
 
@@ -69,15 +72,19 @@ export default ({ content, isSystem, onlineUsers }: Props) => {
     })
   }
 
+  const embeds = useMemo(() => {
+    return urls.map(url => (
+      <Embed
+        key={ url }
+        url={ url }
+      />
+    ))
+  }, [urls])
+
   return (
     <div className={ styles.messageContent }>
       { messageContent }
-      { urls.map(url => (
-        <Embed
-          key={ url }
-          url={ url }
-        />
-      ))}
+      { embeds }
     </div>
   )
 }

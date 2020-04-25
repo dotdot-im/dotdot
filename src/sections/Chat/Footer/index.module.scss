@@ -1,0 +1,38 @@
+@import 'assets/scss/variables';
+
+$command: #aaa;
+$borderRadius: 0.25em;
+
+// Footer area - full width
+.area {
+  // background: red; // var(--color-background-over);
+  box-shadow: 0 0 10px 3px var(--color-background); // subtle top shadow
+
+  @include mq($until: tablet) {
+    .container {
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  @include mq($from: desktop) {
+    padding: 0 0 3em;
+  }
+}
+
+.private {
+  input,
+  input:focus {
+    border-color: $secondary;
+    box-shadow: 0 0 0 0.2rem fade-out($secondary, 0.8);
+  }
+}
+
+.command {
+  input,
+  input:focus {
+    color: inherit;
+    border-color: $command;
+    box-shadow: 0 0 0 0.2rem fade-out($command, 0.8);
+  }
+}

@@ -80,7 +80,7 @@ export default ({ url }: Props) => {
           draft.result = null
         })
       })
-  }, [url])
+  }, [url, setState])
 
   if (state.loading || !state.result) {
     return null
@@ -125,7 +125,11 @@ export default ({ url }: Props) => {
         <div>
           <a href={url} rel="noopener noreferrer" target="_blank" title={ state.result.description }>
             { state.result.favicon && (
-              <img className={ styles.icon } src={ state.result.favicon } />
+              <img
+                className={ styles.icon }
+                src={ state.result.favicon }
+                alt={ state.result.title }
+              />
             ) }
             { state.result.title } <FontAwesomeIcon icon='external-link-alt' />
           </a>

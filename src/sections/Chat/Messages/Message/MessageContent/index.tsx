@@ -1,5 +1,6 @@
 import React from 'react'
 import reactStringReplace from 'react-string-replace'
+import ReactMarkdown from 'react-markdown'
 
 import { User } from 'store/types'
 import HelpMessage from '../HelpMessage'
@@ -26,20 +27,27 @@ export default ({ content, isSystem, onlineUsers }: Props) => {
   if (isSystem && content === '/help') {
     messageContent = <HelpMessage />
   } else {
+    // find urls for embeds
+    const matches = messageContent.match(URL_REGEX)
+    if (matches) {
+      matches.forEach(url => {
+        if (!urls.includes(url)) {
+          urls.push(url)
+        }
+      })
+    }
+
     // replace mentions with colored version
     messageContent = reactStringReplace(
       messageContent,
       USER_REGEX,
       (username, index) => {
-        let style = {}
-        const userIndex = onlineUsers.findIndex(
-          (user) => user.name === username
+        const style: React.CSSProperties = {}
+        const user = onlineUsers.find(
+          eachUser => eachUser.name === username
         )
-        if (userIndex > -1) {
-          const userColor = onlineUsers[userIndex].contrastColor || '#' + onlineUsers[userIndex].color
-          style = {
-            color: userColor,
-          }
+        if (user) {
+          style.color = user.contrastColor || '#' + user.color
         }
         return (
           <span key={index} className={styles.mention} style={style}>
@@ -47,16 +55,17 @@ export default ({ content, isSystem, onlineUsers }: Props) => {
           </span>
         )
       }
-    )
-    // auto-link urls
-    messageContent = reactStringReplace(messageContent, URL_REGEX, (url) => {
-      if (!urls.includes(url)) {
-        urls.push(url)
+    ).map((content, index) => { // parse markdown
+      if (typeof content !== 'string') {
+        return content
       }
       return (
-        <a href={url} rel="noopener noreferrer" target="_blank">
-          { url }
-        </a>
+        <ReactMarkdown
+          key={ index }
+          source={ content }
+          unwrapDisallowed={ true }
+          allowedTypes={ ['text', 'link', 'blockquote', 'code', 'strong', 'emphasis', 'delete', 'image', 'inlineCode'] }
+        />
       )
     })
   }

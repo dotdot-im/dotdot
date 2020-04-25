@@ -134,7 +134,7 @@ export default ({ url }: Props) => {
             { state.result.title } <FontAwesomeIcon icon='external-link-alt' />
           </a>
           { state.result.description && (
-            <div>
+            <div className={ styles.description }>
               { state.result.description }
             </div>
           ) }

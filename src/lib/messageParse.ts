@@ -7,7 +7,7 @@ const isPm = (val: string) => val[0] === '@'
 
 export const getMessageKind = (val: string) => {
   if (isCommand(val)) return 'command'
-  if (isCommand(val)) return 'private'
+  if (isPm(val)) return 'private'
   return false
 }
 

@@ -1,7 +1,6 @@
-import React, { useEffect, useCallback, useContext, useRef } from 'react'
-import { Form, Button, Container } from 'react-bootstrap'
+import React, { useContext, useRef } from 'react'
+import { Form, Container } from 'react-bootstrap'
 import { useImmer } from 'use-immer'
-import classNames from 'classnames'
 
 import { SocketContext } from 'util/socketProvider'
 import { getMessageKind, getMessagePmTo } from 'lib/messageParse'
@@ -132,19 +131,13 @@ export default ({ replyTo, onCancelReply }: Props) => {
   )
 
   return (
-    <div className={styles.area}>
+    <div className={styles.footer}>
       <Container className={styles.container}>
         {replyTo && <Reply replyTo={replyTo} onCancelReply={onCancelReply} />}
-        <Form
-          noValidate
-          onSubmit={handleSubmit}
-          className={classNames({
-            [styles.private]: localState.kind === 'private',
-            [styles.command]: localState.kind === 'command',
-          })}
-        >
+        <Form noValidate onSubmit={handleSubmit}>
           <Field
             inputRef={inputRef}
+            kind={localState.kind}
             value={localState.message}
             onChange={onType}
           >

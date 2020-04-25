@@ -12,6 +12,7 @@ type Props = {
 
 type State = {
   loading: boolean
+  url: string
   result: {
     title: string
     description: string
@@ -27,6 +28,7 @@ type State = {
 export default ({ url }: Props) => {
   const [ state, setState ] = useImmer<State>({
     loading: false,
+    url,
     result: null,
   })
 
@@ -52,8 +54,16 @@ export default ({ url }: Props) => {
             author_url: null,
           }
 
-          if (data.twitter_card && data.twitter_card.players && data.twitter_card.players.length > 0) {
-            draft.result.embed = data.twitter_card.players[0].url
+          if (data.open_graph) {
+            draft.url = data.open_graph.url
+          }
+
+          if (data.twitter_card) {
+            draft.url = data.twitter_card.url
+
+            if (data.twitter_card.players && data.twitter_card.players.length > 0) {
+              draft.result.embed = data.twitter_card.players[0].url
+            }
           }
 
           if (data.oEmbed) {
@@ -89,12 +99,23 @@ export default ({ url }: Props) => {
             <iframe
               className="embed-responsive-item"
               src={ state.result.embed }
+              title={ state.result.title }
               allowFullScreen />
           </div>
           <h4>
             <a href={url} rel="noopener noreferrer" target="_blank" title={ state.result.description }>
               { state.result.title } <FontAwesomeIcon icon='external-link-alt' />
             </a>
+            <div className={ styles.description }>
+              { state.result.description }
+            </div>
+            { state.result.author_url && state.result.author_name && (
+              <div className={ styles.author }>
+                By <a href={ state.result.author_url } >
+                  @{ state.result.author_name }
+                </a>
+              </div>
+            ) }
           </h4>
         </div>
       )

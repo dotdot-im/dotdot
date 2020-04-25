@@ -81,6 +81,7 @@ $border-radius-base: 0.4em;
       0.6
     )};
   --color-text: #{$color-text-dark};
+  --color-text-cyan: #{$cyan-text-light};
   --color-border: #{$color-border-dark};
   --color-border-alt: #{$color-border-light};
   --color-pure: #{$pure-white};
@@ -99,6 +100,7 @@ $border-radius-base: 0.4em;
         0.6
       )};
     --color-text: #{$color-text-light};
+    --color-text-cyan: #{$cyan-text-dark};
     --color-border: #{$color-border-light};
     --color-border-alt: #{$color-border-dark};
     --color-pure: #{$pure-black};

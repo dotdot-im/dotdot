@@ -20,9 +20,11 @@ const URL_REGEX = new RegExp(
 )
 
 export default ({ content, isSystem, onlineUsers }: Props) => {
+
   useEffect(() => {
     console.log('first render message content', content);
   }, [])
+
   let messageContent: React.ReactNodeArray | JSX.Element | string = content
   const urls: string[] = []
 

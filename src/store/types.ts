@@ -15,11 +15,12 @@ export type MessageAttributes = {
   draft: boolean
   private: boolean
   to?: string | null
-  replyToTimestamp?: number | null
+  replyToId?: string | null
   replyTo?: Message | null
 }
 
 export type Message = {
+  uuid: string
   user: User
   timestamp: Date
   content: string[]
@@ -27,6 +28,7 @@ export type Message = {
 }
 
 export type IncomingMessage = {
+  uuid: string
   user: User
   timestamp: Date
   content: string

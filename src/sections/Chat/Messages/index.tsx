@@ -16,7 +16,7 @@ type State = {
 }
 
 type Props = {
-  onMessageClick: (messageTimestamp: number) => void,
+  onMessageClick: (messageId: string) => void,
 }
 
 export default (props: Props) => {
@@ -74,7 +74,7 @@ export default (props: Props) => {
             >
               {state.messages.map((eachMessage) => (
                 <MessageComponent
-                  key={eachMessage.timestamp.getTime()}
+                  key={eachMessage.uuid}
                   onClick={ props.onMessageClick }
                   message={eachMessage}
                 />

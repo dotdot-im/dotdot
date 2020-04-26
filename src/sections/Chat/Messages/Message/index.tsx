@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button } from 'react-bootstrap'
@@ -13,11 +13,15 @@ import Reply from './Reply'
 type Props = {
   reply?: boolean
   message: Message
-  onClick?: (messageTimestamp: number) => void
+  onClick?: (messageId: string) => void
 }
 
-const MessageComponent = ({ message, onClick, reply }: Props) => {
+const MessageComponent = React.memo(({ message, onClick, reply }: Props) => {
   const { state } = useGlobalState()
+
+  useEffect(() => {
+    console.log('first render: messageComponent');
+  }, [])
 
   // User data comes from online users if available
   const userData =
@@ -37,7 +41,7 @@ const MessageComponent = ({ message, onClick, reply }: Props) => {
     if (!isReplyAllowed || !onClick) {
       return
     }
-    onClick(message.timestamp.getTime())
+    onClick(message.uuid)
   }
 
   let messageBody
@@ -56,7 +60,7 @@ const MessageComponent = ({ message, onClick, reply }: Props) => {
 
   return (
     <div
-      id={'message-' + message.timestamp.getTime()}
+      id={'message-' + message.uuid}
       className={classNames(styles.message, {
         [styles.reply]: reply,
         [styles.system]: isSystem,
@@ -90,7 +94,7 @@ const MessageComponent = ({ message, onClick, reply }: Props) => {
       { !reply && (
         <Reply
           replyTo={ message.attributes.replyTo }
-          replyToTimestamp={ message.attributes.replyToTimestamp }
+          replyToId={ message.attributes.replyToId }
         />
       ) }
 
@@ -99,6 +103,6 @@ const MessageComponent = ({ message, onClick, reply }: Props) => {
       </div>
     </div>
   )
-}
+})
 
 export default MessageComponent

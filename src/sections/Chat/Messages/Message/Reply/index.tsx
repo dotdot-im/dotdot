@@ -6,10 +6,10 @@ import MessageComponent from '..'
 
 type Props = {
   replyTo: Message | null | undefined
-  replyToTimestamp: number | null | undefined
+  replyToId: string | null | undefined
 }
 
-const Reply = ({ replyTo, replyToTimestamp }: Props) => {
+const Reply = ({ replyTo, replyToId }: Props) => {
 
   if (!replyTo || !replyTo.user) {
     return null
@@ -17,7 +17,7 @@ const Reply = ({ replyTo, replyToTimestamp }: Props) => {
 
   return (
     <a
-      href={'#message-' + replyToTimestamp}
+      href={'#message-' + replyToId}
       className={styles.replyBox}
       title="Go to original message"
       style={{

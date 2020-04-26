@@ -29,6 +29,7 @@
     "@types/recharts": "^1.8.9",
     "@types/smoothscroll-polyfill": "^0.3.1",
     "@types/socket.io-client": "^1.4.32",
+    "@types/uuid": "^7.0.3",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "classnames": "^2.2.6",
@@ -52,7 +53,8 @@
     "socket.io-client": "^2.3.0",
     "typescript": "^3.8.3",
     "use-immer": "^0.4.0",
-    "use-sound": "^1.0.1"
+    "use-sound": "^1.0.1",
+    "uuid": "^7.0.3"
   },
   "eslintConfig": {
     "extends": "react-app"

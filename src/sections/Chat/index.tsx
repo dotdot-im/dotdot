@@ -35,7 +35,6 @@ export default () => {
             (eachMessage) =>
               eachMessage.uuid === messageId
           ) || null
-        console.log('replying to ', messageId, state.messages, messageReply)
         draft.replyTo = messageReply
       })
     },

@@ -40,7 +40,6 @@ export default ({ url }: Props) => {
       url,
     })
       .then((data: any) => {
-        console.log('unfurl', data);
         setState(draft => {
           draft.loading = false
           draft.result = {

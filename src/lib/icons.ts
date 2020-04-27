@@ -192,5 +192,5 @@ library.add(
   faPaperPlane,
   faTimes,
   faReply,
-  faExternalLinkAlt
+  faExternalLinkAlt,
 )

@@ -89,7 +89,7 @@ export default ({ replyTo, onCancelReply }: Props) => {
         draft,
         private: localState.kind === 'private',
         to: localState.to,
-        replyToTimestamp: replyTo ? replyTo.timestamp.getTime() : null,
+        replyToId: replyTo ? replyTo.uuid : null,
       },
     }
 

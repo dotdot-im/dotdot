@@ -1,4 +1,5 @@
 import produce from 'immer'
+import uuidv4 from 'uuid/v4'
 
 import {
   AppState,
@@ -53,6 +54,7 @@ export default produce((draft: AppState, action: Action) => {
       break
     case 'system_message':
       const systemMessage = {
+        uuid: uuidv4(),
         user: systemUser,
         content: [action.payload],
         timestamp: new Date(),
@@ -118,12 +120,12 @@ export default produce((draft: AppState, action: Action) => {
         return
       }
 
-      if (incomingMessage.attributes.replyToTimestamp) {
+      if (incomingMessage.attributes.replyToId) {
         const messageReply =
           draft.messages.find(
             (eachMessage) =>
-              eachMessage.timestamp.getTime() ===
-              incomingMessage.attributes.replyToTimestamp
+              eachMessage.uuid ===
+              incomingMessage.attributes.replyToId
           ) || null
         if (messageReply && messageReply.user) {
           incomingMessage.attributes.replyTo = messageReply
@@ -138,8 +140,8 @@ export default produce((draft: AppState, action: Action) => {
           lastMessage.user.user_id === incomingMessage.user.user_id &&
           lastMessage.attributes.private ===
             incomingMessage.attributes.private &&
-          lastMessage.attributes.replyToTimestamp ===
-            incomingMessage.attributes.replyToTimestamp
+          lastMessage.attributes.replyToId ===
+            incomingMessage.attributes.replyToId
         ) {
           // last message was by this same user (and it's the same kind of message)
           lastMessage.content.push(incomingMessage.content)
@@ -149,6 +151,7 @@ export default produce((draft: AppState, action: Action) => {
       }
 
       const message: Message = {
+        uuid: incomingMessage.uuid,
         user: incomingMessage.user,
         timestamp: incomingMessage.timestamp,
         attributes: incomingMessage.attributes,

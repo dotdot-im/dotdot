@@ -28,14 +28,13 @@ export default () => {
   })
 
   const onMessageClick = useCallback(
-    (messageTimestamp: number) => {
+    (messageId: string) => {
       setState((draft) => {
         const messageReply =
           state.messages.find(
             (eachMessage) =>
-              eachMessage.timestamp.getTime() === messageTimestamp
+              eachMessage.uuid === messageId
           ) || null
-        console.log('replying to ', messageReply)
         draft.replyTo = messageReply
       })
     },

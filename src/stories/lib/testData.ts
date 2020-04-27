@@ -1,4 +1,5 @@
 import randomWords from 'random-words'
+import uuidv4 from 'uuid/v4'
 
 import { Message, User, AppState, MessageAttributes, IncomingMessage } from '../../store/types'
 import { initialState } from '../../store/state';
@@ -82,13 +83,13 @@ export function generateRandomMessage(user: User, messages: Message[], randomAtt
   const attributes: MessageAttributes = {
     draft: false,
     private: false,
-    replyToTimestamp: null,
+    replyToId: null,
   }
 
   if (randomAttributes) {
     if (messages.length > 0 && Math.random() < 0.2) {
       attributes.replyTo = messages[Math.floor(Math.random() * messages.length)]
-      attributes.replyToTimestamp = attributes.replyTo.timestamp.getTime()
+      attributes.replyToId = attributes.replyTo.uuid
     }
 
     attributes.draft = Math.random() < 0.3
@@ -106,6 +107,7 @@ export function generateRandomMessage(user: User, messages: Message[], randomAtt
   }
 
   return {
+    uuid: uuidv4(),
     timestamp,
     user,
     attributes,

@@ -73,3 +73,17 @@ export const offlineUser = () => {
 
   return renderMessage(testMessage, state)
 }
+
+export const youtubeVideo = () => {
+  const testMessage = generateRandomMessage(currentUser, [])
+  testMessage.content = ['Check out https://www.youtube.com/watch?v=10EYqRCRz_8']
+
+  return renderMessage(testMessage, testState)
+}
+
+export const article = () => {
+  const testMessage = generateRandomMessage(currentUser, [])
+  testMessage.content = ['Check out https://blog.codinghorror.com/']
+
+  return renderMessage(testMessage, testState)
+}

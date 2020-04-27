@@ -3,7 +3,7 @@
 // Message box
 .embed {
   border-left: var(--color-background-over) solid 4px;
-  padding: 0.5em 1em;
+  padding: 0.5em 1em 0;
   margin-top: 0.5em;
   color: var(--color-text);
 
@@ -19,6 +19,7 @@
 }
 
 .title {
+  display: block;
   font-weight: 700;
 
   svg {
@@ -45,4 +46,13 @@
 .author {
   margin-top: 0.5rem;
   font-size: 0.8em;
+}
+
+.images {
+  margin-top: 0.5em;
+
+  img {
+    max-width: 15em;
+    margin: 0.5em 0.5em 0 0;
+  }
 }

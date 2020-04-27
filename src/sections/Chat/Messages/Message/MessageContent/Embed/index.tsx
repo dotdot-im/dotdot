@@ -144,6 +144,7 @@ export default ({ url }: Props) => {
               rel="noopener noreferrer"
               target="_blank"
               title={state.result.description}
+              className={styles.title}
             >
               {state.result.favicon && (
                 <img
@@ -175,6 +176,7 @@ export default ({ url }: Props) => {
             rel="noopener noreferrer"
             target="_blank"
             title={state.result.description}
+            className={styles.title}
           >
             {state.result.favicon && (
               <img

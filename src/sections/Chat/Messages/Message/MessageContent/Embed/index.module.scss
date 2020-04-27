@@ -18,10 +18,22 @@
   }
 }
 
+.title {
+  font-weight: 700;
+
+  svg {
+    width: 0.8em !important;
+    margin-left: 0.2em;
+    color: var(--color-pure);
+    opacity: 0.5;
+  }
+}
+
 .icon {
-  max-height: 1.5em;
-  max-width: 1.5em;
+  max-height: 1.2em;
+  max-width: 1.2em;
   margin-right: 0.5em;
+  transform: translateY(-0.1em);
 }
 
 .description {

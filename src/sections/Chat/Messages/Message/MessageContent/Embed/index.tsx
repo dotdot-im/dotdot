@@ -57,6 +57,13 @@ export default ({ url }: Props) => {
             draft.url = data.open_graph.url
           }
 
+          if (data.oEmbed) {
+            draft.result.type = data.oEmbed.type
+            draft.result.provider = data.oEmbed.provider_name
+            draft.result.author_name = data.oEmbed.author_name
+            draft.result.author_url = data.oEmbed.author_url
+          }
+
           if (data.twitter_card) {
             draft.url = data.twitter_card.url
 
@@ -65,14 +72,11 @@ export default ({ url }: Props) => {
               data.twitter_card.players.length > 0
             ) {
               draft.result.embed = data.twitter_card.players[0].url
-            }
-          }
 
-          if (data.oEmbed) {
-            draft.result.provider = data.oEmbed.provider_name
-            draft.result.type = data.oEmbed.type
-            draft.result.author_name = data.oEmbed.author_name
-            draft.result.author_url = data.oEmbed.author_url
+              if (draft.result.type !== 'video') {
+                draft.result.type = data.twitter_card.site
+              }
+            }
           }
         })
       })
@@ -90,19 +94,33 @@ export default ({ url }: Props) => {
 
   let content = null
 
+  const aspectRatio = {
+    video: '16by9',
+    '@spotify': '21by9',
+    SoundCloud: '21by9',
+  }
+
   switch (state.result.type) {
     case 'video':
+    case '@spotify':
+    case 'SoundCloud':
       if (!state.result.embed) {
         return null
       }
       content = (
         <div>
-          <div className="embed-responsive embed-responsive-16by9">
+          <div
+            className={`embed-responsive embed-responsive-${
+              aspectRatio[state.result.type]
+            }`}
+          >
             <iframe
               className="embed-responsive-item"
               src={state.result.embed}
               title={state.result.title}
               allowFullScreen
+              width="640"
+              height="320"
             />
           </div>
           <h4>
@@ -112,6 +130,13 @@ export default ({ url }: Props) => {
               target="_blank"
               title={state.result.description}
             >
+              {state.result.favicon && (
+                <img
+                  className={styles.icon}
+                  src={state.result.favicon}
+                  alt={state.result.title}
+                />
+              )}
               {state.result.title} <FontAwesomeIcon icon="external-link-alt" />
             </a>
             <div className={styles.description}>{state.result.description}</div>

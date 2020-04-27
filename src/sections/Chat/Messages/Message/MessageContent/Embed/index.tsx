@@ -22,6 +22,7 @@ type State = {
     type: string | null
     author_name: string | null
     author_url: string | null
+    images: [{ url: string }] | null
   } | null
 }
 
@@ -43,7 +44,7 @@ export default ({ url }: Props) => {
         setState((draft) => {
           draft.loading = false
           draft.result = {
-            title: data.title,
+            title: data.title.replace(/(\r\n|\n|\r)/gm, ''),
             description: data.description,
             favicon: data.favicon,
             embed: null,
@@ -51,10 +52,7 @@ export default ({ url }: Props) => {
             type: null,
             author_name: null,
             author_url: null,
-          }
-
-          if (data.open_graph) {
-            draft.url = data.open_graph.url
+            images: null,
           }
 
           if (data.oEmbed) {
@@ -73,10 +71,22 @@ export default ({ url }: Props) => {
             ) {
               draft.result.embed = data.twitter_card.players[0].url
 
+              // Fallback to site name for type if not video
               if (draft.result.type !== 'video') {
                 draft.result.type = data.twitter_card.site
               }
             }
+          }
+
+          if (data.open_graph) {
+            draft.url = data.open_graph.url
+
+            // Fallback to opengraph type if all fails
+            if (!draft.result.type) {
+              draft.result.type = data.open_graph.type
+            }
+
+            draft.result.images = data.open_graph.images
           }
         })
       })
@@ -134,6 +144,8 @@ export default ({ url }: Props) => {
               title={state.result.title}
               frameBorder="0"
               allowFullScreen
+              allowTransparency
+              allow="encrypted-media"
               width="100%"
               height="150"
             />
@@ -170,7 +182,7 @@ export default ({ url }: Props) => {
       break
     default:
       content = (
-        <div>
+        <>
           <a
             href={url}
             rel="noopener noreferrer"
@@ -185,12 +197,19 @@ export default ({ url }: Props) => {
                 alt={state.result.title}
               />
             )}
-            {state.result.title} <FontAwesomeIcon icon="external-link-alt" />
+            <>{state.result.title}</>{' '}
+            <FontAwesomeIcon icon="external-link-alt" />
           </a>
           {state.result.description && (
             <div className={styles.description}>{state.result.description}</div>
           )}
-        </div>
+
+          <div className={styles.images}>
+            {state.result.images?.map((image) => {
+              return <img src={image.url} />
+            })}
+          </div>
+        </>
       )
   }
 

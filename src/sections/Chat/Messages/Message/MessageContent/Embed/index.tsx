@@ -197,7 +197,7 @@ export default ({ url }: Props) => {
                 alt={state.result.title}
               />
             )}
-            <>{state.result.title}</>{' '}
+            {state.result.title}{' '}
             <FontAwesomeIcon icon="external-link-alt" />
           </a>
           {state.result.description && (
@@ -205,9 +205,9 @@ export default ({ url }: Props) => {
           )}
 
           <div className={styles.images}>
-            {state.result.images?.map((image) => {
-              return <img src={image.url} />
-            })}
+            {state.result.images?.map(image => (
+              <img alt={ state.result?.title || image.url } src={image.url} />
+            ))}
           </div>
         </>
       )

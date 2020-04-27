@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import axios, { AxiosRequestConfig, AxiosError } from 'axios'
 
 import { API_URL } from '../constants'
+import useGlobalState from 'store/state'
 
 export type FetchMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
 export const CSRF_HEADER = 'x-csrf-token'
@@ -23,6 +24,7 @@ function useFetch<T>(
   method: FetchMethod,
   body?: any
 ): FetchReturn<T> {
+  const { dispatch } = useGlobalState()
   const [error, setError] = useState<FetchError | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
   const [response, setResponse] = useState<T | null>(null)
@@ -33,6 +35,12 @@ function useFetch<T>(
         const data = await fetchResource(path, method, body)
         setResponse(data)
       } catch (error) {
+        if (error.message === 'offline') {
+          dispatch({
+            type: 'offline',
+            payload: null
+          })
+        }
         setError(error)
       } finally {
         setLoading(false)
@@ -40,7 +48,7 @@ function useFetch<T>(
     }
 
     sendRequest()
-  }, [path, method, body])
+  }, [path, method, body, dispatch])
 
   return [loading, response, error]
 }
@@ -92,7 +100,7 @@ export const fetchResource = async (
     console.warn(`useFetch network error on ${method} ${path}`, error)
     const returnError: FetchError = {
       status: 500,
-      message: error.message,
+      message: 'offline',
       errors: [error.message],
     }
     throw returnError

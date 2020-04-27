@@ -1,6 +1,8 @@
+@import 'assets/scss/variables';
+
 .offline {
-  background: rgb(229, 20, 0);
-  color: #fff;
+  background: $red;
+  color: $black;
   padding: 1rem 2rem;
   text-align: center;
   font-size: 1.1em;

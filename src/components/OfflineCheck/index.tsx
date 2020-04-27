@@ -24,7 +24,7 @@ export default () => {
 
   return (
     <div className={styles.offline}>
-      You seem to be offline! Please try again later
+      One of us is offline! Please try again later
     </div>
   )
 }

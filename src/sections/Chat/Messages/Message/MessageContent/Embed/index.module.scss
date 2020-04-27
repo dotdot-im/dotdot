@@ -7,6 +7,15 @@
   margin-top: 0.5em;
   color: var(--color-text);
 
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  iframe {
+    max-width: 640px;
+  }
+
   h4 {
     font-size: 1em;
     margin: 1em 0 0;

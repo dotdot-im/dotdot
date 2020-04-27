@@ -26,21 +26,21 @@ type State = {
 }
 
 export default ({ url }: Props) => {
-  const [ state, setState ] = useImmer<State>({
+  const [state, setState] = useImmer<State>({
     loading: false,
     url,
     result: null,
   })
 
   useEffect(() => {
-    setState(draft => {
+    setState((draft) => {
       draft.loading = true
     })
     fetchResource('/unfurl', 'POST', {
       url,
     })
       .then((data: any) => {
-        setState(draft => {
+        setState((draft) => {
           draft.loading = false
           draft.result = {
             title: data.title,
@@ -60,7 +60,10 @@ export default ({ url }: Props) => {
           if (data.twitter_card) {
             draft.url = data.twitter_card.url
 
-            if (data.twitter_card.players && data.twitter_card.players.length > 0) {
+            if (
+              data.twitter_card.players &&
+              data.twitter_card.players.length > 0
+            ) {
               draft.result.embed = data.twitter_card.players[0].url
             }
           }
@@ -74,7 +77,7 @@ export default ({ url }: Props) => {
         })
       })
       .catch((reason) => {
-        setState(draft => {
+        setState((draft) => {
           draft.loading = true
           draft.result = null
         })
@@ -97,24 +100,29 @@ export default ({ url }: Props) => {
           <div className="embed-responsive embed-responsive-16by9">
             <iframe
               className="embed-responsive-item"
-              src={ state.result.embed }
-              title={ state.result.title }
-              allowFullScreen />
+              src={state.result.embed}
+              title={state.result.title}
+              allowFullScreen
+            />
           </div>
           <h4>
-            <a href={url} rel="noopener noreferrer" target="_blank" title={ state.result.description }>
-              { state.result.title } <FontAwesomeIcon icon='external-link-alt' />
+            <a
+              href={url}
+              rel="noopener noreferrer"
+              target="_blank"
+              title={state.result.description}
+            >
+              {state.result.title} <FontAwesomeIcon icon="external-link-alt" />
             </a>
-            <div className={ styles.description }>
-              { state.result.description }
-            </div>
-            { state.result.author_url && state.result.author_name && (
-              <div className={ styles.author }>
-                By <a href={ state.result.author_url } >
-                  @{ state.result.author_name }
+            <div className={styles.description}>{state.result.description}</div>
+            {state.result.author_url && state.result.author_name && (
+              <div className={styles.author}>
+                By{' '}
+                <a href={state.result.author_url}>
+                  @{state.result.author_name}
                 </a>
               </div>
-            ) }
+            )}
           </h4>
         </div>
       )
@@ -122,21 +130,24 @@ export default ({ url }: Props) => {
     default:
       content = (
         <div>
-          <a href={url} rel="noopener noreferrer" target="_blank" title={ state.result.description }>
-            { state.result.favicon && (
+          <a
+            href={url}
+            rel="noopener noreferrer"
+            target="_blank"
+            title={state.result.description}
+          >
+            {state.result.favicon && (
               <img
-                className={ styles.icon }
-                src={ state.result.favicon }
-                alt={ state.result.title }
+                className={styles.icon}
+                src={state.result.favicon}
+                alt={state.result.title}
               />
-            ) }
-            { state.result.title } <FontAwesomeIcon icon='external-link-alt' />
+            )}
+            {state.result.title} <FontAwesomeIcon icon="external-link-alt" />
           </a>
-          { state.result.description && (
-            <div className={ styles.description }>
-              { state.result.description }
-            </div>
-          ) }
+          {state.result.description && (
+            <div className={styles.description}>{state.result.description}</div>
+          )}
         </div>
       )
   }
@@ -145,9 +156,5 @@ export default ({ url }: Props) => {
     return null
   }
 
-  return (
-    <blockquote className={styles.embed}>
-      { content }
-    </blockquote>
-  )
+  return <blockquote className={styles.embed}>{content}</blockquote>
 }

@@ -59,6 +59,7 @@ import {
   faReply,
   faExternalLinkAlt,
   faEyeSlash,
+  faRobot,
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -193,4 +194,5 @@ library.add(
   faTimes,
   faReply,
   faExternalLinkAlt,
+  faRobot,
 )

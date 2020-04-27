@@ -94,10 +94,19 @@ export default ({ url }: Props) => {
 
   let content = null
 
-  const aspectRatio = {
-    video: '16by9',
-    '@spotify': '21by9',
-    SoundCloud: '21by9',
+  const sizes = {
+    video: {
+      aspect: '16by9',
+      maxWidth: '640px',
+    },
+    '@spotify': {
+      aspect: '1by1',
+      maxWidth: '320px',
+    },
+    SoundCloud: {
+      aspect: null,
+      maxWidth: 'none',
+    },
   }
 
   switch (state.result.type) {
@@ -110,17 +119,23 @@ export default ({ url }: Props) => {
       content = (
         <div>
           <div
-            className={`embed-responsive embed-responsive-${
-              aspectRatio[state.result.type]
-            }`}
+            className={
+              sizes[state.result.type].aspect
+                ? `embed-responsive embed-responsive-${
+                    sizes[state.result.type].aspect
+                  }`
+                : undefined
+            }
+            style={{ maxWidth: sizes[state.result.type].maxWidth }}
           >
             <iframe
               className="embed-responsive-item"
               src={state.result.embed}
               title={state.result.title}
+              frameBorder="0"
               allowFullScreen
-              width="640"
-              height="320"
+              width="100%"
+              height="150"
             />
           </div>
           <h4>
@@ -129,6 +144,7 @@ export default ({ url }: Props) => {
               rel="noopener noreferrer"
               target="_blank"
               title={state.result.description}
+              className={styles.title}
             >
               {state.result.favicon && (
                 <img
@@ -160,6 +176,7 @@ export default ({ url }: Props) => {
             rel="noopener noreferrer"
             target="_blank"
             title={state.result.description}
+            className={styles.title}
           >
             {state.result.favicon && (
               <img

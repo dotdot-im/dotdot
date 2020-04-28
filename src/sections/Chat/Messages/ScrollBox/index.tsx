@@ -1,4 +1,7 @@
 import React, { useEffect, useCallback, useState, useRef } from 'react'
+import smoothscroll from 'smoothscroll-polyfill'
+
+smoothscroll.polyfill()
 
 const SCROLL_THRESHOLD = 50
 const SCROLL_DEBOUNCE_DELAY = 150

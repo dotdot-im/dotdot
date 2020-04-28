@@ -70,16 +70,18 @@ export default (props: Props) => {
           </Container>
         </div>
       )}
-      <div className="container">
-        <ScrollBox boxRef={chatAreaRef} onScrollChanged={onScrollChanged}>
-          {state.messages.map((eachMessage) => (
-            <MessageComponent
-              key={eachMessage.uuid}
-              onClick={props.onMessageClick}
-              message={eachMessage}
-            />
-          ))}
-        </ScrollBox>
+      <div className={classNames(styles.messageScroll)}>
+        <div className="container">
+          <ScrollBox boxRef={chatAreaRef} onScrollChanged={onScrollChanged}>
+            {state.messages.map((eachMessage) => (
+              <MessageComponent
+                key={eachMessage.uuid}
+                onClick={props.onMessageClick}
+                message={eachMessage}
+              />
+            ))}
+          </ScrollBox>
+        </div>
       </div>
     </div>
   )

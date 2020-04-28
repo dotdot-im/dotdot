@@ -1,6 +1,6 @@
 @import 'assets/scss/variables';
 
-$textbox-height-mobile: 80px;
+$textbox-height-mobile: 65px;
 $textbox-height-desktop: 120px;
 
 .messages {
@@ -12,14 +12,14 @@ $textbox-height-desktop: 120px;
 }
 
 .unseen {
-  position: absolute;
-  bottom: $textbox-height-mobile;
+  position: fixed;
   right: 0;
+  bottom: $textbox-height-mobile;
   z-index: 1;
   width: 100%;
   height: 0px;
 
-  @include mq($from: desktop) {
+  @include mq($from: tablet) {
     bottom: $textbox-height-desktop;
   }
 

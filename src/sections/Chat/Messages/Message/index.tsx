@@ -20,10 +20,6 @@ type Props = {
 const MessageComponent = React.memo(({ message, onClick, reply }: Props) => {
   const { state } = useGlobalState()
 
-  useEffect(() => {
-    console.log('first render: messageComponent');
-  }, [])
-
   // User data comes from online users if available
   const userData =
     state.onlineUsers.find((user) => user.user_id === message.user.user_id) ||
@@ -45,6 +41,7 @@ const MessageComponent = React.memo(({ message, onClick, reply }: Props) => {
     onClick(message.uuid)
   }
 
+  // TODO Move this to a MessageBody component or something like that
   let messageBody
   if (reply) {
     messageBody = message.content.join('. ')

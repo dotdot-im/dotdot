@@ -110,6 +110,7 @@ export default produce((draft: AppState, action: Action) => {
           draft.messages.splice(draftIndex, 1)
         } else if (!isEmpty && incomingMessage.attributes.draft) {
           draft.messages[draftIndex].content[0] = incomingMessage.content
+          draft.messages[draftIndex].timedContent = incomingMessage.timedContent
           draft.messages[draftIndex].timestamp = new Date(
             incomingMessage.timestamp
           )

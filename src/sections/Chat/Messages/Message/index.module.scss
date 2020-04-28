@@ -1,10 +1,5 @@
 @import 'assets/scss/variables';
 
-// $background: rgb(50, 57, 65);
-$border: #3b4252;
-$text: #b5bcc4;
-$text-inverse: #293134;
-$radius: 0.45em;
 $padding: 1em;
 
 // Message box
@@ -12,19 +7,38 @@ $padding: 1em;
   position: relative;
   white-space: pre-line;
 
-  margin: #{$padding} #{-$padding};
-  padding: 0 #{$padding};
+  margin: 0 -$padding;
+  padding: $padding/2 $padding $padding/2;
+  transition: background ease-in-out 100ms;
+  border-radius: 0.5em;
 
-  @media all and (min-width: 40em) {
-    margin: $padding $padding * 1.5;
+  &:hover {
+    background: var(--color-background-over-transparent);
+
+    .reply {
+      background: transparent;
+    }
+  }
+
+  @include mq($from: tablet) {
+    margin: $padding/4 $padding * 1.5;
   }
 
   .replyButton {
     position: absolute;
-    top: 2em;
-    right: 0.2em;
+    top: 0;
+    right: 0;
     display: none;
     z-index: 3;
+    font-size: 0.8em;
+
+    button {
+      text-transform: uppercase;
+      letter-spacing: 0.05em !important;
+      color: var(--color-text-cyan) !important;
+      font-size: 1em;
+      font-weight: 600;
+    }
   }
 
   &:hover {
@@ -40,9 +54,9 @@ $padding: 1em;
 }
 
 .system {
+  opacity: 0.7;
   border: solid 1px var(--color-border);
   font-size: 0.9em;
-  color: fade-out($text, 0.2);
   padding: $padding;
 
   .user,
@@ -50,17 +64,18 @@ $padding: 1em;
     display: none;
   }
 
-  @media (min-width: 40em) {
+  @include mq($from: tablet) {
     border-radius: 0.5em;
   }
 }
 
 .offline {
   color: #aaa !important;
-  opacity: 0.5;
+  opacity: 0.7;
 
   .icon,
-  .user {
+  .user,
+  .user span {
     color: inherit !important;
   }
 }
@@ -79,7 +94,7 @@ $padding: 1em;
     top: 0.35em;
     left: -0.5em;
 
-    @media all and (min-width: 30em) {
+    @include mq($from: mobile) {
       left: -1.5 * $padding;
     }
   }
@@ -99,7 +114,7 @@ $padding: 1em;
     font-weight: 100;
   }
 
-  @media all and (min-width: 30em) {
+  @include mq($from: mobile) {
     margin-left: 0;
     margin-right: 0.3em;
   }
@@ -124,13 +139,17 @@ $padding: 1em;
   letter-spacing: 0.01em;
   clear: both;
 
-  @media all and (min-width: 30em) {
+  @include mq($from: mobile) {
     line-height: 1.66;
     letter-spacing: 0.022em;
   }
 }
 
 .draft {
+  &:hover {
+    background: transparent;
+  }
+
   .header {
     &:before {
       border: 2px solid currentColor;
@@ -153,11 +172,7 @@ $padding: 1em;
 }
 
 .private {
-  color: $secondary !important;
-
-  .body {
-    color: $secondary;
-  }
+  background: var(--color-pure-alt);
 }
 
 .replyBox {
@@ -187,6 +202,10 @@ $padding: 1em;
   max-height: 6rem;
   overflow: auto;
   border-radius: 0;
+
+  &:hover {
+    opacity: 0.7;
+  }
 
   .user {
     margin-left: 0;

@@ -1,0 +1,99 @@
+@import 'assets/scss/variables';
+
+@mixin dotdot-shadow($colorA, $colorB, $distance: 5px) {
+  box-shadow: 0 ($distance * 3) 0 ($distance * -2) $colorA,
+    0 ($distance * 5) 0 ($distance * -3) $colorB;
+}
+
+// Visually represents entire field
+.field {
+  display: flex;
+  background: var(--color-input);
+  color: var(--color-text);
+  border-top: 1px solid #848688;
+  transition: 0.2s;
+  padding: 0.5em;
+
+  &.focused {
+    padding: 0;
+    border-color: var(--color-pure);
+  }
+
+  &.private {
+    background: var(--color-pure-alt);
+    border-color: var(--color-background-over);
+    // border-width: 2px;
+  }
+
+  &.command {
+    border-color: $color-command;
+
+    input,
+    textarea {
+      font-family: 'Courier New', Courier, monospace;
+    }
+  }
+
+  @include mq($from: tablet) {
+    border: 1px solid #848688;
+    border-radius: 0.25em;
+    padding: 0;
+
+    // Cool thing to save :)
+    // box-shadow: -5px -5px 0 0 $cyan, 5px 5px 0 0 $red;
+    @include dotdot-shadow($cyan, $red);
+
+    &.focused {
+      @include dotdot-shadow(fade-out($cyan, 0.3), fade-out($red, 0.3));
+    }
+
+    &.private {
+      @include dotdot-shadow($cyan, $red, 0);
+    }
+
+    &.command {
+      @include dotdot-shadow(lighten(green, 50%), lighten(green, 10%));
+    }
+  }
+}
+
+// Actual input / textarea portion of it
+.inputArea {
+  flex: 1;
+  height: auto !important; // stretches to 100% thanks to flexbox
+  color: inherit !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0.25em 0.5em !important;
+  line-height: 1.2 !important;
+
+  @include mq($until: mobile) {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+
+  @include mq($until: tablet) {
+    &:focus {
+      padding: 0.25em 0.5em;
+      line-height: initial;
+      height: auto;
+    }
+  }
+
+  @include mq($from: tablet) {
+    height: 52px !important;
+    padding: 1em !important;
+  }
+}
+
+// Array of actions next to the input
+.actions {
+  display: flex;
+  margin-left: 0.25em;
+
+  & > * {
+    margin: 0.25em;
+  }
+}

@@ -22,7 +22,7 @@ export const checkAuth = (dispatch: React.Dispatch<Action>) => {
       })
     })
     .catch((reason) => {
-      if (reason.message === 'Network Error') {
+      if (reason.message === 'Network Error' || reason.message === 'offline') {
         dispatch({
           type: 'offline',
           payload: null,

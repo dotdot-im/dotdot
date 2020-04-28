@@ -1,0 +1,10 @@
+@import 'assets/scss/variables';
+
+.button {
+  border-radius: 0.25em !important;
+  border: 1px solid darken(green, 10%) !important;
+
+  @include mq($from: tablet) {
+    display: none !important;
+  }
+}

@@ -1,7 +1,8 @@
 import diff from 'fast-diff'
 
 import { dateDiff } from "lib/dateDiff"
-import { TimedChange } from "../"
+
+export type TimedChange = [number, string | null, number]
 
 export function timedDiff(currentValue: string, previousValue: string, lastKeyStroke: Date | null): TimedChange[] | null {
   const diffs = diff(previousValue, currentValue)

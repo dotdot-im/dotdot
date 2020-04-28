@@ -1,5 +1,5 @@
 import React from 'react'
-import Logo from 'components/Logo'
+import LogoAnimation from 'components/LogoAnimation'
 
 type Props = {
   text?: string | null
@@ -7,8 +7,15 @@ type Props = {
 
 export default (props: Props) => {
   return (
-    <>
-      <Logo infinite />
-    </>
+    <div
+      style={{
+        position: 'absolute',
+        top: '45%',
+        left: '50%',
+        transform: 'translateX(-50%) translateY(-50%)',
+      }}
+    >
+      <LogoAnimation infinite />
+    </div>
   )
 }

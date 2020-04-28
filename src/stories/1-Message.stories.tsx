@@ -1,13 +1,14 @@
 import React from 'react'
+import { Container } from 'react-bootstrap'
 
 import MessageComponent from 'sections/Chat/Messages/Message'
 import { Message, User } from 'store/types'
-import { Container } from 'react-bootstrap'
 
 import 'lib/icons'
 
 import 'assets/scss/index.scss'
 import { StateProvider } from 'store/state'
+
 import {
   getInitialState,
   generateRandomUsers,
@@ -99,6 +100,20 @@ export const timedDraftDelete = () => {
   testMessage.attributes.private = false
   testMessage.content[0] = 'let\'s try changing a chunk'
   testMessage.timedContent = TIMED_CONTENT_DELETE_TEST
+
+  return renderMessage(testMessage, testState)
+}
+
+export const article = () => {
+  const testMessage = generateRandomMessage(currentUser, [])
+  testMessage.content = ['Check out https://blog.codinghorror.com/']
+
+  return renderMessage(testMessage, testState)
+}
+
+export const youtubeVideo = () => {
+  const testMessage = generateRandomMessage(currentUser, [])
+  testMessage.content = ['Check out https://www.youtube.com/watch?v=10EYqRCRz_8']
 
   return renderMessage(testMessage, testState)
 }

@@ -3,12 +3,10 @@ import React from 'react'
 import '../lib/icons'
 import '../assets/scss/index.scss'
 
-import TextBox from 'sections/Chat/TextBox'
+import Footer from 'sections/Chat/Footer'
 
-export default { title: 'Text Box' }
+export default { title: 'Footer' }
 
 export const normal = () => {
-  return (
-    <TextBox />
-  );
+  return <Footer onCancelReply={() => {}} />
 }

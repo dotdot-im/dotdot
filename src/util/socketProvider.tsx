@@ -58,7 +58,7 @@ export default (props: Props) => {
       setTimeout(() => {
         dispatch({
           type: 'system_message',
-          payload: 'Remember: If you want to keep this username, you must set a password! You can set it by clicking on the lock icon on the top left of the screen.'
+          payload: 'Remember: If you want to keep this username, you must set a password! You can set it by clicking on the lock icon on the top right of the screen.'
         })
       }, 60 * 1000);
     }

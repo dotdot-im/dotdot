@@ -1,0 +1,20 @@
+@import 'assets/scss/variables';
+
+$background: rgb(50, 57, 65);
+$border: #3b4252;
+$text: #b5bcc4;
+$text-inverse: #293134;
+$radius: 0.45em;
+$padding: 1em;
+
+// Message box
+.messageContent {
+  .mention {
+    font-weight: 500;
+    color: #999999;
+  }
+
+  a {
+    color: var(--color-text-cyan) !important;
+  }
+}

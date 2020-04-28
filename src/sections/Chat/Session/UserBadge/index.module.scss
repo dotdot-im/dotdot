@@ -4,10 +4,10 @@
   border: 0;
   background: transparent;
   color: var(--color-text);
-  height: 75px;
+  height: 70px;
   padding: 0 15px;
 
-  @media (max-width: 60em) {
+  @include mq($until: desktop) {
     border-left: 2px solid var(--color-background);
     margin-right: -15px;
     height: 57px;
@@ -44,9 +44,9 @@
   display: inline-block;
   color: var(--color-text);
   font-weight: 800;
-  margin-left: 0.25em;
+  // margin-left: 0.25em;
 
-  @media (max-width: 40em) {
+  @include mq($until: tablet) {
     display: none;
   }
 }

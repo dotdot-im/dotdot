@@ -16,7 +16,7 @@ export default () => {
       <h6>Keep your User</h6>
       <p>
         You can set a password to protect your username from being deleted and
-        used by someone else. Simply click on the lock in the top left corner.
+        used by someone else. Simply click on the lock in the top right corner.
       </p>
 
       <h6>Private Messages</h6>
@@ -83,10 +83,10 @@ export default () => {
           </tr>
           <tr>
             <td>
-              <code>/list</code>
+              <code>/list users</code>
             </td>
             <td>
-              <code>/list</code>
+              <code>/list users</code>
             </td>
             <td>Get a list of the users who are currently online</td>
           </tr>

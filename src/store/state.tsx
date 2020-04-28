@@ -32,6 +32,9 @@ export const initialState: AppState = {
   },
   offline: false,
   error: null,
+  chat: {
+    focused: false
+  }
 }
 const defaultDispatch: React.Dispatch<Action> = () => {
   console.warn('Using default reducer, check StateProvider')

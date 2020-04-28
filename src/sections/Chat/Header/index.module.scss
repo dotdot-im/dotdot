@@ -1,3 +1,5 @@
+@import 'assets/scss/variables';
+
 .header {
   position: fixed;
   top: 0;
@@ -9,33 +11,40 @@
   overflow: hidden;
 
   .logo {
-    padding: 0.9em 0;
-    float: left;
+    display: none;
   }
 
   .badge {
     float: right;
   }
 
-  .onlineUsers {
-    display: none;
+  .online {
+    display: inline-block;
+    margin-top: 0.5em;
   }
 
-  @media all and (min-width: 40em) {
-    .online {
+  @include mq($from: tablet) {
+    .logo {
       display: inline-block;
+      height: 28px;
+      width: auto;
+      margin: 0.9em 0;
+      float: left;
+    }
+
+    .online {
       margin-left: 1em;
       margin-top: 0.5em;
     }
   }
 
-  @media all and (min-width: 60em) {
+  @include mq($from: desktop) {
     top: 0 !important;
     background: none;
     text-align: center;
 
     .logo {
-      padding: 1.5em 0;
+      margin: 1.5em 0;
     }
 
     .online {

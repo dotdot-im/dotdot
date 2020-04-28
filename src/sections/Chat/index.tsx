@@ -8,7 +8,7 @@ import Loader from 'components/Loader'
 import styles from './index.module.scss'
 import Header from './Header'
 import Messages from './Messages'
-import TextBox from './TextBox'
+import Footer from './Footer'
 import { useImmer } from 'use-immer'
 import { Message } from 'store/types'
 
@@ -16,7 +16,6 @@ import { Message } from 'store/types'
 smoothscroll.polyfill()
 
 type State = {
-  isTextBoxFocused: boolean
   scrollingWhileFocused: boolean
   replyTo: Message | null
 }
@@ -24,20 +23,18 @@ type State = {
 export default () => {
   const { state } = useGlobalState()
   const [localState, setState] = useImmer<State>({
-    isTextBoxFocused: false,
     scrollingWhileFocused: false,
     replyTo: null,
   })
 
   const onMessageClick = useCallback(
-    (messageTimestamp: number) => {
+    (messageId: string) => {
       setState((draft) => {
         const messageReply =
           state.messages.find(
             (eachMessage) =>
-              eachMessage.timestamp.getTime() === messageTimestamp
+              eachMessage.uuid === messageId
           ) || null
-        console.log('replying to ', messageReply)
         draft.replyTo = messageReply
       })
     },
@@ -53,7 +50,7 @@ export default () => {
   // On window scroll
   const setHeaderPosition = useCallback(() => {
     setState((draft) => {
-      if (draft.isTextBoxFocused) {
+      if (state.chat.focused) {
         draft.scrollingWhileFocused = true
       }
     })
@@ -68,22 +65,18 @@ export default () => {
     }
   }, [setHeaderPosition])
 
-  const handleTextBoxFocus = () => {
-    setState((draft) => {
-      draft.isTextBoxFocused = true
-    })
-    setHeaderPosition()
-  }
+  useEffect(() => {
+    if (state.chat.focused) {
+      setHeaderPosition()
+    } else {
+      setState((draft) => {
+        draft.scrollingWhileFocused = false
+      })
+    }
+  }, [setState, setHeaderPosition, state.chat.focused])
 
   if (!state.socket.connected) {
     return <Loader />
-  }
-
-  const handleTextBoxBlur = () => {
-    setState((draft) => {
-      draft.isTextBoxFocused = false
-      draft.scrollingWhileFocused = false
-    })
   }
 
   return (
@@ -96,12 +89,7 @@ export default () => {
 
       <Messages onMessageClick={onMessageClick} />
 
-      <TextBox
-        replyTo={localState.replyTo}
-        onFocus={handleTextBoxFocus}
-        onBlur={handleTextBoxBlur}
-        onCancelReply={cancelReply}
-      />
+      <Footer replyTo={localState.replyTo} onCancelReply={cancelReply} />
     </div>
   )
 }

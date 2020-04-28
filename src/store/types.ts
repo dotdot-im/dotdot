@@ -1,5 +1,6 @@
 import { IconName } from "@fortawesome/fontawesome-svg-core"
-import { TimedChange } from "sections/Chat/TextBox";
+
+import { TimedChange } from "sections/Chat/Footer/lib/timedDiff"
 
 export type User = {
   user_id: string
@@ -16,11 +17,12 @@ export type MessageAttributes = {
   draft: boolean
   private: boolean
   to?: string | null
-  replyToTimestamp?: number | null
+  replyToId?: string | null
   replyTo?: Message | null
-};
+}
 
 export type Message = {
+  uuid: string
   user: User
   timestamp: Date
   content: string[]
@@ -29,6 +31,7 @@ export type Message = {
 }
 
 export type IncomingMessage = {
+  uuid: string
   user: User
   timestamp: Date
   content: string
@@ -43,9 +46,9 @@ export type OutgoingMessage = {
 }
 
 export type RoomStats = {
-  id: string,
-  active: number,
-  inactive: number,
+  id: string
+  active: number
+  inactive: number
 }
 
 export type AppState = {
@@ -57,25 +60,28 @@ export type AppState = {
   socket: {
     connected: boolean
   }
-  draftTimer: number,
+  draftTimer: number
   onlineUsers: User[]
   messages: Message[]
   stats: {
-    messages: number[],
-    users: number[],
-    rooms: RoomStats[],
-    onlineUsers: number,
-    totalMessages: number,
-    totalUsers: number,
-    cpuUsage: number,
-    freeMemory: number,
-    uptime: number,
-    timeActive: number,
-    timeInactive: number,
-    sessions: number,
+    messages: number[]
+    users: number[]
+    rooms: RoomStats[]
+    onlineUsers: number
+    totalMessages: number
+    totalUsers: number
+    cpuUsage: number
+    freeMemory: number
+    uptime: number
+    timeActive: number
+    timeInactive: number
+    sessions: number
   }
   offline: boolean
   error: string | null
+  chat: {
+    focused: boolean
+  }
 
   [key: string]: any
 }
@@ -106,4 +112,4 @@ export const EVENTS = {
   TIMER: 'timer',
   CONTROL: 'control',
   CHANGE_ROOM: 'change_room',
-};
+}

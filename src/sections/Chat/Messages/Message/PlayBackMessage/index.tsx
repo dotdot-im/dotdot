@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TimedChange } from '../../../TextBox';
+import { TimedChange } from 'sections/Chat/Footer/lib/timedDiff';
 
 const MAX_DELAY = 1500
 

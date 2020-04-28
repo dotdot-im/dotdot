@@ -85,9 +85,10 @@ export default produce((draft: AppState, action: Action) => {
       const incomingMessage: IncomingMessage = action.payload
       incomingMessage.timestamp = new Date(incomingMessage.timestamp)
 
-      // delete draft from this user, and if the draft is past messages, stay there
-      let draftIsPastMessage = false
-      let draftIndex = -1
+      // delete draft from this user, and if the draft is past messages, keep it there
+      // this way if multiple users are typing, their drafts don't keep jumping around
+      let draftIsPastMessage = false;
+      let draftIndex = -1;
       for (let i = draft.messages.length - 1; i >= 0; i--) {
         const eachMessage = draft.messages[i]
         if (!eachMessage.attributes.draft) {
@@ -109,6 +110,7 @@ export default produce((draft: AppState, action: Action) => {
           draft.messages.splice(draftIndex, 1)
         } else if (!isEmpty && incomingMessage.attributes.draft) {
           draft.messages[draftIndex].content[0] = incomingMessage.content
+          draft.messages[draftIndex].timedContent = incomingMessage.timedContent
           draft.messages[draftIndex].timestamp = new Date(
             incomingMessage.timestamp
           )
@@ -156,6 +158,10 @@ export default produce((draft: AppState, action: Action) => {
         timestamp: incomingMessage.timestamp,
         attributes: incomingMessage.attributes,
         content: [incomingMessage.content],
+      }
+
+      if (incomingMessage.attributes.draft) {
+        message.timedContent = incomingMessage.timedContent
       }
 
       draft.messages.push(message)

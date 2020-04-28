@@ -1,4 +1,6 @@
-import { IconName } from '@fortawesome/fontawesome-svg-core'
+import { IconName } from "@fortawesome/fontawesome-svg-core"
+
+import { TimedChange } from "sections/Chat/Footer/lib/timedDiff"
 
 export type User = {
   user_id: string
@@ -24,6 +26,7 @@ export type Message = {
   user: User
   timestamp: Date
   content: string[]
+  timedContent?: TimedChange[]
   attributes: MessageAttributes
 }
 
@@ -32,11 +35,13 @@ export type IncomingMessage = {
   user: User
   timestamp: Date
   content: string
+  timedContent?: TimedChange[]
   attributes: MessageAttributes
 }
 
 export type OutgoingMessage = {
   content: string
+  timedContent?: TimedChange[]
   attributes: MessageAttributes
 }
 

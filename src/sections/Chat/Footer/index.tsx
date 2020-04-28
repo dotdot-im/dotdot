@@ -7,6 +7,7 @@ import { getMessageKind, getMessagePmTo } from 'lib/messageParse'
 import useGlobalState from 'store/state'
 import { EVENTS, Message, OutgoingMessage } from 'store/types'
 
+import { timedDiff, TimedChange } from './lib/timedDiff'
 import Reply from './Reply'
 import Field from './Field'
 import Submit from './Submit'
@@ -16,6 +17,8 @@ import styles from './index.module.scss'
 
 type State = {
   message: string
+  timedMessage: TimedChange[]
+  lastKeyStroke: Date | null
   kind: 'private' | 'command' | false
   to: string | null
 }
@@ -30,6 +33,8 @@ export default ({ replyTo, onCancelReply }: Props) => {
 
   const [localState, setState] = useImmer<State>({
     message: '',
+    timedMessage: [],
+    lastKeyStroke: null,
     kind: false,
     to: null,
   })
@@ -56,6 +61,8 @@ export default ({ replyTo, onCancelReply }: Props) => {
 
     setState((draft) => {
       draft.message = ''
+      draft.timedMessage = []
+      draft.lastKeyStroke = null
       draft.kind = false
     })
 
@@ -93,6 +100,10 @@ export default ({ replyTo, onCancelReply }: Props) => {
       },
     }
 
+    if (draft) {
+      payload.timedContent = localState.timedMessage
+    }
+
     socket?.emit(type, payload)
   }
 
@@ -106,12 +117,23 @@ export default ({ replyTo, onCancelReply }: Props) => {
 
     // special messages
     setState((draft) => {
+      // Timed messages
+      const timedMessage = timedDiff(value, draft.message, draft.lastKeyStroke)
+      if (timedMessage) {
+        draft.timedMessage.push(...timedMessage)
+      } else if (value.length > 0) {
+        draft.timedMessage = [[0, value, 0]]
+      } else {
+        draft.timedMessage = []
+      }
+
       draft.message = value
       draft.kind = kind
       draft.to = kind === 'private' ? getMessagePmTo(value) : null
+      draft.lastKeyStroke = new Date()
     })
 
-    // What is this for?
+    // Avoid sending drafts for commands or PMs
     if (kind) {
       return
     }

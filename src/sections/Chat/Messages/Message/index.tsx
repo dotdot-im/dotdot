@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button } from 'react-bootstrap'
@@ -7,6 +7,7 @@ import { Message } from 'store/types'
 import styles from './index.module.scss'
 import useGlobalState from 'store/state'
 import MessageContent from './MessageContent'
+import PlayBackMessage from './PlayBackMessage'
 import Heading from './Heading'
 import Reply from './Reply'
 
@@ -18,10 +19,6 @@ type Props = {
 
 const MessageComponent = React.memo(({ message, onClick, reply }: Props) => {
   const { state } = useGlobalState()
-
-  useEffect(() => {
-    console.log('first render: messageComponent');
-  }, [])
 
   // User data comes from online users if available
   const userData =
@@ -44,9 +41,17 @@ const MessageComponent = React.memo(({ message, onClick, reply }: Props) => {
     onClick(message.uuid)
   }
 
+  // TODO Move this to a MessageBody component or something like that
   let messageBody
   if (reply) {
     messageBody = message.content.join('. ')
+  } else if (message.attributes.draft && message.timedContent) {
+    messageBody = (
+      <PlayBackMessage
+        timers={ message.timedContent }
+        message={ message.content[0] }
+      />
+    )
   } else {
     messageBody = message.content.map(content => (
       <MessageContent

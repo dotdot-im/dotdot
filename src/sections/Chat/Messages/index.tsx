@@ -60,7 +60,7 @@ export default (props: Props) => {
   }, [state.messages, setLocalState])
 
   return (
-    <div className={styles.messages} ref={chatAreaRef}>
+    <div className={styles.messages}>
       {localState.unseenMessages && (
         <div className={classNames(styles.unseen)}>
           <Container className={styles.unseenContainer}>
@@ -70,7 +70,7 @@ export default (props: Props) => {
           </Container>
         </div>
       )}
-      <div className={classNames(styles.messageScroll)}>
+      <div className={classNames(styles.messageScroll)} ref={chatAreaRef}>
         <div className="container">
           <ScrollBox boxRef={chatAreaRef} onScrollChanged={onScrollChanged}>
             {state.messages.map((eachMessage) => (

@@ -8,19 +8,21 @@
   z-index: 2;
 
   background: var(--color-background-over);
-  overflow: hidden;
+
+  .container {
+    display: flex;
+    align-items: stretch;
+  }
 
   .logo {
     display: none;
   }
 
-  .badge {
-    float: right;
-  }
-
   .online {
-    display: inline-block;
-    margin-top: 0.5em;
+    flex: 1;
+    justify-self: center;
+    align-self: center;
+    margin: 0.5em 0;
   }
 
   @include mq($from: tablet) {
@@ -34,22 +36,31 @@
 
     .online {
       margin-left: 1em;
-      margin-top: 0.5em;
     }
   }
 
   @include mq($from: desktop) {
     top: 0 !important;
-    background: none;
     text-align: center;
 
     .logo {
-      margin: 1.5em 0;
+      margin: 1em 0.5em;
     }
 
     .online {
-      margin-top: 1em;
       margin-left: 3em;
     }
   }
+
+  @include mq($from: 1350px) {
+    background: none;
+
+    .logo {
+      margin: 1.2em 0;
+    }
+  }
+}
+
+.badge {
+  display: flex;
 }

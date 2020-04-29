@@ -1,9 +1,0 @@
-@import 'assets/scss/variables';
-
-.wrapper {
-  margin: 0 15px; // TODO: Replace with $margin-side
-
-  @include mq($from: tablet) {
-    margin: 0 20px;
-  }
-}

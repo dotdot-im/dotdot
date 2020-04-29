@@ -4,13 +4,17 @@
   border: 0;
   background: transparent;
   color: var(--color-text);
-  height: 70px;
-  padding: 0 15px;
+  padding: 0 1em;
+  display: flex;
+  align-items: center;
 
   @include mq($until: desktop) {
     border-left: 2px solid var(--color-background);
     margin-right: -15px;
-    height: 57px;
+  }
+
+  @include mq($from: desktop) {
+    padding: 0 1.5em;
   }
 
   &:hover {
@@ -27,11 +31,12 @@
 
 // Lock state
 .lock {
-  position: relative;
-  top: -0.25em;
   font-size: 0.7em;
   animation: pulse linear 1s infinite;
-  margin-left: 1.5em;
+
+  @include mq($from: tablet) {
+    margin-left: 1.5em;
+  }
 }
 
 .dot {
@@ -39,8 +44,6 @@
 }
 
 .name {
-  position: relative;
-  top: -0.1em;
   display: inline-block;
   color: var(--color-text);
   font-weight: 800;

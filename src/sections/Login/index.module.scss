@@ -1,12 +1,122 @@
+@import 'assets/scss/variables';
+
+.all {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 4em 1em 1em;
+}
+
 .login {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  margin: auto;
+  min-height: 50vh;
 
   form {
-    width: 12em;
-    margin: 2em auto 30%;
+    margin: 2em auto;
+
+    @include mq($until: tablet) {
+      width: 100%;
+    }
   }
+
+  input {
+    font-size: 1em !important;
+
+    @include mq($from: tablet) {
+      max-width: 20em;
+    }
+  }
+
+  button {
+    font-size: 0.75em !important;
+    padding: 0.5em 1em;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+  }
+
+  @include mq($from: tablet) {
+    // margin: 20vh auto 15vh;
+  }
+
+  @include mq($from: desktop) {
+    // margin: 30vh auto 20vh;
+  }
+}
+
+.title {
+  font-size: 2em;
+  line-height: 1.2;
+  font-weight: 500;
+
+  @include mq($from: tablet) {
+    font-size: 2.5em;
+  }
+}
+
+.singleLineForm {
+  display: flex;
+  flex-direction: column;
+
+  button {
+    margin-top: 1em;
+  }
+
+  @include mq($from: tablet) {
+    flex-direction: row;
+    font-size: 1.25em;
+
+    input + input {
+      margin-top: 0 !important;
+      margin-left: 1em;
+    }
+
+    button {
+      margin-top: 0;
+      margin-left: 1em;
+    }
+  }
+}
+
+// Bottom bit from here
+
+.logo {
+  width: 160px;
+  max-width: 75%;
+  height: auto;
+  padding-left: 1em;
+}
+
+.description {
+  padding: 1em;
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+.ksp {
+  text-transform: uppercase;
+  font-size: 1em;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  opacity: 0.8;
+  margin-top: 0.5em;
+}
+
+.copy {
+  letter-spacing: 0.025em;
+  line-height: 1.66;
+
+  @include mq($from: desktop) {
+    padding-right: 0.25em;
+  }
+}
+
+.github {
+  margin-top: 0em;
+  text-align: right;
 }

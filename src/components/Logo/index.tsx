@@ -2,10 +2,12 @@ import React from 'react'
 
 type Props = {
   className: string
-  theme: 'dark' | 'light'
 }
 
-export default ({ className, theme }: Props) => {
+export default ({ className }: Props) => {
+  const theme = window.matchMedia('(prefers-color-scheme: light)').matches
+    ? 'light'
+    : 'dark'
   const lettersColor = theme === 'light' ? '282B2D' : 'F3F3F3'
 
   return (

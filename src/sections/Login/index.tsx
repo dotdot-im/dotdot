@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { Form, Container, Button } from 'react-bootstrap'
+import { Form, Container, Button, Row, Col, InputGroup } from 'react-bootstrap'
 import { useImmer } from 'use-immer'
 import classNames from 'classnames'
 import HCaptcha from 'react-hcaptcha'
@@ -12,6 +12,7 @@ import LogoAnimation from 'components/LogoAnimation'
 import styles from './index.module.scss'
 import { AuthData } from 'store/types'
 import { CAPTCHA_KEY, CAPTCHA_PROVIDER } from '../../constants'
+import Logo from 'components/Logo'
 
 type State = {
   username: string
@@ -108,70 +109,128 @@ export default () => {
   }
 
   return (
-    <Container className={classNames(styles.login, 'mt-4')}>
-      <LogoAnimation />
-      <Form noValidate onSubmit={handleSubmit}>
-        <Form.Group controlId="loginForm.username">
-          <Form.Control
-            as="input"
-            type="text"
-            autoComplete="username"
-            placeholder="What's your name?"
-            disabled={localState.loading}
-            autoFocus
-            minLength={1}
-            maxLength={20}
-            onChange={(e) => {
-              const value = e.currentTarget.value
-              setState((draft) => {
-                draft.username = value
-              })
-            }}
-            value={localState.username}
-          />
-          {localState.hasPassword && (
-            <Form.Control
-              as="input"
-              className="mt-2"
-              type="password"
-              placeholder="Password..."
-              autoComplete="current-password"
-              disabled={localState.loading}
-              autoFocus
-              onChange={(e) => {
-                const value = e.currentTarget.value
-                setState((draft) => {
-                  draft.password = value
-                })
-              }}
-              value={localState.password}
-            />
-          )}
-          {CAPTCHA_PROVIDER === 'recaptcha' && (
-            <ReCaptcha
-              ref={captchaRef}
-              size="invisible"
-              theme={theme}
-              sitekey={CAPTCHA_KEY}
-              onChange={oncaptchaChange}
-            />
-          )}
-          {CAPTCHA_PROVIDER === 'hcaptcha' && (
-            <HCaptcha
-              ref={captchaRef}
-              size="invisible"
-              theme={theme}
-              sitekey={CAPTCHA_KEY}
-              onVerify={oncaptchaChange}
-            />
-          )}
-          <p className="text-center mt-4">
-            <Button type="submit" size="sm">
-              Login
-            </Button>
+    <div className={styles.all}>
+      <Container className={styles.login}>
+        <div className={styles.title}>
+          {localState.hasPassword
+            ? 'Ah, you do. Welcome back.'
+            : "You have a name, don't you?"}
+        </div>
+        <Form noValidate onSubmit={handleSubmit}>
+          <Form.Group controlId="loginForm.username">
+            <div className={styles.singleLineForm}>
+              <Form.Control
+                as="input"
+                type="text"
+                autoComplete="username"
+                placeholder="username69"
+                disabled={localState.loading}
+                autoFocus
+                minLength={1}
+                maxLength={20}
+                onChange={(e) => {
+                  const value = e.currentTarget.value
+                  setState((draft) => {
+                    draft.username = value
+                  })
+                }}
+                value={localState.username}
+              />
+              {localState.hasPassword && (
+                <Form.Control
+                  as="input"
+                  className="mt-2"
+                  type="password"
+                  placeholder="Password..."
+                  autoComplete="current-password"
+                  disabled={localState.loading}
+                  autoFocus
+                  onChange={(e) => {
+                    const value = e.currentTarget.value
+                    setState((draft) => {
+                      draft.password = value
+                    })
+                  }}
+                  value={localState.password}
+                />
+              )}
+
+              <Button type="submit" size="sm">
+                Login
+              </Button>
+            </div>
+
+            {CAPTCHA_PROVIDER === 'recaptcha' && (
+              <ReCaptcha
+                ref={captchaRef}
+                size="invisible"
+                theme={theme}
+                sitekey={CAPTCHA_KEY}
+                onChange={oncaptchaChange}
+              />
+            )}
+            {CAPTCHA_PROVIDER === 'hcaptcha' && (
+              <HCaptcha
+                ref={captchaRef}
+                size="invisible"
+                theme={theme}
+                sitekey={CAPTCHA_KEY}
+                onVerify={oncaptchaChange}
+              />
+            )}
+          </Form.Group>
+        </Form>
+      </Container>
+
+      <Container>
+        <Row>
+          <Logo className={styles.logo} />
+        </Row>
+        <Row>
+          <p className={styles.description}>
+            A place where you can talk to people
           </p>
-        </Form.Group>
-      </Form>
-    </Container>
+        </Row>
+        <Row>
+          <Col sm={12} md={true}>
+            <h5 className={styles.ksp}>Limited capacity</h5>
+            <p className={styles.copy}>
+              Never more than 10 people at once. Big live chats make it
+              impossible to have a conversation or keep track of one. Here we
+              break it down so people can engage.
+            </p>
+          </Col>
+          <Col sm={12} md={true}>
+            <h5 className={styles.ksp}>Message streaming</h5>
+            <p className={styles.copy}>
+              As you type, your message will be shared live with the room, and
+              so will other dot's messages. This makes for a more engaging, real
+              experience.
+            </p>
+          </Col>
+          <Col sm={12} md={true}>
+            <h5 className={styles.ksp}>Absolutely private</h5>
+            <p className={styles.copy}>
+              No private data is stored, period. We don’t relate your IP to your
+              user, so we could never track you.
+            </p>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <p className={styles.github}>
+              <a
+                href="https://github.com/dotdot-im"
+                target="_blank"
+                rel="external noopener"
+                title="View dotdot organisation on GitHub"
+              >
+                @dotdot on GitHub
+              </a>
+            </p>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   )
 }

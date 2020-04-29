@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 4em 1em 1em;
+  padding: 5em 1em 1em;
 }
 
 .login {
@@ -111,12 +111,19 @@
   letter-spacing: 0.025em;
   line-height: 1.66;
 
+  @include mq($until: tablet) {
+    display: none;
+  }
+
   @include mq($from: desktop) {
     padding-right: 0.25em;
   }
 }
 
 .github {
-  margin-top: 0em;
-  text-align: right;
+  margin-top: 1em;
+
+  @include mq($from: 1150px) {
+    text-align: right;
+  }
 }

@@ -102,6 +102,10 @@ import {
   faTired as farTired,
 } from '@fortawesome/free-regular-svg-icons'
 
+import {
+  faGithub
+} from '@fortawesome/free-brands-svg-icons'
+
 /**
  * All icons that will be used in this app need to be preloaded here
  */
@@ -195,4 +199,5 @@ library.add(
   faReply,
   faExternalLinkAlt,
   faRobot,
+  faGithub,
 )

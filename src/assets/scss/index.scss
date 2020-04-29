@@ -21,3 +21,23 @@ body,
 #root {
   height: 100%;
 }
+
+a {
+  color: var(--color-text-cyan) !important;
+}
+
+input,
+textarea {
+  background-color: var(--color-input) !important;
+  color: var(--color-text) !important;
+}
+
+// bootstrap overrides
+.modal-content {
+  color: inherit;
+  background: var(--color-background-over);
+}
+
+.close {
+  color: var(--color-text) !important;
+}

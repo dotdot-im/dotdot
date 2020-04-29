@@ -14,14 +14,11 @@ type Props = {
 export default ({ scrollingWhileFocused }: Props) => {
   const top = scrollingWhileFocused ? window.pageYOffset + 'px' : 0
   const position = scrollingWhileFocused ? 'absolute' : 'fixed'
-  const theme = window.matchMedia('(prefers-color-scheme: light)').matches
-    ? 'light'
-    : 'dark'
 
   return (
     <header className={styles.header} style={{ position, top }}>
       <Wrapper>
-        <Logo className={styles.logo} theme={theme} />
+        <Logo className={styles.logo} />
 
         <div className={styles.online}>
           <OnlineUsers />

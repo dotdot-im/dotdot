@@ -41,3 +41,12 @@ textarea {
 .close {
   color: var(--color-text) !important;
 }
+
+// Helper classes
+.cyan-text {
+  color: var(--color-text-cyan);
+}
+
+.red-text {
+  color: var(--color-text-red);
+}

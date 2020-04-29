@@ -88,14 +88,16 @@
 .logo {
   width: 160px;
   max-width: 75%;
+  max-height: 27px;
   height: auto;
   padding-left: 1em;
 }
 
 .description {
   padding: 1em;
+  padding-bottom: 0;
   font-size: 0.9em;
-  opacity: 0.8;
+  opacity: 0.6;
 }
 
 .ksp {
@@ -103,7 +105,7 @@
   font-size: 1em;
   letter-spacing: 0.12em;
   font-weight: 700;
-  opacity: 0.8;
+  opacity: 0.9;
   margin-top: 0.5em;
 }
 
@@ -121,7 +123,7 @@
 }
 
 .github {
-  margin-top: 1em;
+  margin-top: 0.5em;
 
   @include mq($from: 1150px) {
     text-align: right;

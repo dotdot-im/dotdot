@@ -250,7 +250,7 @@ export default () => {
               <a
                 href="https://github.com/dotdot-im"
                 target="_blank"
-                rel="external noopener"
+                rel="external noopener noreferrer"
                 title="View dotdot organisation on GitHub"
               >
                 <FontAwesomeIcon icon={['fab', 'github']} /> dotdot-im

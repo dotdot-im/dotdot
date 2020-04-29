@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 5em 1em 1em;
+  padding: 12vh 1em 1em;
 }
 
 .login {
@@ -32,12 +32,24 @@
     }
   }
 
-  button {
+  button[type='submit'] {
     font-size: 0.75em !important;
     padding: 0.5em 1em;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     font-weight: 600;
+  }
+
+  .at {
+    font-size: 1em !important;
+    padding: 0 0.6rem 0.1em !important;
+    background: var(--color-input);
+    color: var(--color-text);
+    border-right: 0;
+
+    & + input {
+      border-left: 0;
+    }
   }
 
   @include mq($from: tablet) {
@@ -61,17 +73,22 @@
 
 .subtitle {
   text-align: center;
-  font-size: 1.5em;
-  color: $red;
+  font-size: 1.2em;
   font-weight: 300;
-  margin-top: 1em;
+  margin-top: 2em;
 
   button {
     color: inherit;
+    font-size: inherit !important;
+    color: var(--color-text-cyan);
 
     &:hover {
       color: inherit;
     }
+  }
+
+  @include mq($from: tablet) {
+    min-height: 2.5em; // avoids jump when on desktop
   }
 }
 
@@ -79,22 +96,21 @@
   display: flex;
   flex-direction: column;
 
-  button {
-    margin-top: 1em;
-  }
-
   @include mq($from: tablet) {
     flex-direction: row;
     font-size: 1.25em;
+  }
+}
 
-    input + input {
+.singleLineFormPiece {
+  margin: 0;
+
+  & + & {
+    margin-top: 1em !important;
+
+    @include mq($from: tablet) {
       margin-top: 0 !important;
-      margin-left: 1em;
-    }
-
-    button {
-      margin-top: 0;
-      margin-left: 1em;
+      margin-left: 1em !important;
     }
   }
 }
@@ -121,11 +137,10 @@
   font-size: 1em;
   letter-spacing: 0.12em;
   font-weight: 700;
-  opacity: 0.9;
   margin-top: 0.5em;
 
   @include mq($from: tablet) {
-    color: $red;
+    color: var(--color-text-red);
   }
 }
 

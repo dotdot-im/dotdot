@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
-import { Form, Container, Button, Row, Col } from 'react-bootstrap'
+import { Form, Container, Button, Row, Col, InputGroup } from 'react-bootstrap'
 import { useImmer } from 'use-immer'
+import classNames from 'classnames'
 import HCaptcha from 'react-hcaptcha'
 import ReCaptcha from 'react-google-recaptcha'
 
@@ -43,8 +44,8 @@ export default () => {
   }
 
   const reset = () => {
-    console.log('reset');
-    setState(draft => {
+    console.log('reset')
+    setState((draft) => {
       draft.loading = false
       draft.hasPassword = false
     })
@@ -120,33 +121,42 @@ export default () => {
       <Container className={styles.login}>
         <div className={styles.title}>
           {localState.hasPassword
-            ? 'I\'ve seen you before, welcome back!'
-            : "How should we call you?"}
+            ? "I've seen you before, welcome back!"
+            : 'How should we call you?'}
         </div>
         <Form noValidate onSubmit={handleSubmit}>
           <Form.Group controlId="loginForm.username">
             <div className={styles.singleLineForm}>
-              <Form.Control
-                as="input"
-                type="text"
-                autoComplete="username"
-                placeholder='Username...'
-                disabled={localState.loading}
-                autoFocus
-                minLength={1}
-                maxLength={20}
-                onChange={(e) => {
-                  const value = e.currentTarget.value
-                  setState((draft) => {
-                    draft.username = value
-                  })
-                }}
-                value={localState.username}
-              />
+              <InputGroup
+                bsPrefix={classNames(styles.singleLineFormPiece, 'input-group')}
+              >
+                <InputGroup.Prepend>
+                  <InputGroup.Text id="basic-addon1" className={styles.at}>
+                    @
+                  </InputGroup.Text>
+                </InputGroup.Prepend>
+                <Form.Control
+                  as="input"
+                  type="text"
+                  autoComplete="username"
+                  placeholder="Username..."
+                  disabled={localState.loading}
+                  autoFocus
+                  minLength={1}
+                  maxLength={20}
+                  onChange={(e) => {
+                    const value = e.currentTarget.value
+                    setState((draft) => {
+                      draft.username = value
+                    })
+                  }}
+                  value={localState.username}
+                />
+              </InputGroup>
               {localState.hasPassword && (
                 <Form.Control
                   as="input"
-                  className="mt-2"
+                  className={styles.singleLineFormPiece}
                   type="password"
                   placeholder="Password..."
                   autoComplete="current-password"
@@ -161,18 +171,22 @@ export default () => {
                   value={localState.password}
                 />
               )}
-
-              <Button type="submit" size="sm">
+              <Button
+                className={styles.singleLineFormPiece}
+                type="submit"
+                size="sm"
+              >
                 Enter
               </Button>
             </div>
 
-            {localState.hasPassword && (
-              <div className={ styles.subtitle }>
-                <Button variant="link" onClick={ reset }>Not you?</Button>
-              </div>
-            )}
-
+            <div className={styles.subtitle}>
+              {localState.hasPassword && (
+                <Button variant="link" onClick={reset}>
+                  Not you?
+                </Button>
+              )}
+            </div>
 
             {CAPTCHA_PROVIDER === 'recaptcha' && (
               <ReCaptcha

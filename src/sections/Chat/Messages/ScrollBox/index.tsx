@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState, useRef } from 'react'
+import React from 'react'
 import smoothscroll from 'smoothscroll-polyfill'
 
 smoothscroll.polyfill()
@@ -13,25 +13,133 @@ type Props = {
   children?: any,
 }
 
-export default ({ boxRef, onScrollChanged, threshold, children }: Props) => {
-  const [ scrollTop, setScrollTop ] = useState<number>(-1);
-  const [ height, setHeight ] = useState<number>(0);
-  const scrollDebounce = useRef<any>(null)
+type State = {
+  stayAtBottom: boolean
+  height: number
+}
 
-  // Debounced method to fire on scroll, to make it more performant
-  const onScrollDebounced = useCallback((isAtBottom: boolean) => {
-    clearTimeout(scrollDebounce.current)
+/**
+ * Automatic Scroller for any container
+ *
+ * Algorithm outline:
+ *   1. On Mount, scroll to bottom if possible
+ *      - scrollTop = scrollHeight
+ *      - stayAtBottom = true
+ *      - height = scrollHeight
+ *   2. On Update (children have changed)
+ *      - if scrollHeight != height -> the container is now bigger
+ *          - height = scrollHeight
+ *          - if stayAtBottom = true -> autoScroll
+ *          - if stayAtBottom = false -> nothing (fire onScrollChanged)
+ *   3. On Scroll
+ *      This event can be triggered by the user scrolling, or by the autoScroll going to the bottom
+ *      But all cases are the same:
+ *      - if scrollTop < scrollheight -> User scrolled UP
+ *          - stayAtBottom = false (no longer stick to the bottom)
+ *      - else // this means that the user or the autoScroll scrolled to the bottom
+ *          - stayAtBottom = true
+ */
+export default class ScrollBox extends React.PureComponent<Props, State> {
+  private scrollDebounceTimer: any
+  private scrollListenerSetup: boolean = false
 
-    if (onScrollChanged) {
-      scrollDebounce.current = setTimeout(() => {
-        console.log('SCROLL CHANGED', isAtBottom);
-        onScrollChanged(isAtBottom)
-      }, SCROLL_DEBOUNCE_DELAY)
+  state: State = {
+    stayAtBottom: true,
+    height: 0,
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    if (prevProps.boxRef !== this.props.boxRef ||
+        prevProps.boxRef.current !== this.props.boxRef.current) {
+      this.setupListener(true)
     }
-  }, [onScrollChanged])
+    this.setupListener()
 
-  // Automatically scroll to the bottom of the screen
-  const scrollToBottom = useCallback(() => {
+    setTimeout(() => {
+      const { boxRef } = this.props
+      if (!boxRef.current) {
+        return;
+      }
+      const height = boxRef.current.scrollHeight;
+      if (height !== this.state.height) {
+        this.setState({
+          height
+        })
+        this.onScroll(true)
+      }
+    })
+  }
+
+  componentDidMount() {
+    window.addEventListener("resize", this.scrollToBottom, true);
+
+    setTimeout(() => {
+      this.scrollToBottom()
+    }, 250)
+  }
+
+  componentWillUnmount() {
+    const { boxRef } = this.props
+
+    if (boxRef && boxRef.current) {
+      boxRef.current.removeEventListener('scroll', this.onScrollDebounced)
+    }
+
+    window.removeEventListener("resize", this.scrollToBottom);
+  }
+
+  /**
+   * Event handler for scroll events on the component
+   * Used to debounce them every SCROLL_DEBOUNCE_DELAY
+   * for performance.
+   * The only point of this is to call props.onScrollChanged
+   * and tell it whether it's at the bottom or not
+   */
+  private onScrollDebounced = () => {
+    clearTimeout(this.scrollDebounceTimer)
+
+    this.scrollDebounceTimer = setTimeout(() => {
+      this.onScroll(false)
+    }, SCROLL_DEBOUNCE_DELAY)
+  }
+
+  /**
+   * onScroll event handler
+   *
+   * It will check if we're at the bottom, and if not and we're meant to scroll to the bottom,
+   * it will go there.
+   */
+  private onScroll = (shouldScroll: boolean) => {
+    const { onScrollChanged, boxRef, threshold } = this.props
+
+    if (!boxRef || !boxRef.current) {
+      return
+    }
+
+    const scrollHeight = boxRef.current.scrollHeight - boxRef.current.offsetHeight
+    const customThreshold = threshold || SCROLL_THRESHOLD
+    const isAtBottom = Math.abs(boxRef.current.scrollTop - scrollHeight) < customThreshold
+
+    if (shouldScroll && this.state.stayAtBottom) {
+      this.scrollToBottom()
+    }
+
+    if (!shouldScroll) {
+      this.setState({
+        stayAtBottom: isAtBottom
+      })
+
+      // Notify of scroll changes
+      onScrollChanged && onScrollChanged(isAtBottom)
+    }
+  }
+
+  /**
+   * Automatically scroll all the way tot he bottom
+   */
+  private scrollToBottom = () => {
+    const { boxRef, onScrollChanged } = this.props
+
     if (!boxRef || !boxRef.current) {
       return
     }
@@ -43,59 +151,31 @@ export default ({ boxRef, onScrollChanged, threshold, children }: Props) => {
       behavior: 'smooth'
     });
 
-    setScrollTop(boxRef.current.scrollTop)
-    onScrollDebounced(true)
-  }, [boxRef, onScrollDebounced, setScrollTop])
+    this.setState({
+      stayAtBottom: true
+    })
 
-  // Update based on whether the scrollbar is at the bottom or not
-  const updateScrollState = useCallback((shouldScroll: boolean) => () => {
-    if (!boxRef || !boxRef.current) {
+    onScrollChanged && onScrollChanged(true)
+  }
+
+  private setupListener(override: boolean = false) {
+    const { boxRef } = this.props
+
+    if (this.scrollListenerSetup && !override) {
       return
     }
 
-    const scrollHeight = boxRef.current.scrollHeight - boxRef.current.offsetHeight
-    const customThreshold = threshold || SCROLL_THRESHOLD
-    const isAtBottom = Math.abs(boxRef.current.scrollTop - scrollHeight) < customThreshold
-    const hasUserScrolled = Math.abs(boxRef.current.scrollTop - scrollTop) < customThreshold
-
-    onScrollDebounced(isAtBottom)
-
-    if (shouldScroll && !hasUserScrolled) {
-      scrollToBottom()
-    }
-  }, [boxRef, onScrollDebounced, threshold, scrollToBottom, scrollTop])
-
-  // Set up event listeners
-  useEffect(() => {
-    window.addEventListener("resize", scrollToBottom, true);
-
     if (boxRef && boxRef.current) {
-      boxRef.current.addEventListener('scroll', updateScrollState(false), true)
+      this.scrollListenerSetup = true
+      boxRef.current.addEventListener('scroll', this.onScrollDebounced, true)
     }
+  }
 
-    // cleanup
-    return () => {
-      window.removeEventListener("resize", scrollToBottom, true);
-    }
-  }, [boxRef, scrollToBottom, updateScrollState])
-
-  // Recalculate when the element children change
-  // TODO Might be better to run on resize, but not sure if resize will fire when things are added
-  useEffect(() => {
-    // when the children changes, recalculate
-    if (!boxRef.current) {
-      return;
-    }
-    const newHeight = boxRef.current.scrollHeight;
-    if (newHeight !== height) {
-      setHeight(newHeight)
-      updateScrollState(true)()
-    }
-  }, [boxRef, height, updateScrollState, children])
-
-  return (
-    <>
-      { children }
-    </>
-  )
+  render() {
+    return (
+      <>
+        { this.props.children }
+      </>
+    )
+  }
 }

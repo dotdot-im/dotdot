@@ -33,7 +33,6 @@ export default (props: Props) => {
       setLocalState((draft) => {
         draft.scrollAtBottom = isAtBottom
         if (isAtBottom) {
-          console.log('SCROLL IS AT BOTTOM');
           draft.unseenMessages = false
         }
       })

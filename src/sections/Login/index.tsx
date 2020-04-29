@@ -1,18 +1,17 @@
 import React, { useRef } from 'react'
-import { Form, Container, Button, Row, Col, InputGroup } from 'react-bootstrap'
+import { Form, Container, Button, Row, Col } from 'react-bootstrap'
 import { useImmer } from 'use-immer'
-import classNames from 'classnames'
 import HCaptcha from 'react-hcaptcha'
 import ReCaptcha from 'react-google-recaptcha'
 
 import { useGlobalState } from 'store/state'
 import { fetchResource } from 'util/fetch'
-import LogoAnimation from 'components/LogoAnimation'
 
 import styles from './index.module.scss'
 import { AuthData } from 'store/types'
 import { CAPTCHA_KEY, CAPTCHA_PROVIDER } from '../../constants'
 import Logo from 'components/Logo'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 type State = {
   username: string
@@ -41,6 +40,14 @@ export default () => {
       return
     }
     captchaRef.current.execute()
+  }
+
+  const reset = () => {
+    console.log('reset');
+    setState(draft => {
+      draft.loading = false
+      draft.hasPassword = false
+    })
   }
 
   const oncaptchaChange = (token: string | null) => {
@@ -113,8 +120,8 @@ export default () => {
       <Container className={styles.login}>
         <div className={styles.title}>
           {localState.hasPassword
-            ? 'Ah, you do. Welcome back.'
-            : "You have a name, don't you?"}
+            ? 'I\'ve seen you before, welcome back!'
+            : "How should we call you?"}
         </div>
         <Form noValidate onSubmit={handleSubmit}>
           <Form.Group controlId="loginForm.username">
@@ -123,7 +130,7 @@ export default () => {
                 as="input"
                 type="text"
                 autoComplete="username"
-                placeholder="username69"
+                placeholder='Username...'
                 disabled={localState.loading}
                 autoFocus
                 minLength={1}
@@ -156,9 +163,16 @@ export default () => {
               )}
 
               <Button type="submit" size="sm">
-                Login
+                Enter
               </Button>
             </div>
+
+            {localState.hasPassword && (
+              <div className={ styles.subtitle }>
+                <Button variant="link" onClick={ reset }>Not you?</Button>
+              </div>
+            )}
+
 
             {CAPTCHA_PROVIDER === 'recaptcha' && (
               <ReCaptcha
@@ -225,7 +239,7 @@ export default () => {
                 rel="external noopener"
                 title="View dotdot organisation on GitHub"
               >
-                @dotdot on GitHub
+                <FontAwesomeIcon icon={['fab', 'github']} /> dotdot-im
               </a>
             </p>
           </Col>

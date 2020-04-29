@@ -59,6 +59,22 @@
   }
 }
 
+.subtitle {
+  text-align: center;
+  font-size: 1.5em;
+  color: $red;
+  font-weight: 300;
+  margin-top: 1em;
+
+  button {
+    color: inherit;
+
+    &:hover {
+      color: inherit;
+    }
+  }
+}
+
 .singleLineForm {
   display: flex;
   flex-direction: column;
@@ -107,11 +123,16 @@
   font-weight: 700;
   opacity: 0.9;
   margin-top: 0.5em;
+
+  @include mq($from: tablet) {
+    color: $red;
+  }
 }
 
 .copy {
   letter-spacing: 0.025em;
   line-height: 1.66;
+  opacity: 0.8;
 
   @include mq($until: tablet) {
     display: none;

@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom'
 import styles from './index.module.scss'
 
 export default () => (
-  <Link
+  <a
     className={styles.badge}
-    to="/admin"
+    href="/admin"
     title="Monitoring"
     style={{ marginLeft: '1em' }}
   >
     <FontAwesomeIcon className={styles.icon} icon="shield-alt" />
-  </Link>
+  </a>
 )

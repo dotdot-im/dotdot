@@ -1,12 +1,16 @@
+@import 'assets/scss/variables';
+
 .badge {
-  display: inline-block;
-  border: 0;
   background: transparent;
-  height: 52px;
-  padding: 0 1.2em;
+  padding: 0 1em;
   border-left: 2px solid var(--color-background);
   color: var(--color-text);
-  line-height: 62px;
+  display: flex;
+  align-items: center;
+
+  @include mq($from: desktop) {
+    padding: 0 1.5em;
+  }
 }
 
 .icon {

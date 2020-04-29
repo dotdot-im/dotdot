@@ -3,17 +3,29 @@
 .onlineUsers {
   font-size: 1em;
   padding: 0.5em;
-  margin: 0;
+  margin: 0 auto;
   text-align: left;
   background: var(--color-background-over);
   border-radius: 50px;
+  display: inline-block;
+  display: inline-flex;
+  align-items: center;
 
   svg {
+    display: inline-block;
+
+    @include mq($until: 320px) {
+      font-size: 0.5em;
+    }
+
+    @include mq($until: 375px) {
+      font-size: 0.66em;
+    }
     margin-right: 0.5em;
   }
 
-  @include mq($from: desktop) {
-    box-shadow: 0 0 10px 3px var(--color-background);
+  @include mq($from: 1350px) {
+    box-shadow: 0 0 13px 1px var(--color-background);
   }
 }
 

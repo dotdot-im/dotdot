@@ -1,11 +1,11 @@
 import React from 'react'
 
 import Logo from 'components/Logo'
-import Wrapper from '../Wrapper'
 
 import styles from './index.module.scss'
-import PasswordLock from '../Session'
+import Session from '../Session'
 import OnlineUsers from '../OnlineUsers'
+import { Container } from 'react-bootstrap'
 
 type Props = {
   scrollingWhileFocused?: boolean
@@ -17,7 +17,7 @@ export default ({ scrollingWhileFocused }: Props) => {
 
   return (
     <header className={styles.header} style={{ position, top }}>
-      <Wrapper>
+      <Container fluid className={styles.container}>
         <Logo className={styles.logo} />
 
         <div className={styles.online}>
@@ -25,9 +25,9 @@ export default ({ scrollingWhileFocused }: Props) => {
         </div>
 
         <div className={styles.badge}>
-          <PasswordLock />
+          <Session />
         </div>
-      </Wrapper>
+      </Container>
     </header>
   )
 }

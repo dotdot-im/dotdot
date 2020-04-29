@@ -26,6 +26,7 @@ export default ({ children }: Props) => {
 
   return (
     <>
+      <AdminBadge />
       {state.auth.user && state.auth.user.isAdmin && <AdminBadge />}
       <OverlayTrigger
         placement="bottom"

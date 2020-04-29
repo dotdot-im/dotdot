@@ -49,7 +49,7 @@ $secondary-dark: $red-text-dark;
 
 $container-max-widths: (
   lg: 960px,
-  xl: 1140px,
+  xl: 1120px,
 );
 
 // To be removed / refactored
@@ -90,8 +90,8 @@ $border-radius-base: 0.4em;
   --color-input: #{$charcoal};
 
   // Bootstrap vars
-  --light: #{$white};
-  --dark: #{$black};
+  --light: #{$black};
+  --dark: #{$white};
 
   @media (prefers-color-scheme: light) {
     --color-background: #{$color-background-light};
@@ -109,8 +109,8 @@ $border-radius-base: 0.4em;
     --color-input: #{$white};
 
     // Bootstrap vars
-    --light: #{$black};
-    --dark: #{$white};
+    --light: #{$white};
+    --dark: #{$black};
   }
 }
 

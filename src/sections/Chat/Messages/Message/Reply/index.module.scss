@@ -1,0 +1,26 @@
+@import 'assets/scss/variables';
+
+.replyBox {
+  display: block;
+  font-size: 0.85em;
+  margin: 0.5em 0;
+  padding: 0.33em 1em;
+  border-left-color: #ccc;
+  border-left-style: solid;
+  border-left-width: 4px;
+  transition: background ease-in-out 50ms;
+  color: var(--color-text);
+  // background: var(--color-background-over);
+  cursor: pointer;
+
+  opacity: 0.7;
+  max-height: 7rem;
+  overflow: auto;
+
+  &:hover {
+    color: inherit;
+    background: rgba(255, 255, 255, 0.05);
+    text-decoration: none;
+    opacity: 1;
+  }
+}

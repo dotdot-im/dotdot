@@ -1,7 +1,5 @@
 import React from 'react'
 import classNames from 'classnames'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Button } from 'react-bootstrap'
 
 import { Message } from 'store/types'
 import styles from './index.module.scss'
@@ -10,6 +8,7 @@ import MessageContent from './MessageContent'
 import PlayBackMessage from './PlayBackMessage'
 import Heading from './Heading'
 import Reply from './Reply'
+import ReplyButton from './ReplyButton'
 
 type Props = {
   reply?: boolean
@@ -34,7 +33,7 @@ const MessageComponent = React.memo(({ message, onClick, reply }: Props) => {
   const isReplyAllowed =
     !reply && onClick && !isSystem && !message.attributes.draft
 
-  const onReplyClick = () => {
+  const handleReplyClick = () => {
     if (!isReplyAllowed || !onClick) {
       return
     }
@@ -48,17 +47,17 @@ const MessageComponent = React.memo(({ message, onClick, reply }: Props) => {
   } else if (message.attributes.draft && message.timedContent) {
     messageBody = (
       <PlayBackMessage
-        timers={ message.timedContent }
-        message={ message.content[0] }
+        timers={message.timedContent}
+        message={message.content[0]}
       />
     )
   } else {
-    messageBody = message.content.map(content => (
+    messageBody = message.content.map((content) => (
       <MessageContent
         content={content}
         isSystem={isSystem}
         onlineUsers={state.onlineUsers}
-        key={ content }
+        key={content}
       />
     ))
   }
@@ -76,36 +75,29 @@ const MessageComponent = React.memo(({ message, onClick, reply }: Props) => {
       })}
     >
       {isReplyAllowed && (
-        <div className={styles.replyButton}>
-          <Button
-            variant="link"
-            onClick={onReplyClick}
-            title="Reply to this message"
-          >
-            <FontAwesomeIcon icon="reply" /> Reply
-          </Button>
+        <div className={styles.actions}>
+          <ReplyButton onClick={handleReplyClick} />
         </div>
       )}
 
       <Heading
-        user={ userData }
-        timestamp={ message.timestamp }
-        isOnline={ isUserOnline }
-        isDraft={ message.attributes.draft }
-        isPrivate={ message.attributes.private }
-        isCurrentUser={ userData.user_id === state.auth.user?.user_id }
+        user={userData}
+        timestamp={message.timestamp}
+        isReply={reply}
+        isOnline={isUserOnline}
+        isDraft={message.attributes.draft}
+        isPrivate={message.attributes.private}
+        isCurrentUser={userData.user_id === state.auth.user?.user_id}
       />
 
-      { !reply && (
+      {!reply && (
         <Reply
-          replyTo={ message.attributes.replyTo }
-          replyToId={ message.attributes.replyToId }
+          replyTo={message.attributes.replyTo}
+          replyToId={message.attributes.replyToId}
         />
-      ) }
+      )}
 
-      <div className={classNames(styles.body)}>
-        {messageBody}
-      </div>
+      <div className={classNames(styles.body)}>{messageBody}</div>
     </div>
   )
 })

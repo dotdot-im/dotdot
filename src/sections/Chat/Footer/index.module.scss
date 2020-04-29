@@ -18,5 +18,9 @@
 
   @include mq($from: desktop) {
     padding: 0 0 3em;
+
+    .container {
+      padding: 0 3em;
+    }
   }
 }

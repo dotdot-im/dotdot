@@ -8,9 +8,8 @@ $padding: 1em;
   white-space: pre-line;
 
   margin: 0 #{-$padding};
-  padding: $padding/2 $padding $padding/2;
+  padding: $padding/2 $padding;
   transition: background ease-in-out 100ms;
-  border-radius: 0.5em;
 
   &:hover {
     background: var(--color-background-over-transparent);
@@ -21,24 +20,13 @@ $padding: 1em;
   }
 
   @include mq($from: tablet) {
-    margin: $padding/4 $padding * 1.5;
+    padding: $padding $padding * 3;
   }
 
-  .replyButton {
-    position: absolute;
-    top: 0;
-    right: 0;
-    display: none;
-    z-index: 3;
-    font-size: 0.8em;
-
-    button {
-      text-transform: uppercase;
-      letter-spacing: 0.05em !important;
-      color: var(--color-text-cyan) !important;
-      font-size: 1em;
-      font-weight: 600;
-    }
+  @include mq($from: desktop) {
+    border-radius: 0.5em;
+    margin: 0 $padding * 1.5 0 $padding * 2.5;
+    padding: $padding * 2/3 $padding * 2 $padding/4 $padding * 2.5;
   }
 
   &:hover {
@@ -50,6 +38,18 @@ $padding: 1em;
   .mention {
     font-weight: 500;
     color: #999999;
+  }
+}
+
+.actions {
+  position: absolute;
+  top: 0;
+  right: 0.1em;
+  z-index: 2;
+  display: none;
+
+  @media (pointer: coarse) {
+    display: block;
   }
 }
 
@@ -84,68 +84,11 @@ $padding: 1em;
   opacity: 0.7;
 }
 
-// Message header
-.icon {
-  font-size: 1em;
-  position: relative;
-
-  svg {
-    position: absolute;
-    top: 0.35em;
-    left: -0.5em;
-
-    @include mq($from: mobile) {
-      left: -1.5 * $padding;
-    }
-  }
-}
-
-// User tag
-.user {
-  display: inline-block;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  margin-bottom: 0.1em;
-  margin-left: 1em;
-
-  &:after {
-    opacity: 0.7;
-    font-size: 0.8em;
-    font-weight: 100;
-  }
-
-  @include mq($from: mobile) {
-    margin-left: 0;
-    margin-right: 0.3em;
-  }
-}
-
-.timestamp {
-  font-weight: 500;
-  font-size: 0.7em;
-  opacity: 0.6;
-  color: var(--color-text);
-  letter-spacing: 0.02em;
-  margin-left: 1em;
-
-  @media all and (max-width: 30em) {
-    display: none;
-  }
-}
-
-// Message body
-.body {
-  line-height: 1.45;
-  letter-spacing: 0.01em;
-  clear: both;
-
-  @include mq($from: mobile) {
-    line-height: 1.66;
-    letter-spacing: 0.022em;
-  }
-}
-
 .draft {
+  .messageContent {
+    opacity: 0.5;
+  }
+
   &:hover {
     background: transparent;
   }
@@ -165,54 +108,14 @@ $padding: 1em;
       content: ' is thinking...';
     }
   }
-
-  .body {
-    opacity: 0.5;
-  }
 }
 
 .private {
   background: var(--color-pure-alt);
 }
 
-.replyBox {
-  font-size: 0.9em;
-  margin: 0.5em;
-  padding: 0.15em 0.75em;
-  border-radius: 0.2em;
-  border-left-color: #ccc;
-  border-left-style: solid;
-  border-left-width: 4px;
-  transition: background ease-in-out 50ms;
-  display: block;
-  color: inherit;
-  cursor: pointer;
-
-  &:hover {
-    color: inherit;
-    background: rgba(255, 255, 255, 0.05);
-    text-decoration: none;
-  }
-}
-
 .reply {
   margin: 0;
   padding: 0;
-  opacity: 0.5;
-  max-height: 6rem;
-  overflow: auto;
   border-radius: 0;
-
-  &:hover {
-    opacity: 0.7;
-  }
-
-  .user {
-    margin-left: 0;
-  }
-
-  .icon,
-  .timestamp {
-    display: none;
-  }
 }

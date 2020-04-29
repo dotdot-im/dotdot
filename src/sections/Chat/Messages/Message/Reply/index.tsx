@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Message } from 'store/types'
-import styles from '../index.module.scss'
+import styles from './index.module.scss'
 import MessageComponent from '..'
 
 type Props = {
@@ -10,7 +10,6 @@ type Props = {
 }
 
 const Reply = ({ replyTo, replyToId }: Props) => {
-
   if (!replyTo || !replyTo.user) {
     return null
   }
@@ -24,10 +23,7 @@ const Reply = ({ replyTo, replyToId }: Props) => {
         borderLeftColor: `#${replyTo.user.color}`,
       }}
     >
-      <MessageComponent
-        reply
-        message={replyTo}
-      />
+      <MessageComponent reply message={replyTo} />
     </a>
   )
 }

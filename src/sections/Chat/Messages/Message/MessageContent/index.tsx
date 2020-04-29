@@ -5,6 +5,8 @@ import HelpMessage from '../HelpMessage'
 import { parseContent, URL_REGEX } from '../lib/parseContent'
 import Embed from './Embed'
 
+import styles from './index.module.scss'
+
 type Props = {
   content: string
   isSystem: boolean
@@ -21,7 +23,7 @@ export default ({ content, isSystem, onlineUsers }: Props) => {
     // find urls for embeds
     const matches = messageContent.match(URL_REGEX)
     if (matches) {
-      matches.forEach(url => {
+      matches.forEach((url) => {
         if (!urls.includes(url)) {
           urls.push(url)
         }
@@ -33,18 +35,13 @@ export default ({ content, isSystem, onlineUsers }: Props) => {
   }
 
   const embeds = useMemo(() => {
-    return urls.map(url => (
-      <Embed
-        key={ url }
-        url={ url }
-      />
-    ))
+    return urls.map((url) => <Embed key={url} url={url} />)
   }, [urls])
 
   return (
-    <div>
-      { messageContent }
-      { embeds }
+    <div className={styles.messageContent}>
+      {messageContent}
+      {embeds}
     </div>
   )
 }

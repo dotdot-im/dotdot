@@ -7,7 +7,7 @@ $padding: 1em;
   position: relative;
   white-space: pre-line;
 
-  margin: 0 -$padding;
+  margin: 0 #{-$padding};
   padding: $padding/2 $padding $padding/2;
   transition: background ease-in-out 100ms;
   border-radius: 0.5em;

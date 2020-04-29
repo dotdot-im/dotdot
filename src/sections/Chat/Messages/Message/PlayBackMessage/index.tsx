@@ -3,6 +3,7 @@ import React from 'react';
 import { TimedChange } from 'sections/Chat/Footer/lib/timedDiff';
 
 const MAX_DELAY = 1500
+const PLAYBACK_SPEED = 1.25 // 1 is the recorded speed
 
 type Props = {
   timers: TimedChange[],
@@ -78,7 +79,7 @@ export class PlayBackMessage extends React.PureComponent<Props, State> {
           this.nextAnimationStep()
         }
       })
-    }, Math.min(timer, MAX_DELAY))
+    }, Math.min(timer, MAX_DELAY) / PLAYBACK_SPEED)
   }
 
   private applyChangeToText(text: string, char: string | null, index: number) {

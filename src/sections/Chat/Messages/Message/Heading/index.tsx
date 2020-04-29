@@ -39,7 +39,7 @@ const Heading = ({ user, timestamp, isDraft, isPrivate, isOnline, isCurrentUser 
   }
 
   let icon: IconProp = iconName
-  if (isCurrentUser) {
+  if (isCurrentUser && !isPrivate && !isDraft) {
     icon = ['far', iconName]
   }
 

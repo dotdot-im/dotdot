@@ -8,6 +8,7 @@ type rgbColor = {
   b: number
 }
 
+/*eslint-disable */
 const demoInConsole = (color: string, colorRgb: rgbColor) => {
   // Make sure to replicate the formula changes you do above, here
   const forLight = pSBC(getThemeOffset(colorRgb, true), color, '#000000')
@@ -35,6 +36,7 @@ const demoInConsole = (color: string, colorRgb: rgbColor) => {
       `background:#fcfcfc; color: ${forLight}; display: block; padding: 1em; font-size: 1.5em`
     )
 }
+/*eslint-enable */
 
 const getThemeOffset = (colorRgb: rgbColor, lightMode: boolean) => {
   const lum = getRgbLuminance(colorRgb.r, colorRgb.g, colorRgb.b)

@@ -221,7 +221,9 @@ export default () => {
         </Row>
         <Row>
           <Col sm={12} md={true}>
-            <h5 className={styles.ksp}>Limited capacity</h5>
+            <h5 className={classNames(styles.ksp, 'red-text')}>
+              Limited capacity
+            </h5>
             <p className={styles.copy}>
               Never more than 10 people at once. Big live chats make it
               impossible to have a conversation or keep track of one. Here we
@@ -229,7 +231,9 @@ export default () => {
             </p>
           </Col>
           <Col sm={12} md={true}>
-            <h5 className={styles.ksp}>Message streaming</h5>
+            <h5 className={classNames(styles.ksp, 'red-text')}>
+              Message streaming
+            </h5>
             <p className={styles.copy}>
               As you type, your message will be shared live with the room, and
               so will other dot's messages. This makes for a more engaging, real
@@ -237,7 +241,9 @@ export default () => {
             </p>
           </Col>
           <Col sm={12} md={true}>
-            <h5 className={styles.ksp}>Absolutely private</h5>
+            <h5 className={classNames(styles.ksp, 'red-text')}>
+              Absolutely private
+            </h5>
             <p className={styles.copy}>
               No private data is stored, period. We don’t relate your IP to your
               user, so we could never track you.

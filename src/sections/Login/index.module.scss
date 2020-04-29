@@ -4,32 +4,27 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 12vh 1em 1em;
+  padding: 1em;
 }
 
 .login {
   flex: 1;
+  margin: auto;
   display: flex;
-  align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin: auto;
-  min-height: 50vh;
 
   form {
-    margin: 2em auto;
+    margin: 0;
 
     @include mq($until: tablet) {
       width: 100%;
+      margin: 0 auto 5vh;
     }
   }
 
   input {
     font-size: 1em !important;
-
-    @include mq($from: tablet) {
-      max-width: 20em;
-    }
   }
 
   button[type='submit'] {
@@ -62,25 +57,28 @@
 }
 
 .title {
-  font-size: 2em;
+  font-size: 2.5em;
+  font-size: calc(0.5em + 5vh);
   line-height: 1.2;
   font-weight: 500;
+  margin: 1.2em 0 0.5em;
 
   @include mq($from: tablet) {
-    font-size: 2.5em;
+    font-size: 3.3em;
+    font-size: calc(0.5em + 6vh);
   }
 }
 
 .subtitle {
-  text-align: center;
   font-size: 1.2em;
   font-weight: 300;
-  margin-top: 2em;
+  margin-top: 1em;
 
   button {
     color: inherit;
     font-size: inherit !important;
     color: var(--color-text-cyan);
+    padding-left: 0;
 
     &:hover {
       color: inherit;
@@ -104,6 +102,10 @@
 
 .singleLineFormPiece {
   margin: 0;
+
+  @include mq($from: tablet) {
+    max-width: 12em;
+  }
 
   & + & {
     margin-top: 1em !important;
@@ -138,22 +140,20 @@
   letter-spacing: 0.12em;
   font-weight: 700;
   margin-top: 0.5em;
-
-  @include mq($from: tablet) {
-    color: var(--color-text-red);
-  }
 }
 
 .copy {
   letter-spacing: 0.025em;
   line-height: 1.66;
   opacity: 0.8;
+  font-size: 0.9em;
 
   @include mq($until: tablet) {
     display: none;
   }
 
   @include mq($from: desktop) {
+    font-size: 1em;
     padding-right: 0.25em;
   }
 }

@@ -2,7 +2,7 @@
 
 .onlineUsers {
   font-size: 1em;
-  padding: 0.5em;
+  padding: 0.5em 0;
   margin: 0 auto;
   text-align: left;
   background: var(--color-background-over);
@@ -13,18 +13,20 @@
 
   svg {
     display: inline-block;
+    margin-right: 0.5em;
+    font-size: 0.5em;
 
-    @include mq($until: 320px) {
-      font-size: 0.5em;
-    }
-
-    @include mq($until: 375px) {
+    @include mq($from: 23em) {
       font-size: 0.66em;
     }
-    margin-right: 0.5em;
+
+    @include mq($from: 30em) {
+      font-size: 1em;
+    }
   }
 
   @include mq($from: 1350px) {
+    padding: 0.5em;
     box-shadow: 0 0 13px 1px var(--color-background);
   }
 }

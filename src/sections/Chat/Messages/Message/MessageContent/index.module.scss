@@ -1,12 +1,20 @@
 @import 'assets/scss/variables';
 
 .messageContent {
-  margin-bottom: 0.6em;
-  font-size: 0.9em;
+  margin: 0 0 0.33rem 0;
+
+  // Text
+  color: var(--color-text);
+  white-space: pre-line;
   line-height: 1.45;
   letter-spacing: 0;
-  clear: both;
-  color: var(--color-text);
+  font-size: 0.96em;
+  font-weight: 500;
+
+  .mention {
+    font-weight: 500;
+    color: #999999;
+  }
 
   @include mq($from: tablet) {
     font-size: 1em;

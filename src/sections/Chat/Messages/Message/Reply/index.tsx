@@ -19,11 +19,17 @@ const Reply = ({ replyTo, replyToId }: Props) => {
       href={'#message-' + replyToId}
       className={styles.replyBox}
       title="Go to original message"
-      style={{
-        borderLeftColor: `#${replyTo.user.color}`,
-      }}
     >
-      <MessageComponent reply message={replyTo} />
+      <span
+        aria-hidden={true}
+        className={styles.bar}
+        style={{
+          background: `#${replyTo.user.color}`,
+        }}
+      />
+      <div className={styles.scroll}>
+        <MessageComponent reply message={replyTo} />
+      </div>
     </a>
   )
 }

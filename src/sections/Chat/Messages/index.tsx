@@ -76,7 +76,7 @@ export default ({ onMessageClick }: Props) => {
         </div>
       )}
       <div className={classNames(styles.messageScroll)} ref={chatAreaRef}>
-        <div className="container">
+        <div className={classNames('container', styles.messagesContainer)}>
           <ScrollBox boxRef={chatAreaRef} onScrollChanged={onScrollChanged}>
             {state.messages.map((eachMessage) => (
               <MessageComponent

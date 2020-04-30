@@ -15,6 +15,7 @@ export default ({ onClick }: Props) => (
     onClick={onClick}
     title="Reply to this message"
   >
-    <FontAwesomeIcon icon="reply" /> Reply
+    <FontAwesomeIcon icon="reply" />
+    <span className={styles.text}>Reply</span>
   </Button>
 )

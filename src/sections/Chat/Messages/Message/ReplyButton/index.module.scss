@@ -6,5 +6,12 @@
   letter-spacing: 0.05em !important;
   color: var(--color-text-cyan) !important;
   font-size: 1em;
+  line-height: 1 !important;
   font-weight: 600;
+}
+
+.text {
+  @include mq($until: desktop) {
+    display: none;
+  }
 }

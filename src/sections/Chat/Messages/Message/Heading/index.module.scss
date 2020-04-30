@@ -6,7 +6,7 @@
   font-weight: 700;
   letter-spacing: 0.03em;
   margin-bottom: 0.1em;
-  margin-left: 3em;
+  font-size: 0.9em;
 
   &:after {
     opacity: 0.7;
@@ -22,9 +22,10 @@
 
 // User icon
 .icon {
-  font-size: 1em;
+  font-size: 0.8em;
   margin-right: 0.25em;
-  margin-left: -0.5em;
+  margin-left: -0.33em;
+  margin-top: -0.2em;
   background: transparent;
 
   svg {
@@ -43,12 +44,12 @@
 .timestamp {
   font-weight: 500;
   font-size: 0.7em;
-  opacity: 0.6;
+  opacity: 0.5;
   color: var(--color-text);
   letter-spacing: 0.02em;
   margin-left: 1em;
 
   @include mq($until: tablet) {
-    display: none;
+    // display: none;
   }
 }

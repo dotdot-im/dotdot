@@ -17,6 +17,12 @@ $textbox-height-desktop: 120px;
   padding: 4em 0 1em;
 }
 
+.messagesContainer {
+  @include mq($until: tablet) {
+    padding: 0;
+  }
+}
+
 .unseen {
   position: absolute;
   right: 1em;

@@ -24,7 +24,7 @@ const Reply = ({ replyTo, replyToId }: Props) => {
         aria-hidden={true}
         className={styles.bar}
         style={{
-          background: `#${replyTo.user.color}`,
+          background: replyTo.user.contrastColor || `#${replyTo.user.color}`,
         }}
       />
       <div className={styles.scroll}>

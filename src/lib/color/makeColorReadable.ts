@@ -13,6 +13,8 @@ const demoInConsole = (color: string, colorRgb: rgbColor) => {
   // Make sure to replicate the formula changes you do above, here
   const forLight = pSBC(getThemeOffset(colorRgb, true), color, '#000000')
   const forDark = pSBC(getThemeOffset(colorRgb, false), color, '#ffffff')
+
+  console.log(color, colorRgb)
   // Current on dark
   console.log(
     `%c (${forDark !== color ? '<' : '='}) @jaicab ☃ ★ ♖`,

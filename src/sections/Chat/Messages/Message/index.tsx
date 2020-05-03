@@ -74,21 +74,23 @@ const MessageComponent = React.memo(({ message, onClick, reply }: Props) => {
         [styles.private]: message.attributes.private,
       })}
     >
-      {isReplyAllowed && (
-        <div className={styles.actions}>
-          <ReplyButton onClick={handleReplyClick} />
-        </div>
-      )}
+      <div className={styles.frame}>
+        {isReplyAllowed && (
+          <div className={styles.actions}>
+            <ReplyButton onClick={handleReplyClick} />
+          </div>
+        )}
 
-      <Heading
-        user={userData}
-        timestamp={message.timestamp}
-        isReply={reply}
-        isOnline={isUserOnline}
-        isDraft={message.attributes.draft}
-        isPrivate={message.attributes.private}
-        isCurrentUser={userData.user_id === state.auth.user?.user_id}
-      />
+        <Heading
+          user={userData}
+          timestamp={message.timestamp}
+          isReply={reply}
+          isOnline={isUserOnline}
+          isDraft={message.attributes.draft}
+          isPrivate={message.attributes.private}
+          isCurrentUser={userData.user_id === state.auth.user?.user_id}
+        />
+      </div>
 
       {!reply && (
         <Reply

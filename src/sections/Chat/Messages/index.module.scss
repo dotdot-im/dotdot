@@ -14,12 +14,14 @@ $textbox-height-desktop: 120px;
 .messageScroll {
   overflow-x: hidden;
   overflow-y: auto;
-  padding: 4em 0 1em;
+  padding: 5em 0 1.2em;
 }
 
 .messagesContainer {
-  @include mq($until: tablet) {
-    padding: 0;
+  padding: 0;
+
+  @include mq($from: desktop) {
+    padding: 0 4em;
   }
 }
 

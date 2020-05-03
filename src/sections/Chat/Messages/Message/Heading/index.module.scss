@@ -23,7 +23,7 @@
 // User icon
 .icon {
   font-size: 0.8em;
-  margin-right: 0.25em;
+  margin-right: 0.3em;
   margin-left: -0.33em;
   margin-top: -0.2em;
   background: transparent;
@@ -32,11 +32,19 @@
     fill: currentColor;
   }
 
-  @include mq($from: desktop) {
+  @include mq($from: tablet) {
     position: absolute;
-    left: 0.75em;
-    margin-left: 0.5em;
+    right: 100%;
+    margin-right: 0.75rem;
     margin-top: 0.1em;
+    font-size: 1.5em;
+  }
+
+  @include mq($from: desktop) {
+    margin-top: 0;
+    margin-right: 0.5rem;
+    // font-size: 1.2em;
+    font-size: 1.4em;
   }
 }
 

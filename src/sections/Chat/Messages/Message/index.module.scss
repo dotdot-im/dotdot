@@ -1,12 +1,10 @@
 @import 'assets/scss/variables';
 
-$padding: 1em;
-
 // Message box
 .message {
   position: relative;
 
-  padding: 0.25em $padding;
+  padding: 0.25em 1em;
   transition: background ease-in-out 100ms;
 
   // Debbug
@@ -21,27 +19,35 @@ $padding: 1em;
   }
 
   @include mq($from: tablet) {
-    padding: $padding $padding * 3;
+    padding: 0.4em 3em 0.25em 5em;
   }
 
   @include mq($from: desktop) {
     border-radius: 0.5em;
-    margin: 0 $padding * 1.5 0 $padding * 2.5;
-    padding: $padding * 2/3 $padding * 2 $padding/4 $padding * 2.5;
+    padding: 0.4em 1em 0.25em 1.2em;
+    margin: 0 0 0 1.5em;
   }
 }
 
+// Allows for things like icon and actions to be positioned around content, not container padding
+.frame {
+  position: relative;
+}
+
 .actions {
-  position: absolute;
-  top: 0rem;
-  right: 0;
-  z-index: 2;
+  float: right;
   display: none;
 
-  // border: 1px solid currentColor;
+  @include mq($from: desktop) {
+    position: absolute;
+    top: 0;
+    right: -0.5em;
+    z-index: 2;
+  }
 
   @media (pointer: coarse) {
     display: block;
+    position: static !important;
   }
 
   .message:hover & {

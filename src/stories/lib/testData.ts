@@ -10,10 +10,11 @@ import {
 } from '../../store/types'
 import { initialState } from '../../store/state'
 import { TimedChange } from '../../sections/Chat/Footer/lib/timedDiff'
+import { makeColorReadable } from 'lib/color/makeColorReadable'
 
 export const SYSTEM_USER: User = {
   user_id: 'dotdot',
-  color: 'ff5151',
+  color: makeColorReadable('#ff5151'),
   name: 'dotdot',
   icon: 'cog',
   isActive: true,
@@ -41,9 +42,11 @@ export function generateRandomUsers(num: number): User[] {
 export function generateRandomUser(): User {
   const name = randomWords(1)
   const color = Math.floor(Math.random() * 16777215).toString(16)
+  const contrastColor = makeColorReadable(`#${color}`)
   return {
     user_id: '' + Math.floor(Math.random() * 100000),
     color,
+    contrastColor,
     name,
     icon: null,
     isActive: true,

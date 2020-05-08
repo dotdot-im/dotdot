@@ -8,6 +8,7 @@ $bar-width: 4px;
   margin: 0.33rem 0;
   padding: $bar-width 0 $bar-width 1em;
   padding-left: calc(1em + $bar-width);
+  border-radius: 0.2em;
 
   color: var(--color-text) !important;
   text-decoration: none !important;

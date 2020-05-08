@@ -40,6 +40,7 @@ const demoInConsole = (color: string, colorRgb: rgbColor) => {
 }
 /*eslint-enable */
 
+// Returns number between 0 and 1
 const getThemeOffset = (colorRgb: rgbColor, lightMode: boolean) => {
   const lum = getRgbLuminance(colorRgb.r, colorRgb.g, colorRgb.b)
   let offset = 0

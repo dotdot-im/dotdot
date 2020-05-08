@@ -16,7 +16,9 @@ export default ({ replyTo, onCancelReply }: Props) => {
   return (
     <div
       className={styles.reply}
-      style={{ borderLeftColor: `#${replyTo.user.color}` }}
+      style={{
+        borderLeftColor: replyTo.user.contrastColor || `#${replyTo.user.color}`,
+      }}
     >
       <div className={styles.actions}>
         <Button variant="link" onClick={onCancelReply}>

@@ -1,7 +1,9 @@
 import React from 'react'
+import classNames from 'classnames'
 
 import { Message } from 'store/types'
-import styles from '../index.module.scss'
+import styles from './index.module.scss'
+import messageStyles from '../index.module.scss'
 import MessageComponent from '..'
 
 type Props = {
@@ -10,24 +12,32 @@ type Props = {
 }
 
 const Reply = ({ replyTo, replyToId }: Props) => {
-
   if (!replyTo || !replyTo.user) {
     return null
   }
 
+  const Bar = () => (
+    <span
+      aria-hidden={true}
+      className={styles.bar}
+      style={{
+        background: replyTo.user.contrastColor || `#${replyTo.user.color}`,
+      }}
+    />
+  )
+
   return (
     <a
       href={'#message-' + replyToId}
-      className={styles.replyBox}
+      className={classNames(styles.replyBox, {
+        [messageStyles.private]: replyTo.attributes.private,
+      })}
       title="Go to original message"
-      style={{
-        borderLeftColor: `#${replyTo.user.color}`,
-      }}
     >
-      <MessageComponent
-        reply
-        message={replyTo}
-      />
+      <Bar />
+      <div className={styles.scroll}>
+        <MessageComponent reply message={replyTo} />
+      </div>
     </a>
   )
 }

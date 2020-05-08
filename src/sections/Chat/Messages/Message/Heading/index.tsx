@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import { User } from 'store/types'
-import styles from '../index.module.scss'
+import styles from './index.module.scss'
 
 type Props = {
   user: User
@@ -14,9 +14,18 @@ type Props = {
   isPrivate: boolean
   isOnline: boolean
   isCurrentUser: boolean
+  isReply?: boolean
 }
 
-const Heading = ({ user, timestamp, isDraft, isPrivate, isOnline, isCurrentUser }: Props) => {
+const Heading = ({
+  user,
+  timestamp,
+  isDraft,
+  isPrivate,
+  isOnline,
+  isCurrentUser,
+  isReply,
+}: Props) => {
   const userContrastColor = user.contrastColor || `#${user.color}`
   const isSystem = user.user_id === 'dotdot'
 
@@ -43,15 +52,14 @@ const Heading = ({ user, timestamp, isDraft, isPrivate, isOnline, isCurrentUser 
     icon = ['far', iconName]
   }
 
-  return (
-    <>
-      <div
-        className={classNames(styles.icon, {
-          [styles.private]: isPrivate,
-        })}
-        style={{ color: userContrastColor, background: userContrastColor }}
-      >
-        {isPrivate && (
+  const UserIcon = () => {
+    const justIcon = (
+      <FontAwesomeIcon icon={icon} spin={!isPrivate && isDraft} />
+    )
+
+    return (
+      <span className={styles.icon} style={{ color: userContrastColor }}>
+        {isPrivate ? (
           <OverlayTrigger
             placement="right"
             overlay={
@@ -62,24 +70,34 @@ const Heading = ({ user, timestamp, isDraft, isPrivate, isOnline, isCurrentUser 
               </Tooltip>
             }
           >
-            <FontAwesomeIcon icon={icon} />
+            {justIcon}
           </OverlayTrigger>
+        ) : (
+          justIcon
         )}
-        {!isPrivate && (
-          <FontAwesomeIcon icon={icon} spin={ isDraft } />
-        )}
-      </div>
+      </span>
+    )
+  }
+
+  const Username = () => (
+    <span style={{ color: userContrastColor }}>{user.name}</span>
+  )
+  const TimeStamp = () => (
+    <span className={classNames(styles.timestamp)}>
+      {timestamp.toLocaleTimeString([], {
+        hour: 'numeric',
+        minute: '2-digit',
+      })}
+    </span>
+  )
+
+  return (
+    <>
+      {!isReply && <UserIcon />}
 
       <div className={classNames(styles.user)}>
-        <span style={{ color: userContrastColor }}>{user.name}</span>
-        {!isDraft && (
-          <span className={classNames(styles.timestamp)}>
-            {timestamp.toLocaleTimeString([], {
-              hour: 'numeric',
-              minute: '2-digit',
-            })}
-          </span>
-        )}
+        <Username />
+        {!isDraft && !isReply && <TimeStamp />}
       </div>
     </>
   )

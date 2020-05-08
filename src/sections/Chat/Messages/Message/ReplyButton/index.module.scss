@@ -1,0 +1,26 @@
+@import 'assets/scss/variables';
+
+.button {
+  font-size: 0.8em !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em !important;
+  color: var(--color-text-cyan) !important;
+  font-size: 1em;
+  line-height: 1 !important;
+  font-weight: 600;
+
+  @media (pointer: coarse) {
+    border: 1px solid var(--color-background-over) !important;
+  }
+
+  @include mq($from: desktop) {
+    border: 0 !important;
+  }
+}
+
+.text {
+  margin-left: 0.5em;
+  @include mq($until: desktop) {
+    display: none;
+  }
+}

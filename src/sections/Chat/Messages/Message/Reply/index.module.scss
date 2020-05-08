@@ -1,0 +1,54 @@
+@import 'assets/scss/variables';
+
+$bar-width: 4px;
+
+.replyBox {
+  position: relative;
+  display: block;
+  margin: 0.33rem 0;
+  padding: $bar-width 0 $bar-width 1em;
+  padding-left: calc(1em + $bar-width);
+  border-radius: 0.2em;
+
+  color: var(--color-text) !important;
+  text-decoration: none !important;
+  cursor: pointer;
+
+  @include mq($from: desktop) {
+    opacity: 0.7;
+
+    &:hover {
+      color: inherit;
+      background: rgba(255, 255, 255, 0.05);
+      text-decoration: none;
+      opacity: 1;
+    }
+  }
+}
+
+.scroll {
+  /* hide text if it more than N lines  */
+  overflow: hidden;
+  /* for set '...' in absolute position */
+  position: relative;
+  /* use this value to count block height */
+  line-height: 1.2em;
+  /* max-height = line-height (1.2) * lines max number (3) */
+  max-height: 3.6em;
+  /* fix problem when last visible word doesn't adjoin right side  */
+  text-align: justify;
+  /* place for '...' */
+  margin-right: -1em;
+  padding-right: 1em;
+}
+
+.bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: $bar-width;
+  border-radius: $bar-width;
+  background: #ccc;
+  transition: background ease-in-out 50ms;
+}

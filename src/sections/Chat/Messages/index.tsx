@@ -19,7 +19,7 @@ type Props = {
   onMessageClick: (messageId: string) => void
 }
 
-export default (props: Props) => {
+export default ({ onMessageClick }: Props) => {
   const { state } = useGlobalState()
   const [localState, setLocalState] = useImmer<State>({
     scrollAtBottom: true,
@@ -46,11 +46,11 @@ export default (props: Props) => {
     }
     const scrollHeight =
       chatAreaRef.current.scrollHeight - chatAreaRef.current.offsetHeight
-      chatAreaRef.current.scroll({
-        top: scrollHeight,
-        left: 0,
-        behavior: 'smooth'
-      });
+    chatAreaRef.current.scroll({
+      top: scrollHeight,
+      left: 0,
+      behavior: 'smooth',
+    })
 
     setLocalState((draft) => {
       draft.scrollAtBottom = true
@@ -76,12 +76,12 @@ export default (props: Props) => {
         </div>
       )}
       <div className={classNames(styles.messageScroll)} ref={chatAreaRef}>
-        <div className="container">
+        <div className={classNames('container', styles.messagesContainer)}>
           <ScrollBox boxRef={chatAreaRef} onScrollChanged={onScrollChanged}>
             {state.messages.map((eachMessage) => (
               <MessageComponent
                 key={eachMessage.uuid}
-                onClick={props.onMessageClick}
+                onClick={onMessageClick}
                 message={eachMessage}
               />
             ))}

@@ -5,18 +5,21 @@
   // background: red; // var(--color-background-over);
   box-shadow: 0 0 10px 3px var(--color-background); // subtle top shadow
 
-  @include mq($from: tablet) {
-    padding: 0 0 2em;
+  .container {
+    padding: 0;
   }
 
-  @include mq($until: tablet) {
+  @include mq($from: tablet) {
+    padding: 0 0 3em;
+
     .container {
-      margin: 0;
-      padding: 0;
+      padding: 0 2em;
     }
   }
 
   @include mq($from: desktop) {
-    padding: 0 0 3em;
+    .container {
+      padding: 0 4em;
+    }
   }
 }

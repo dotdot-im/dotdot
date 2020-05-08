@@ -13,6 +13,8 @@ const demoInConsole = (color: string, colorRgb: rgbColor) => {
   // Make sure to replicate the formula changes you do above, here
   const forLight = pSBC(getThemeOffset(colorRgb, true), color, '#000000')
   const forDark = pSBC(getThemeOffset(colorRgb, false), color, '#ffffff')
+
+  console.log(color, colorRgb)
   // Current on dark
   console.log(
     `%c (${forDark !== color ? '<' : '='}) @jaicab ☃ ★ ♖`,
@@ -38,6 +40,7 @@ const demoInConsole = (color: string, colorRgb: rgbColor) => {
 }
 /*eslint-enable */
 
+// Returns number between 0 and 1
 const getThemeOffset = (colorRgb: rgbColor, lightMode: boolean) => {
   const lum = getRgbLuminance(colorRgb.r, colorRgb.g, colorRgb.b)
   let offset = 0

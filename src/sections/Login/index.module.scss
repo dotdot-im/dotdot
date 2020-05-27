@@ -57,13 +57,17 @@
 }
 
 .title {
-  font-size: 2.5em;
-  font-size: calc(0.5em + 5vh);
+  font-size: 1.4em;
   line-height: 1.2;
   font-weight: 500;
   margin: 1.2em 0 0.5em;
 
   @include mq($from: tablet) {
+    font-size: 2.5em;
+    font-size: calc(0.5em + 5vh);
+  }
+
+  @include mq($from: desktop) {
     font-size: 3.3em;
     font-size: calc(0.5em + 6vh);
   }

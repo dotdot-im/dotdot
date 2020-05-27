@@ -88,7 +88,6 @@ const MessageComponent = React.memo(({ message, onClick, reply }: Props) => {
           isOnline={isUserOnline}
           isDraft={message.attributes.draft}
           isPrivate={message.attributes.private}
-          isCurrentUser={userData.user_id === state.auth.user?.user_id}
         />
       </div>
 

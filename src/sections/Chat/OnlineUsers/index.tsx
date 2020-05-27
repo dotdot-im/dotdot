@@ -2,7 +2,7 @@ import React from 'react'
 
 import styles from './index.module.scss'
 import useGlobalState from 'store/state'
-import User from './User'
+import Dot from '../../../components/Dot'
 
 export default () => {
   const { state } = useGlobalState()
@@ -12,7 +12,7 @@ export default () => {
       <span className={styles.count}>{state.onlineUsers.length}</span>
 
       {state.onlineUsers.map((user) => (
-        <User user={user} key={user.user_id} />
+        <Dot isOnline user={user} key={user.user_id} />
       ))}
     </div>
   )

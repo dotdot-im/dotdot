@@ -7,7 +7,7 @@ import Session from '../Session'
 import OnlineUsers from '../OnlineUsers'
 import { Container } from 'react-bootstrap'
 
-type Props = {
+export type Props = {
   scrollingWhileFocused?: boolean
 }
 

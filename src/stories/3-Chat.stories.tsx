@@ -9,7 +9,7 @@ import '../assets/scss/index.scss'
 import useGlobalState, { StateProvider } from 'store/state'
 import { getInitialState, generateRandomUsers, generateRandomMessages, getRandomUser, generateRandomIncomingMessage } from './lib/testData'
 
-export default { title: 'Chat' }
+export default { title: 'Examples/Chat' }
 
 const users: User[] = generateRandomUsers(10)
 

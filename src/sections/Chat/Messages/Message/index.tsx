@@ -10,7 +10,7 @@ import Heading from './Heading'
 import Reply from './Reply'
 import ReplyButton from './ReplyButton'
 
-type Props = {
+export type Props = {
   reply?: boolean
   message: Message
   onClick?: (messageId: string) => void

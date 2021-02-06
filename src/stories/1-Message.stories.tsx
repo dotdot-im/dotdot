@@ -18,7 +18,7 @@ import {
   TIMED_CONTENT_DELETE_TEST,
 } from './lib/testData'
 
-export default { title: 'Message' }
+export default { title: 'Examples/Message' }
 
 const users: User[] = generateRandomUsers(3)
 const currentUser: User = users[0]

@@ -6,6 +6,7 @@ module.exports = {
     '@storybook/preset-create-react-app',
     '@storybook/addon-actions',
     '@storybook/addon-links',
+    '@storybook/addon-essentials',
   ],
   // webpackFinal: async (config, { configType }) => {
   //   // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'

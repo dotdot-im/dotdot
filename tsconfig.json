@@ -20,5 +20,6 @@
       "./definitions/",
     ]
   },
-  "include": ["src", "definitions"]
+  "include": ["src", "definitions"],
+  "exclude": ["node_modules"]
 }

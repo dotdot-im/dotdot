@@ -1,66 +1,66 @@
-import React, { useState } from 'react'
-import { Button, Modal, Form } from 'react-bootstrap'
-import classNames from 'classnames'
+import React, { useState } from 'react';
+import { Button, Modal, Form } from 'react-bootstrap';
+import classNames from 'classnames';
 
-import { fetchResource } from 'util/fetch'
-import { API_URL } from '../../../../constants'
-import useGlobalState from 'store/state'
+import { fetchResource } from 'util/fetch';
+import { API_URL } from '../../../../constants';
+import useGlobalState from 'store/state';
 
-import styles from './index.module.scss'
+import styles from './index.module.scss';
 
-type Props = {
-  show: boolean
-  onHide: () => void
-}
+export type Props = {
+  show: boolean;
+  onHide: () => void;
+};
 
 export default ({ show, onHide }: Props) => {
-  const { state, dispatch } = useGlobalState()
+  const { state, dispatch } = useGlobalState();
 
-  const [validated, setValidated] = useState<boolean>(false)
-  const [password, setPassword] = useState<string>('')
-  const [repeatPassword, setRepeatPassword] = useState<string>('')
+  const [validated, setValidated] = useState<boolean>(false);
+  const [password, setPassword] = useState<string>('');
+  const [repeatPassword, setRepeatPassword] = useState<string>('');
 
-  let title = 'Claim Username'
+  let title = 'Claim Username';
 
   if (state.auth.user && state.auth.user.hasPassword) {
-    title = 'Update Password'
+    title = 'Update Password';
   }
 
   const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    event.stopPropagation()
+    event.preventDefault();
+    event.stopPropagation();
 
-    setValidated(true)
+    setValidated(true);
 
-    const form = event.currentTarget
+    const form = event.currentTarget;
     if (!form.checkValidity()) {
-      return
+      return;
     }
 
     const body = {
       password,
       repeatPassword,
-    }
+    };
 
     fetchResource('/password', 'POST', body)
       .then(() => {
         dispatch({
           type: 'user_password',
           payload: true,
-        })
+        });
 
-        onHide()
-        setValidated(false)
-        setPassword('')
-        setRepeatPassword('')
+        onHide();
+        setValidated(false);
+        setPassword('');
+        setRepeatPassword('');
       })
       .catch((reason) => {
         dispatch({
           type: 'error',
           payload: reason.errors.join(', '),
-        })
-      })
-  }
+        });
+      });
+  };
 
   return (
     <Modal show={show} onHide={onHide}>
@@ -80,7 +80,7 @@ export default ({ show, onHide }: Props) => {
               required
               minLength={6}
               onChange={(event) => {
-                setPassword(event.currentTarget.value)
+                setPassword(event.currentTarget.value);
               }}
               value={password}
             />
@@ -99,7 +99,7 @@ export default ({ show, onHide }: Props) => {
               minLength={6}
               pattern={password}
               onChange={(event) => {
-                setRepeatPassword(event.currentTarget.value)
+                setRepeatPassword(event.currentTarget.value);
               }}
               value={repeatPassword}
             />
@@ -122,5 +122,5 @@ export default ({ show, onHide }: Props) => {
         </Modal.Footer>
       </Form>
     </Modal>
-  )
-}
+  );
+};

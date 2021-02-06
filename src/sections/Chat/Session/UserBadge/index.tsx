@@ -7,7 +7,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core'
 
 import styles from './index.module.scss'
 
-type Props = {
+export type Props = {
   onClick: () => void
   small?: boolean
 }

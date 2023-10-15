@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import useGlobalState from 'store/state'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import Dot from 'components/Dot'
 
 import styles from './index.module.scss'
 
@@ -22,11 +23,8 @@ export default ({ onClick, small }: Props) => {
 
   return (
     <button className={styles.badge} onClick={onClick}>
-      <span
-        className={ styles.dot }
-        style={{ color: `#${state.auth.user.color}` }}
-      >
-        <FontAwesomeIcon icon={ state.auth.user.icon || 'circle' } />
+      <span className={styles.dot}>
+        <Dot isOnline user={state.auth.user} />
       </span>
       <span className={styles.name}>{state.auth.user.name}</span>
       <FontAwesomeIcon
